@@ -1,47 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { ScrollView, StyleSheet, Text, View, Alert } from 'react-native';
-import LateralMenu from './LateralMenu';
-import Boton from './Boton';
-import React from 'react';
-import { Button } from 'react-native-paper';
-import { WebView } from 'react-native';
-import TopBar from './TopBar';
+import React from 'react'
+import { Provider } from 'react-native-paper'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { theme } from './src/core/theme'
+import {
+  ArchivoAux,
+} from './src/views'
 
-export default class App extends React.Component{
-  constructor(props) {
-    super(props);
-    this.state = {isHidden: false};
-    this.onPress = this.onPress.bind(this);
-  }
+const Stack = createStackNavigator()
 
-  onPress() {
-    this.setState({isHidden: !this.state.isHidden})
-  }
-
-  render() {
-    return (
-      <ScrollView>
-        <TopBar></TopBar>
-        <Button
-        icon="camera" 
-        mode="contained" 
-        onPress={() => this.onPress()} 
+export default function App() {
+  return (
+    <Provider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="ArchivoAux"
+          screenOptions={{
+            headerShown: false,
+          }}
         >
-        Press me
-        </Button>
-         <LateralMenu></LateralMenu>
-      </ScrollView>
-      
-    );
-  }
-
+          <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
