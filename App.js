@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { theme } from './src/core/theme'
 import {
+  MainScreen,
+  LoginScreen,
   ArchivoAux,
 } from './src/views'
 
@@ -14,12 +16,15 @@ export default function App() {
     <Provider theme={theme}>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="ArchivoAux"
+          initialRouteName="LoginScreen"
           screenOptions={{
             headerShown: false,
           }}
         >
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="MainScreen" component={MainScreen} />
           <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
