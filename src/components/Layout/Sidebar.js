@@ -3,10 +3,16 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Menu, Avatar } from 'react-native-paper';
 import {theme} from '../../core/theme'
 class Sidebar extends React.Component {
+
   constructor(props) {
     super(props);
   }
   
+  navigate(view){
+    this.props.toggleMenu()
+    console.log(view)
+  }
+
   render() {
     return (
         <View style={this.props.menuVisible? s.sidebarVisible : s.sidebarInvisible}>
@@ -14,12 +20,12 @@ class Sidebar extends React.Component {
               <Avatar.Image style={s.avatar} size={100} source={require('../../assets/avatar.png')} />
               <Text style={s.username}>Username</Text>
             </View>
-            <Menu.Item style={s.item} onPress={(e)=> console.log("Ir a pagina de Cuenta")} icon="account" title="Cuenta" />
-            <Menu.Item style={s.item} onPress={(e)=> console.log("Ir a pagina de Vehiculos")} icon="car" title="Vehiculos" />
-            <Menu.Item style={s.item} onPress={(e)=> console.log("Ir a pagina de Reservas")} icon="book" title="Reservas"/>
-            <Menu.Item style={s.item} onPress={(e)=> console.log("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
-            <Menu.Item style={s.item} onPress={(e)=> console.log("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
-            <Menu.Item style={s.item} onPress={(e)=> console.log("Ir a pagina de Informacion")} icon="information" title="Informacion" />
+            <Menu.Item style={s.item} onPress={(e)=> this.navigate("Ir a pagina de Cuenta")} icon="account" title="Cuenta" />
+            <Menu.Item style={s.item} onPress={(e)=> this.navigate("Ir a pagina de Vehiculos")} icon="car" title="Vehículos" />
+            <Menu.Item style={s.item} onPress={(e)=> this.navigate("Ir a pagina de Reservas")} icon="book" title="Reservas"/>
+            <Menu.Item style={s.item} onPress={(e)=> this.navigate("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
+            <Menu.Item style={s.item} onPress={(e)=> this.navigate("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
+            <Menu.Item style={s.item} onPress={(e)=> this.navigate("Ir a pagina de Informacion")} icon="information" title="Información" />
         </View>      
     );
   }
@@ -32,10 +38,11 @@ const s = StyleSheet.create({
     zIindex: 9999,
     top: "4rem",
     backgroundColor: theme.colors.primary,
+    opacity: "0.95",
     width: "60vw",
     height: "100vh",
     transition: "all 0.3s",
-    paddingLeft: "0.5em"
+    paddingHorizontal: "0.5em"
   },
   sidebarInvisible:{
     position: "fixed",
@@ -48,13 +55,12 @@ const s = StyleSheet.create({
     transition: "all 0.3s"
   },
   item: {
-    height: "3rem",
-    borderRadius: "0.24em",
-    paddingLeft: "2em",
+    height: "2.5rem",
     backgroundColor: "#fff",
-    marginBottom: "0.5em",
-    marginLeft: "0.5em",
-    width: "100%"
+    borderColor: theme.colors.primary,
+    borderRadius: "0.25em",
+    width: "100",
+    marginBottom: "0.5em"
   },
   avatarContainer:{
     alignItems: 'center',

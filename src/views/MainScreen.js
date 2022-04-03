@@ -1,11 +1,20 @@
-import Background from '../components/Background'
-import Header from '../components/Header'
+import { Image, View, StyleSheet } from 'react-native'
 
-export default function MainScreen({ navigation }) {
+export default function MainScreen() {
 
   return (
-    <Background>
-      <Header>Bienvenido a GeSyS</Header>
-    </Background>
+    <View>
+      <Image
+        style={s.map}
+        source={require('../assets/map.png')}
+      />
+    </View>
   )
 }
+
+const s = StyleSheet.create({
+  map: {
+    width: "100vw",
+    height: "100vh"
+  }
+})

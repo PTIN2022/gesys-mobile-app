@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { Provider } from 'react-native-paper'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -11,23 +11,27 @@ import {
 } from './src/views'
 
 const Stack = createStackNavigator()
+class App extends React.Component {
 
-export default function App() {
-  return (
-    <Provider theme={theme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="LoginScreen"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          <Stack.Screen name="LoginScreen" component={LoginScreen} />
-          <Stack.Screen name="MainScreen" component={MainScreen} />
-          <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
-        </Stack.Navigator>
-      </NavigationContainer>
-      <Layout />
-    </Provider>
-  )
+  constructor(props){
+    super(props);
+    this.state = {auth: false};
+  }
+
+  render(){
+    return (
+      <Provider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
+            <Stack.Screen name="LoginScreen" component={LoginScreen} />
+            <Stack.Screen name="MainScreen" component={MainScreen} />
+            <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
+          </Stack.Navigator>
+        </NavigationContainer>
+        <Layout />
+      </Provider>
+    )
+  }
 }
+
+export default App

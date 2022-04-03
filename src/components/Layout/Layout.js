@@ -9,7 +9,6 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {menuVisible: false};
-    this.user = null
     this.toggleMenu = this.toggleMenu.bind(this);
   }
 
