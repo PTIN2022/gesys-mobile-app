@@ -9,6 +9,7 @@ import {
   LoginScreen,
   ArchivoAux,
   SignupScreen,
+  NoPassScreen,
 } from './src/views'
 
 const Stack = createStackNavigator()
@@ -28,6 +29,7 @@ class App extends React.Component {
             <Stack.Screen name="MainScreen" component={MainScreen} />
             <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
+            <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
           </Stack.Navigator>
         </NavigationContainer>
         <Layout />
