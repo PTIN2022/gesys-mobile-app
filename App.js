@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Alert, StyleSheet, Text, View, Image, TextInput, Button } from 'react-native';
 import image from './assets/Còpia de Logo1fin.png'
 
-export default function App() {
+export default function no_password() {
   return (
 
 
