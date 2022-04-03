@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { IconButton, Avatar, Badge } from 'react-native-paper';
 import { theme } from '../../core/theme';
-import {useTailwind} from 'tailwind-rn';
+
 
 
 function Header (props) {
