@@ -7,8 +7,35 @@ const INITIAL_STATE = {
   all_bookings: [ // Guardamos las reservas.
   ],
   all_stations: [ // Guardmos las electrolineras.
-  ],
-  
+    // Ponemos los datos iniciales (de momento ficticios) a la store.
+    {
+      name: "Station Vilanova Casino",
+      coordinates: {
+        latitude: 27.38,
+        longitude: 31.33
+      },
+      capacity: 31,
+      curr_ocupation: 30
+    },
+    {
+      name: "Station SuperMart",
+      coordinates: {
+        latitude: 90.38,
+        longitude: 87.33
+      },
+      capacity: 50,
+      curr_ocupation: 2
+    },
+    {
+      name: "Station Lidl Granvia",
+      coordinates: {
+        latitude: 10.1,
+        longitude: 15.12
+      },
+      capacity: 20,
+      curr_ocupation: 10
+    }
+  ]
 };
 
 const gesysReducer = (state = INITIAL_STATE, action) => {
