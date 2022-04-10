@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 import React from 'react'
 import { SafeAreaView } from "react-native";
 import { Provider } from 'react-native-paper'
-=======
 import React, {useState} from 'react'
 import { Provider as Provider } from 'react-native-paper'
->>>>>>> 0dc8c51 (Set Redux provider and store in main App)
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { theme } from './src/core/theme'
@@ -36,20 +33,19 @@ class App extends React.Component {
   render(){
     return(
       <ReduxProvider store={store}>
-        <SafeAreaView style={SafeArea.AndroidSafeArea}>
-          <Provider theme={theme}>
-            <NavigationContainer >
-              <Layout />
-              <Stack.Navigator  initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
-                <Stack.Screen name="LoginScreen" component={LoginScreen} />
-                <Stack.Screen name="MainScreen" component={MainScreen} />
-                <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
-                <Stack.Screen name="SignupScreen" component={SignupScreen} />
-                <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </Provider>
-        </SafeAreaView>
+        <Provider theme={theme}>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="StationsList" screenOptions={{headerShown: false}}>
+              <Stack.Screen name="LoginScreen" component={LoginScreen} />
+              <Stack.Screen name="MainScreen" component={MainScreen} />
+              <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
+              <Stack.Screen name="SignupScreen" component={SignupScreen} />
+              <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
+              <Stack.Screen name="StationsList" component={Stations} />
+            </Stack.Navigator>
+          </NavigationContainer>
+          <Layout />
+        </Provider>
       </ReduxProvider>
     )
   }

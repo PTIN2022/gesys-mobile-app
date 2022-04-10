@@ -16,7 +16,7 @@ export default class ElectrolineraCard extends react.Component{
             <Card.Title
                 style={{marginTop: '4rem'}}
                 title={this.props.nombre}
-                subtitle={this.props.detalle}
+                subtitle={this.props.capacity}
                 left={(props) => <Avatar.Icon {...props} icon="car-electric" />}
                 right={(props) => <IconButton {...props} icon="arrow-right" onPress={() => {}} />}
             />

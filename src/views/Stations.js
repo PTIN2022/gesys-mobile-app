@@ -1,7 +1,7 @@
 import { Image, View, StyleSheet } from 'react-native'
 import ElectrolineraCard from '../components/ElectrolineraCard'
 
-export default function MainScreen() {
+export default function Stations() {
 
   return (
     <View>
@@ -9,10 +9,3 @@ export default function MainScreen() {
     </View>
   )
 }
-
-const s = StyleSheet.create({
-  map: {
-    width: "100%",
-    height: "100%"
-  }
-})
