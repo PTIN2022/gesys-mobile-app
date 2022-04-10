@@ -9,6 +9,7 @@ const INITIAL_STATE = {
   all_stations: [ // Guardmos las electrolineras.
     // Ponemos los datos iniciales (de momento ficticios) a la store.
     {
+      id: 1,
       name: "Station Vilanova Casino",
       coordinates: {
         latitude: 27.38,
@@ -18,6 +19,7 @@ const INITIAL_STATE = {
       curr_ocupation: 30
     },
     {
+      id: 2,
       name: "Station SuperMart",
       coordinates: {
         latitude: 90.38,
@@ -27,6 +29,7 @@ const INITIAL_STATE = {
       curr_ocupation: 2
     },
     {
+      id: 3,
       name: "Station Lidl Granvia",
       coordinates: {
         latitude: 10.1,
@@ -70,6 +73,4 @@ const gesysReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default combineReducers({
-  gesys: gesysReducer
-});
+export default gesysReducer;
