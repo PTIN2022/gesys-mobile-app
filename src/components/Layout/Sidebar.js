@@ -4,11 +4,14 @@ import { Menu, Avatar } from 'react-native-paper';
 import {theme} from '../../core/theme'
 class Sidebar extends React.Component {
 
+  //El sidebar es un componente del layout de la app.
+  //Permite la nevegacion por las distintas pantallas de configuracion de la app.
+
   constructor(props) {
     super(props);
   }
   
-  navigate(view){
+  navigate(view){ // Esta funcion se accion al apretar en los distintos botones de navegacion presentes en el sidebar.
     this.props.toggleMenu()
     console.log(view)
   }

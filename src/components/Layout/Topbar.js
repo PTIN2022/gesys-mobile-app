@@ -7,6 +7,10 @@ import { theme } from '../../core/theme';
 
 function Header (props) {
 
+    //El header es parte del layout de la app.
+    //Esta compuesto por dos botones (control de sidebar y notificaciones) y un output
+    //del usuario autenticado.
+
         return (
             <View style={s.header}>
                     <IconButton 

@@ -5,14 +5,19 @@ import Topbar from './Topbar';
 
 
 class Layout extends React.Component {
+  //El layout es un componente que envuelve el contenido de la app.
+  //Esta compuesto por el header (cabecera) y un sidebar (menu lateral).
 
   constructor(props) {
     super(props);
-    this.state = {menuVisible: false};
-    this.toggleMenu = this.toggleMenu.bind(this);
+    this.state = {
+      menuVisible: false //Variable que controla estado del menu lateral. False: Escondido, True: Visible
+    }; 
+    this.toggleMenu = this.toggleMenu.bind(this); //Funcion que modifica el estado del componente layout.
   }
 
   toggleMenu = ()=> {this.setState({menuVisible: !this.state.menuVisible})}
+  //Esta funcion se accion desde los subcomponentes del layout. Se encarga de esconder y mostrar el sidebar (menu lateral).
   
   render() {
     return (
