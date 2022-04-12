@@ -31,8 +31,9 @@ class App extends React.Component {
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
           </Stack.Navigator>
+          <Layout />
         </NavigationContainer>
-        <Layout />
+        
       </Provider>
     )
   }
