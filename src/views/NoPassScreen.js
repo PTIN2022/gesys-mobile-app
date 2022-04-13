@@ -6,10 +6,13 @@ import TextInput from '../components/TextInput';
 import { emailValidator } from '../helpers/emailValidator'
 import { useState } from 'react';
 
-export default function App({navigation}) {
+
+//Esta función exporta la pantalla de NoPassScreen para poder utilizarla como una view.
+export default function NoPassScreen({navigation}) {
 
   const [email, setEmail] = useState({ value: 'example@example.com', error: '' })
 
+  //Establecemos el aspecto que tendrá la pantalla
   return (
 
     <Background>
@@ -31,7 +34,7 @@ export default function App({navigation}) {
       />
       <StatusBar style="auto" />
       <Button mode="contained" onPress={()=>{
-        const emailError = emailValidator(email.value)
+        const emailError = emailValidator(email.value) //Comprobamos si el correo introducido por el usuario es válido
         if (emailError){
           setEmail({ ...email, error: emailError })
           return

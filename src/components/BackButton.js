@@ -2,6 +2,8 @@ import React from 'react'
 import { TouchableOpacity, Image, StyleSheet } from 'react-native'
 import { getStatusBarHeight } from 'react-native-status-bar-height'
 
+//Esta funcion exporta el backbutton para poder integrarlo en las diferentes views.
+//La función de este es navegar por las pantallas de tal forma que, al pulsar el botón, iremos a la pantalla previamente vista.
 export default function BackButton({ goBack }) {
   return (
     <TouchableOpacity onPress={goBack} style={styles.container}>
@@ -13,6 +15,7 @@ export default function BackButton({ goBack }) {
   )
 }
 
+//Definimos el estilo del elemento
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',

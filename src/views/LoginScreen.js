@@ -11,21 +11,23 @@ import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 
 
+//Esta función exporta la pantalla de LogIn para poder utilizarla como una view.
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState({ value: 'example@example.com', error: '' })
-  const [password, setPassword] = useState({ value: 'Secret!2022', error: '' })
+  const [email, setEmail] = useState({ value: 'example@example.com', error: '' }) //Ponemos unos valores de ejemplo para el correo
+  const [password, setPassword] = useState({ value: 'Secret!2022', error: '' }) //Ponemos unos valores de ejemplo para la contrasña
 
   const onLoginPressed = () => {
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError) {
+    const emailError = emailValidator(email.value) //Comprobamos que el correo introducido sea válido
+    const passwordError = passwordValidator(password.value) //Comprobamos que la contraseña introducida sea válida
+    if (emailError || passwordError) { 
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
       return
     }
-    navigation.navigate('MainScreen')
+    navigation.navigate('MainScreen') //Si tanto el correo como la contraseña son válidos, navegamos al mainscreen
   }
 
+  //Establecemos el aspecto que tendrá la pantalla
   return (
     <Background>
       <Logo />
@@ -94,6 +96,7 @@ export default function LoginScreen({ navigation }) {
   )
 }
 
+//Establecemos los diferentes estilos que tiene esta view
 const styles = StyleSheet.create({
   forgotPassword: {
     width: '100%',

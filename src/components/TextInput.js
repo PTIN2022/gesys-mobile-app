@@ -3,6 +3,7 @@ import { View, StyleSheet, Text } from 'react-native'
 import { TextInput as Input } from 'react-native-paper'
 import { theme } from '../core/theme'
 
+//Esta función exporta el elemento para introducir texto para poder utilizarla en las pantallas.
 export default function TextInput({ errorText, description, ...props }) {
   return (
     <View style={styles.container}>
@@ -21,6 +22,7 @@ export default function TextInput({ errorText, description, ...props }) {
   )
 }
 
+//Establecemos el estilo del text input.
 const styles = StyleSheet.create({
   container: {
     width: '100%',
