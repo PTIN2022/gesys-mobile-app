@@ -13,7 +13,8 @@ import { passwordValidator } from '../helpers/passwordValidator'
 import { nameValidator } from '../helpers/nameValidator'
 import { apellidoValidator } from '../helpers/apellidoValidator'
 
-
+//Hacemos uso de los helpers para validar los datos introducidos por el usuario
+//Para eso exportamos la funcion SingupScreen que hará validacion de todos los apartados en su pantalla
 export default function SignupScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
   const [apellido, setApellido] = useState({ value: '', error: '' })
@@ -37,7 +38,7 @@ export default function SignupScreen({ navigation }) {
       routes: [{ name: 'Dashboard' }],
     })
   }
-
+//Comienza la pagina en si
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
@@ -46,6 +47,7 @@ export default function SignupScreen({ navigation }) {
       <TextInput
         label="Nombre"
         returnKeyType="next"
+        //Usamos el helper para validar
         value={name.value}
         onChangeText={(text) => setName({ value: text, error: '' })}
         error={!!name.error}
@@ -54,6 +56,7 @@ export default function SignupScreen({ navigation }) {
       <TextInput
         label="Apellido"
         returnKeyType="next"
+        //Usamos el helper para validar
         value={apellido.value}
         onChangeText={(text) => setApellido({ value: text, error: '' })}
         error={!!apellido.error}
@@ -62,6 +65,7 @@ export default function SignupScreen({ navigation }) {
       <TextInput
         label="Email"
         returnKeyType="next"
+        //Usamos el helper para validar
         value={email.value}
         onChangeText={(text) => setEmail({ value: text, error: '' })}
         error={!!email.error}
@@ -74,6 +78,7 @@ export default function SignupScreen({ navigation }) {
       <TextInput
         label="Password"
         returnKeyType="done"
+        //Usamos el helper para validar
         value={password.value}
         onChangeText={(text) => setPassword({ value: text, error: '' })}
         error={!!password.error}
@@ -82,6 +87,7 @@ export default function SignupScreen({ navigation }) {
       />
       <Button
         mode="contained"
+        //Boton para activar los helpers, en caso de error nos resaltará los campos erroneos
         onPress={onSignUpPressed}
         style={{ marginTop: 24 }}
       >
