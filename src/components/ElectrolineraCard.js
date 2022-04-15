@@ -1,28 +1,23 @@
 import * as React from 'react';
-import react from 'react';
 import { Avatar, Card, IconButton } from 'react-native-paper';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
+import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 
-export default class ElectrolineraCard extends react.Component{
-    constructor(props){
-        super(props);
-        this.name = this.props.name;
-        this.id = this.props.id; // Guardamos el ID de la estación
-        this.coordinates = {
-            latitude: this.props.latitude, 
-            longitude: this.props.longitude
-        };
-        this.capacity = this.props.capacity;
-        this.curr_ocupation = this.props.curr_ocupation;
-    }
 
-    render(){
-        return(
+export default function ElectrolineraCard (props){
+    const [visible, setVisible] = React.useState(true);
+    const showDialog = () => props.openModal();
+    const hideDialog = () => setVisible(false);
+
+    return(
+        <View>
             <Card.Title
-                title={this.name}
-                subtitle={this.curr_ocupation + "/" + this.capacity}
+                title={props.name}
+                subtitle={props.curr_ocupation + "/" + props.capacity}
                 left={(props) => <Avatar.Icon {...props} icon="car-electric" />}
-                right={(props) => <IconButton {...props} icon="arrow-right" onPress={() => {}} />}
+                right={(props) => <IconButton {...props} icon="arrow-right" onPress={() => {showDialog()}} />}
             />
-        );
-    };
+        </View>
+    );
 }
