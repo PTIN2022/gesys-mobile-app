@@ -22,8 +22,9 @@ class Layout extends React.Component {
   render() {
     return (
         <View>
-          <Topbar menuVisible={this.state.menuVisible} toggleMenu={this.toggleMenu}/>
           <Sidebar menuVisible={this.state.menuVisible} toggleMenu={this.toggleMenu}/>
+          <Topbar menuVisible={this.state.menuVisible} toggleMenu={this.toggleMenu}/>
+          
         </View>      
     );
   }
