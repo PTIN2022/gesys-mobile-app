@@ -44,48 +44,42 @@ const s = StyleSheet.create({
     header: {
         display: "flex",
         flexDirection: "row",
-        width: '100vw',
-        height: '4rem',
-        position: 'fixed',
-        top: "0",
+        width: "100%",
+        height: 60,
         backgroundColor: "#fff",
-        paddingHorizontal: "0.5em",
-        opacity: "0.95"
+        color: "black",
+        alignItems: "center",
+        paddingHorizontal: 10
     },
     headerText: {
-        fontWeight: '800',
+        fontWeight: '700',
         fontSize: 20,
         color: theme.colors.primary,
-        marginVertical: "auto",
-        marginHorizontal: "auto"
     },
     iconBtn: {
-        marginVertical: "auto",
         backgroundColor: theme.colors.primary,
-        borderRadius: "0.25em"
+        borderRadius: 5
     },
     avatarContainer: {
         display: "flex",
         flexDirection: "row",
-        marginVertical: "auto",
-        marginLeft: "auto"
+        marginLeft: "auto",
+        alignItems: "center"
     },
     username:{
-        marginVertical: "auto",
-        marginRight: "0.25em",
+        marginRight: 0.25,
         color: theme.colors.primary,
-        fontWeight: 700,
+        fontWeight: "700",
         fontSize: 20
     },
     bellBadge: {
-        content: "100",
         position: "absolute",
         backgroundColor: "#00e39b",
-        top: "0.85rem",
-        left: "1.75rem",
-        borderRadius: "50%",
+        top: 0.85,
+        left: 1.75,
+        borderRadius: 25,
         color: "white",
-        fontWeight: 700,
+        fontWeight: "700",
         fontSize: 16,
     }
 
