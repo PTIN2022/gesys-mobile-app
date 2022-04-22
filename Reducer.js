@@ -6,8 +6,16 @@ const INITIAL_STATE = {
   ],
   all_bookings: [ // Guardamos las reservas.
     {
-      id: 1,
+      id: 1, // es el id de reserva. No el de la electrolinera.
       name: "Station Vilanova Casino",
+      date: "02/05/2022 16:50",
+      status: 'Activa'
+    },
+    {
+      id: 1, // es el id de reserva. No el de la electrolinera.
+      name: "Station SuperMart",
+      date: "20/04/2022 8:30",
+      status: 'Terminada' // Puede ser una diferencia de fechas realmente.
     }
   ],
   all_stations: [ // Guardmos las electrolineras.
@@ -20,7 +28,8 @@ const INITIAL_STATE = {
         longitude: 31.33
       },
       capacity: 31,
-      curr_ocupation: 30
+      curr_ocupation: 30,
+      slots: ["10:30"]
     },
     {
       id: 2,
@@ -30,7 +39,8 @@ const INITIAL_STATE = {
         longitude: 87.33
       },
       capacity: 50,
-      curr_ocupation: 2
+      curr_ocupation: 2,
+      slots: ["10:30"]
     },
     {
       id: 3,
@@ -40,7 +50,8 @@ const INITIAL_STATE = {
         longitude: 15.12
       },
       capacity: 20,
-      curr_ocupation: 10
+      curr_ocupation: 10,
+      slots: ["12:30"]
     }
   ]
 };

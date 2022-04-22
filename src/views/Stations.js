@@ -2,7 +2,7 @@ import { Image, View, StyleSheet } from 'react-native'
 import ElectrolineraCard from '../components/ElectrolineraCard'
 import { connect } from 'react-redux';
 import React from 'react';
-import { Button, Paragraph, Dialog, Portal, Snackbar  } from 'react-native-paper';
+import { Button, Paragraph, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { addBooking } from '../../Actions';
 
@@ -29,14 +29,19 @@ class Stations extends React.Component{
             this.setState({loading: false, visible: false, bookingSuccess: true})
         }, 2000);
         //this.props.addBooking({id: idStation, name: nameStation});
-        this.props.addBooking({id: idStation, name:nameStation});
+        this.props.addBooking({
+            id: idStation, 
+            name: nameStation, 
+            date: Date(), 
+            status: 'Activa',
+        })
     }
 
 
     // Para pintar por pantalla.
     render(){
         return (
-            <View style={{marginTop: '4rem'}}>
+            <View>
                 {this.props.all_stations.map((item) => {
                     // Iteramos las estaciones que tenemos cargadas en el store.
                     return (
@@ -49,12 +54,13 @@ class Stations extends React.Component{
                                 longitude={item.coordinates.longitude}
                                 latitude={item.coordinates.latitude}
                                 openModal={this.toggleDialog}
+                                firstSlot={item.slots[0]}
                             />
                             <Portal>
                                 <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                                     <Dialog.Title>Reserva</Dialog.Title>
                                     <Dialog.Content>
-                                    <Paragraph>¿Hacer la reserva para la estación {item.name}?</Paragraph>
+                                    <Paragraph>¿Hacer la reserva para la estación {item.name} a las {item.slots[0]}?</Paragraph>
                                     </Dialog.Content>
                                     <Dialog.Actions>
                                         <Button loading={this.state.loading} onPress={() => this.book(item.id, item.name)}>
@@ -64,7 +70,7 @@ class Stations extends React.Component{
                                     </Dialog.Actions>
                                 </Dialog>
                             </Portal>
-
+                            <Divider />
                         </View>
                     );
                 })}

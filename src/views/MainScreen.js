@@ -1,11 +1,13 @@
 import { Image, View, StyleSheet } from 'react-native'
-import ElectrolineraCard from '../components/ElectrolineraCard'
 
 export default function MainScreen() {
 
   return (
     <View>
-      <ElectrolineraCard name="abdullah" capacity="30" />
+      <Image
+        style={s.map}
+        source={require('../assets/map.png')}
+      />
     </View>
   )
 }
