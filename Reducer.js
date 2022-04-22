@@ -5,6 +5,10 @@ const INITIAL_STATE = {
   all_vehicles: [ // Guardamos los vehículos.
   ],
   all_bookings: [ // Guardamos las reservas.
+    {
+      id: 1,
+      name: "Station Vilanova Casino",
+    }
   ],
   all_stations: [ // Guardmos las electrolineras.
     // Ponemos los datos iniciales (de momento ficticios) a la store.
@@ -62,11 +66,10 @@ const gesysReducer = (state = INITIAL_STATE, action) => {
       return { current, all_vehicles };
 
     case 'ADD_BOOKING': // Definimos lo que hacemos con la acción.
-      const { all_bookings } = state;
-      // Insertamos en la primera posición.
-      const addedBooking = all_bookings.splice(action.payload, 1);
-      current.push(addedBooking);
-      return { current, all_bookings };
+      return {
+        ...state,
+        all_bookings: state.all_bookings.concat(action.payload)
+      }
 
     default:
       return state

@@ -3,7 +3,8 @@ import ElectrolineraCard from '../components/ElectrolineraCard'
 import { connect } from 'react-redux';
 import React from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar  } from 'react-native-paper';
-
+import { bindActionCreators } from 'redux';
+import { addBooking } from '../../Actions';
 
 class Stations extends React.Component{
     constructor(props){
@@ -12,6 +13,8 @@ class Stations extends React.Component{
             visible: false,
             loading: false,
             snackBar: false,
+            bookingSuccess: false,
+            bookingError: false,
         }
     }
 
@@ -19,12 +22,14 @@ class Stations extends React.Component{
         this.setState({visible: true})
     }
 
-    load = () => {
+    book = (idStation, nameStation) => {
         this.setState({loading: true})
         // Just a simulation. It would really be a API call.
         setTimeout(() => {
-            this.setState({loading: false, visible: false, snackBar: true})
+            this.setState({loading: false, visible: false, bookingSuccess: true})
         }, 2000);
+        //this.props.addBooking({id: idStation, name: nameStation});
+        this.props.addBooking({id: idStation, name:nameStation});
     }
 
 
@@ -43,16 +48,19 @@ class Stations extends React.Component{
                                 curr_ocupation={item.curr_ocupation}
                                 longitude={item.coordinates.longitude}
                                 latitude={item.coordinates.latitude}
-                                openModal={this.toggleDialog} />
+                                openModal={this.toggleDialog}
+                            />
                             <Portal>
                                 <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                                     <Dialog.Title>Reserva</Dialog.Title>
                                     <Dialog.Content>
-                                    <Paragraph>¿Hacer la reserva?</Paragraph>
+                                    <Paragraph>¿Hacer la reserva para la estación {item.name}?</Paragraph>
                                     </Dialog.Content>
                                     <Dialog.Actions>
-                                        <Button loading={this.state.loading} onPress={this.load}>Confirmar</Button>
-                                        <Button color='red' onPress={this.toggleDialog}>Cancelar</Button>
+                                        <Button loading={this.state.loading} onPress={() => this.book(item.id, item.name)}>
+                                            {this.state.loading === false ? "Confirmar" : null}
+                                        </Button>
+                                        <Button color='red' onPress={() => this.setState({visible: false})}>Cancelar</Button>
                                     </Dialog.Actions>
                                 </Dialog>
                             </Portal>
@@ -62,9 +70,16 @@ class Stations extends React.Component{
                 })}
                 <View style={styles.container}>
                     <Snackbar
-                        visible={this.state.snackBar}
-                        onDismiss={() => this.setState({snackBar: false})}>
+                        style={{backgroundColor: 'green', color:'white'}}
+                        visible={this.state.bookingSuccess}
+                        onDismiss={() => this.setState({bookingSuccess: false})}>
                         Reserva hecha.
+                    </Snackbar>
+                    <Snackbar
+                        style={{backgroundColor: 'red', color: 'white'}}
+                        visible={this.state.bookingError}
+                        onDismiss={() => this.setState({bookingError: false})}>
+                        Ha habido un error al hacer la reserva.
                     </Snackbar>
                 </View>
             </View>
@@ -74,8 +89,7 @@ class Stations extends React.Component{
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      justifyContent: 'space-between',
+      marginTop: '50vh',
     },
   });
   
@@ -86,4 +100,10 @@ const mapStateToProps = (state) => {
     return { all_stations };
 };
 
-export default connect(mapStateToProps)(Stations);
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        addBooking,
+    }, dispatch)
+);
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Stations);
