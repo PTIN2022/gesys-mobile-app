@@ -52,18 +52,16 @@ const gesysReducer = (state = INITIAL_STATE, action) => {
 
   switch (action.type) {
     case 'ADD_STATION': // Definimos lo que hacemos con la acción.
-      const { all_stations } = state;
-      // Insertamos en la primera posición.
-      const addedStation = all_stations.splice(action.payload, 1);
-      current.push(addedStation);
-      return { current, all_stations };
+      return {
+        ...state,
+        all_stations: state.all_stations.concat(action.payload)
+      }
 
     case 'ADD_VEHICLE': // Definimos lo que hacemos con la acción.
-      const { all_vehicles } = state;
-      // Insertamos en la primera posición.
-      const addedVehicle = all_vehicles.splice(action.payload, 1);
-      current.push(addedVehicle);
-      return { current, all_vehicles };
+      return {
+        ...state,
+        all_vehicles: state.all_vehicles.concat(action.payload)
+      }
 
     case 'ADD_BOOKING': // Definimos lo que hacemos con la acción.
       return {
