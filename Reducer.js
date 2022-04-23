@@ -20,7 +20,7 @@ const INITIAL_STATE = {
       status: 'Activa'
     },
     {
-      id: 1, // es el id de reserva. No el de la electrolinera.
+      id: 2, // es el id de reserva. No el de la electrolinera.
       name: "Station SuperMart",
       date: "20/04/2022 8:30",
       status: 'Terminada' // Puede ser una diferencia de fechas realmente.

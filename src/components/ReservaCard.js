@@ -8,6 +8,9 @@ import { NavigationHelpersContext } from '@react-navigation/native';
 import { theme } from '../core/theme'
 
 const TextReserva = (props) => {
+  const [visible, setVisible] = React.useState(true);
+  const showDialog = () => props.openModal();
+  const hideDialog = () => setVisible(false);
   //let state = props.status;
   //console.log(state);
   if(props.status == 'Activa'){
@@ -15,28 +18,32 @@ const TextReserva = (props) => {
       
       <View>
         <Text style={{color:'black'}}> 
-          Estado de la reserva:
-           <Text style={{backgroundColor: 'green', color:'white',textAlign:'right'}}> 
-            {props.status} 
-          </Text>
+            Estado de la reserva:      
+            <Text style={{backgroundColor: 'green', color:'white', marginLeft: '20%'}}> {props.status} </Text>
         </Text>
-       
-        
-        <Text style={{color:'black'}}>{"Fecha de reserva: "+props.date}</Text>
-        
-        <View style={{ flexDirection: "row" }}>
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { onCancelPress }}>
-            <Text style={{ alignSelf: 'center', color: 'white', padding: 5 }}>Cancelar</Text>
+
+        <Text style={{color:'black'}}>
+          Fecha de reserva:
+          <Text style={{marginLeft: '27%'}}>
+            {props.date}
+          </Text>
+         
+        </Text>
+
+        <View style={{ flexDirection: "row" }}> 
+          <View style={{ flex: 1, marginLeft: '25%', marginRight:'20%'}}>
+            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { showDialog() }}>
+            <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Cancelar</Text>
             </TouchableOpacity>
           </View>
           
-          <View style={{ flex: 1}}>
-            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { onSavePress }}>
-            <Text style={{ alignSelf: 'center', color: 'white', padding: 5 }}>Detalles</Text>
+          <View style={{ flex: 1, marginLeft: '65%', marginRight:'10%'}}>
+            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { showDialog() }}>
+            <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
             </TouchableOpacity>
           </View>
         </View>
+
       </View>
     )
   } else {
@@ -44,21 +51,27 @@ const TextReserva = (props) => {
       <View>
         <Text style={{color:'black'}}> 
             Estado de la reserva:      
-            <Text style={{backgroundColor: 'orange', color:'white'}}> {props.status} </Text>
+            <Text style={{backgroundColor: 'orange', color:'white', marginLeft: '20%'}}> {props.status} </Text>
         </Text>
 
-        <Text style={{color:'black'}}>{"Fecha de reserva: "+props.date}</Text>
+        <Text style={{color:'black'}}>
+          Fecha de reserva:
+          <Text style={{marginLeft: '27%'}}>
+            {props.date}
+          </Text>
+         
+        </Text>
 
         <View style={{ flexDirection: "row" }}> 
-          <View style={{ flex: 1 }}>
-            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { onCancelPress }}>
-            <Text style={{ alignSelf: 'center', color: 'white', padding: 5 }}>Cancelar</Text>
+          <View style={{ flex: 1, marginLeft: '25%', marginRight:'20%'}}>
+            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { showDialog() }}>
+            <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Cancelar</Text>
             </TouchableOpacity>
           </View>
           
-          <View style={{ flex: 1}}>
-            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { onSavePress }}>
-            <Text style={{ alignSelf: 'center', color: 'white', padding: 5 }}>Detalle</Text>
+          <View style={{ flex: 1, marginLeft: '65%', marginRight:'10%'}}>
+            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { showDialog() }}>
+            <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -70,9 +83,7 @@ const TextReserva = (props) => {
 }
 
 export default function ReservaCard (props){
-  const [visible, setVisible] = React.useState(true);
-  const showDialog = () => props.openModal();
-  const hideDialog = () => setVisible(false);
+  
 
   return(
     <View>
