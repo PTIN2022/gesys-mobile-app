@@ -5,6 +5,7 @@ import { Button, Paragraph, Dialog, Portal, Snackbar, Divider } from 'react-nati
 import { bindActionCreators } from 'redux';
 import { addBooking } from '../../Actions';
 import ReservaCard from '../components/ReservaCard';
+import { Avatar } from "react-native-paper";
 
 class Bookings extends React.Component{
     constructor(props){
@@ -48,6 +49,9 @@ class Bookings extends React.Component{
                                 name={item.name}
                                 date={item.date}
                                 status={item.status}
+                                import_due={item.import_due}
+                                amount_paid={item.amount_paid}
+                                time={item.time}
                                 openModal={this.toggleDialog}
                             />
                              
@@ -61,35 +65,71 @@ class Bookings extends React.Component{
                                     </Dialog.Content>
 
                                     <Dialog.Actions>
-                                        <Button  onPress={() => this.setState({visible: false})}>No quiero cancelar</Button>
-                                        <Button color='red' loading={this.state.loading} onPress={() => (item.id, item.name)}>
+                                        <Button color='red' onPress={() => this.setState({visible: false})}>Cerrar</Button>
+                                        <Button  loading={this.state.loading} onPress={() => (item.id, item.name)}>
                                             {this.state.loading === false ? "Cancelar" : null}
                                         </Button>
                                     </Dialog.Actions>
+                                </Dialog>
 
-                                    <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
+                                <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                                     <Dialog.Title>
                                         Detalles Reserva: {"\n"}
-                                        <Dialog.Title style={{fontWeight: 'bold'}}> 
-                                            {item.name} 
-                                        </Dialog.Title>
+                                        <Avatar.Icon size={100} icon="map" />
                                     </Dialog.Title>
 
                                     <Dialog.Content>
-                                        <Paragraph> Identificador Reserva: {item.id}</Paragraph>
-                                        <Paragraph> Dia Reserva: {item.date}</Paragraph>
-                                        <Paragraph> Estado: {item.status}</Paragraph>
+                                        <Paragraph> 
+                                            Numero de reserva: 
+                                            <Paragraph style={{marginLeft:"5%"}}>
+                                                {item.id}
+                                            </Paragraph>
+                                        </Paragraph>
+                                        <Paragraph> 
+                                            Estacion: 
+                                            <Paragraph style={{marginLeft:"15%"}}>
+                                                {item.name}
+                                            </Paragraph>
+                                        </Paragraph>
+                                        <Paragraph> Vehículo:</Paragraph>
+                                        <Paragraph> Fecha expedicion:</Paragraph>
+                                        <Paragraph> 
+                                            Fecha de reserva: 
+                                            <Paragraph style={{marginLeft:"6%"}}>
+                                                {item.date}
+                                            </Paragraph>
+                                        </Paragraph>
+                                        <Paragraph>
+                                            Tiempo reservado:
+                                            <Paragraph style={{marginLeft:"6%"}}>
+                                                {item.time}
+                                            </Paragraph>
+                                        </Paragraph>
+                                        <Paragraph> 
+                                            Importe adeudado:
+                                            <Paragraph style={{marginLeft:"6%"}}>
+                                                {item.import_due} € 
+                                            </Paragraph>
+                                        </Paragraph>
+                                        <Paragraph> 
+                                            Importe pagado:
+                                            <Paragraph style={{marginLeft:"8%"}}>
+                                                {item.amount_paid} € 
+                                            </Paragraph>
+                                        </Paragraph>
+                                        <Paragraph> 
+                                            Estado de la reserva:
+                                            <Paragraph style={{marginLeft:"3%"}}>
+                                                {item.status}
+                                            </Paragraph>
+                                        </Paragraph>
                                     </Dialog.Content>
 
                                     <Dialog.Actions>
-                                        <Button  onPress={() => this.setState({visible: false})}>Cancelar</Button>
-                                        
+                                        <Button color='red' onPress={() => this.setState({visible: false})}>Cerrar</Button>
+                                        <Button backgroundColor="blue" onPress={() => this.setState({visible: false})}>Imprimir factura</Button>
                                     </Dialog.Actions>
-
                                 </Dialog>
-
-                                </Dialog>
-
                                 
                             </Portal>
 
