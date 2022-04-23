@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Image, View, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import React from 'react';
@@ -56,11 +57,36 @@ class Bookings extends React.Component{
                     );
                 })}
 
+=======
+import { View } from 'react-native'
+import { connect } from 'react-redux';
+import React from 'react';
+import { bindActionCreators } from 'redux';
+// import { addBooking } from '../../Actions';
+
+class Booking extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+
+        }
+    }
+
+    // Para pintar por pantalla.
+    render(){
+        return (
+            <View>
+                {this.props.all_bookings.map((item) => {
+                    // Iteramos las estaciones que tenemos cargadas en el store.
+                    return (null);
+                })}
+>>>>>>> main
             </View>
         )
     }
 }
 
+<<<<<<< HEAD
 const styles = StyleSheet.create({
     box: {
         flex: 1,
@@ -68,6 +94,9 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
     }
 });
+=======
+
+>>>>>>> main
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = (state) => {
     const { all_bookings } = state;
@@ -79,5 +108,11 @@ const mapDispatchToProps = dispatch => (
         addBooking,
     }, dispatch)
 );
+<<<<<<< HEAD
   
 export default connect(mapStateToProps, mapDispatchToProps)(Bookings);
+=======
+
+//export default connect(mapStateToProps, mapDispatchToProps)(Booking);
+export default connect(mapStateToProps)(Booking);
+>>>>>>> main

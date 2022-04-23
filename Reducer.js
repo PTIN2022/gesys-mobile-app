@@ -3,6 +3,14 @@ import { combineReducers } from 'redux';
 const INITIAL_STATE = {
   current: [],
   all_vehicles: [ // Guardamos los vehículos.
+    {
+      plate: '1279FJD', // es el identificador del vehículo
+      model: 'Raspi 10x'
+    },
+    {
+      plate: '9892JJJ',
+      model: 'Tesla model S'
+    }
   ],
   all_bookings: [ // Guardamos las reservas.
     {
