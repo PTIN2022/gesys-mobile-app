@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { theme } from './src/core/theme'
 import SafeArea from "./SafeArea";
-import Topbar from './src/components/Layout/Topbar'
 import 'react-native-gesture-handler';
 import {
   MainScreen,
@@ -13,6 +12,7 @@ import {
   ArchivoAux,
   SignupScreen,
   NoPassScreen,
+  StationDetail,
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 
@@ -30,12 +30,13 @@ class App extends React.Component {
         <Provider theme={theme}>
           <NavigationContainer >
             <Layout />
-            <Stack.Navigator  initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
+            <Stack.Navigator  initialRouteName="StationDetail" screenOptions={{headerShown: false}}>
               <Stack.Screen name="LoginScreen" component={LoginScreen} />
               <Stack.Screen name="MainScreen" component={MainScreen} />
               <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
               <Stack.Screen name="SignupScreen" component={SignupScreen} />
               <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
+              <Stack.Screen name="StationDetail" component={StationDetail} />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

@@ -40,7 +40,7 @@ function Sidebar(props){
 const s = StyleSheet.create({
   sidebarVisible:{
     position: "absolute",
-    marginTop: 60,
+    marginTop: 75,
     paddingVertical: 25,
     zIndex: 10,
     backgroundColor: theme.colors.primary,
