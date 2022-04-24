@@ -24,10 +24,9 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    //navigation.navigate('StationList')
-    //navigation.navigate('BookingList')
-    navigation.navigate('MainScreen') //Si tanto el correo como la contraseña son válidos, navegamos al mainscreen
-    //navigation.navigate('StationDetail')
+    // navigation.navigate('StationList')
+    //navigation.navigate('MainScreen') //Si tanto el correo como la contraseña son válidos, navegamos al mainscreen
+    navigation.navigate('Bookings')
   }
 
   //Establecemos el aspecto que tendrá la pantalla
