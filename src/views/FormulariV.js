@@ -13,7 +13,7 @@ import { useState } from 'react'
 export default function FormulariV({ navigation }) {
 
     return (
-        <Background>
+        
             <View>
                 <Text style={styles.text} >Model:</Text>
                 <TextInput
@@ -32,7 +32,7 @@ export default function FormulariV({ navigation }) {
                 </TouchableOpacity>
 
 
-            </View></Background>
+            </View>
     )
 }
 
