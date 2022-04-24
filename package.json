@@ -10,7 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@react-native-community/datetimepicker": "^6.1.2",
+    "@react-native-community/datetimepicker": "^4.0.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/stack": "^6.1.1",
     "expo": "~44.0.0",
@@ -21,16 +21,17 @@
     "react-native": "0.64.3",
     "react-native-date-picker": "^4.2.1",
     "react-native-gesture-handler": "~2.1.0",
+    "react-native-maps": "0.29.4",
     "react-native-neat-date-picker": "^1.2.2",
     "react-native-paper": "^4.11.2",
-    "react-native-reanimated": "^2.8.0",
+    "react-native-reanimated": "~2.3.1",
+    "react-native-star-rating": "^1.1.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
     "react-redux": "^7.2.8",
     "redux": "^4.1.2",
-    "react-native-star-rating": "^1.1.0",
-    "react-native-maps": "0.29.4"
+    "yarn": "^1.22.18"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
