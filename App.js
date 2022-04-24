@@ -13,14 +13,13 @@ import {
   ArchivoAux,
   SignupScreen,
   NoPassScreen,
+  Bookings,
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
 import gesysReducer from './Reducer';
 import Stations from './src/views/Stations';
-import Bookings from './src/views/Bookings';
-
 const store = createStore(gesysReducer);
 const Stack = createStackNavigator()
 class App extends React.Component {
@@ -37,7 +36,7 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-              <Stack.Navigator  initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
+              <Stack.Navigator  initialRouteName="BookingList" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="MainScreen" component={MainScreen} />
                 <Stack.Screen name="ArchivoAux" component={ArchivoAux} />

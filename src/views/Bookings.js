@@ -81,13 +81,13 @@ class Bookings extends React.Component{
                                     <Dialog.Content>
                                         <Paragraph> 
                                             Numero de reserva: 
-                                            <Paragraph style={{marginLeft:"5%"}}>
+                                            <Paragraph>
                                                 {item.id}
                                             </Paragraph>
                                         </Paragraph>
                                         <Paragraph> 
                                             Estacion: 
-                                            <Paragraph style={{marginLeft:"15%"}}>
+                                            <Paragraph>
                                                 {item.name}
                                             </Paragraph>
                                         </Paragraph>
@@ -95,31 +95,31 @@ class Bookings extends React.Component{
                                         <Paragraph> Fecha expedicion:</Paragraph>
                                         <Paragraph> 
                                             Fecha de reserva: 
-                                            <Paragraph style={{marginLeft:"6%"}}>
+                                            <Paragraph >
                                                 {item.date}
                                             </Paragraph>
                                         </Paragraph>
                                         <Paragraph>
                                             Tiempo reservado:
-                                            <Paragraph style={{marginLeft:"6%"}}>
+                                            <Paragraph>
                                                 {item.time}
                                             </Paragraph>
                                         </Paragraph>
                                         <Paragraph> 
                                             Importe adeudado:
-                                            <Paragraph style={{marginLeft:"6%"}}>
+                                            <Paragraph>
                                                 {item.import_due} € 
                                             </Paragraph>
                                         </Paragraph>
                                         <Paragraph> 
                                             Importe pagado:
-                                            <Paragraph style={{marginLeft:"8%"}}>
+                                            <Paragraph >
                                                 {item.amount_paid} € 
                                             </Paragraph>
                                         </Paragraph>
                                         <Paragraph> 
                                             Estado de la reserva:
-                                            <Paragraph style={{marginLeft:"3%"}}>
+                                            <Paragraph>
                                                 {item.status}
                                             </Paragraph>
                                         </Paragraph>

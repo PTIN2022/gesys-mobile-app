@@ -19,25 +19,25 @@ const TextReserva = (props) => {
       <View>
         <Text style={{color:'black'}}> 
             Estado de la reserva:      
-            <Text style={{backgroundColor: 'green', color:'white', marginLeft: '20%'}}> {props.status} </Text>
+            <Text style={{backgroundColor: 'green', color:'white'}}> {props.status} </Text>
         </Text>
 
         <Text style={{color:'black'}}>
           Fecha de reserva:
-          <Text style={{marginLeft: '27%'}}>
+          <Text>
             {props.date}
           </Text>
          
         </Text>
 
         <View style={{ flexDirection: "row" }}> 
-          <View style={{ flex: 1, marginLeft: '25%', marginRight:'20%'}}>
+          <View style={{ flex: 1}}>
             <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { showDialog() }}>
             <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Cancelar</Text>
             </TouchableOpacity>
           </View>
           
-          <View style={{ flex: 1, marginLeft: '65%', marginRight:'10%'}}>
+          <View style={{ flex: 1}}>
             <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { showDialog() }}>
             <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
             </TouchableOpacity>
@@ -51,25 +51,25 @@ const TextReserva = (props) => {
       <View>
         <Text style={{color:'black'}}> 
             Estado de la reserva:      
-            <Text style={{backgroundColor: 'orange', color:'white', marginLeft: '20%'}}> {props.status} </Text>
+            <Text style={{backgroundColor: 'orange', color:'white'}}> {props.status} </Text>
         </Text>
 
         <Text style={{color:'black'}}>
           Fecha de reserva:
-          <Text style={{marginLeft: '27%'}}>
+          <Text>
             {props.date}
           </Text>
          
         </Text>
 
         <View style={{ flexDirection: "row" }}> 
-          <View style={{ flex: 1, marginLeft: '25%', marginRight:'20%'}}>
+          <View style={{ flex: 1}}>
             <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { showDialog() }}>
             <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Cancelar</Text>
             </TouchableOpacity>
           </View>
           
-          <View style={{ flex: 1, marginLeft: '65%', marginRight:'10%'}}>
+          <View style={{ flex: 1}}>
             <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { showDialog() }}>
             <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
             </TouchableOpacity>
