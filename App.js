@@ -5,7 +5,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { theme } from './src/core/theme'
 import SafeArea from "./SafeArea";
-import Topbar from './src/components/Layout/Topbar'
 import 'react-native-gesture-handler';
 import {
   MainScreen,
@@ -13,6 +12,7 @@ import {
   ArchivoAux,
   SignupScreen,
   NoPassScreen,
+  StationDetail,
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -44,7 +44,11 @@ class App extends React.Component {
                 <Stack.Screen name="SignupScreen" component={SignupScreen} />
                 <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
                 <Stack.Screen name="StationList" component={Stations} />
+<<<<<<< HEAD
                 <Stack.Screen name="BookingList" component={Bookings} />
+=======
+                <Stack.Screen name="StationDetail" component={StationDetail} />
+>>>>>>> main
               </Stack.Navigator>
             </NavigationContainer>
           </Provider>

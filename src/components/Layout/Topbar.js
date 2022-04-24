@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { IconButton, Avatar, Badge } from 'react-native-paper';
+import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
 import { theme } from '../../core/theme';
 
 
@@ -45,11 +46,11 @@ const s = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        height: 60,
+        height: 75,
         backgroundColor: "#fff",
         color: "black",
         alignItems: "center",
-        paddingHorizontal: 10
+        paddingHorizontal: 10,
     },
     headerText: {
         fontWeight: '700',
