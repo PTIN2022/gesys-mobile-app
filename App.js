@@ -44,11 +44,9 @@ class App extends React.Component {
                 <Stack.Screen name="SignupScreen" component={SignupScreen} />
                 <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
                 <Stack.Screen name="StationList" component={Stations} />
-<<<<<<< HEAD
                 <Stack.Screen name="BookingList" component={Bookings} />
-=======
                 <Stack.Screen name="StationDetail" component={StationDetail} />
->>>>>>> main
+              
               </Stack.Navigator>
             </NavigationContainer>
           </Provider>
