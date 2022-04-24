@@ -76,7 +76,7 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.noregister}>continúa sin registrarte ❯</Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.row}>
+      <View style={styles.row2}>
         <TouchableOpacity onPress={() => navigation.replace('ArchivoAux')}>
           <Text style={styles.forgot}>About </Text>
         </TouchableOpacity>
@@ -108,6 +108,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 4,
   },
+  row2: {
+    flexDirection: 'row',
+    marginTop: -30,
+    marginBottom: 40
+  },
   info_row: {
     flexDirection: 'row',
     marginTop: 140,
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: theme.colors.link,
     textDecorationLine: 'underline',
-    marginBottom: 7,
+    marginBottom: 10,
   },
   noregister: {
     fontSize: 14,

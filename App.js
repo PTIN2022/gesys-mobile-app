@@ -38,7 +38,7 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-              <Stack.Navigator  initialRouteName="ReservaElectrolinera" screenOptions={{headerShown: false}}>
+              <Stack.Navigator  initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="MainScreen" component={MainScreen} />
                 <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
