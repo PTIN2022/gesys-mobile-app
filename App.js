@@ -13,6 +13,7 @@ import {
   ArchivoAux,
   SignupScreen,
   NoPassScreen,
+  ReservaElectrolinera,
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -37,12 +38,13 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-              <Stack.Navigator  initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
+              <Stack.Navigator  initialRouteName="ReservaElectrolinera" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="MainScreen" component={MainScreen} />
                 <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
                 <Stack.Screen name="SignupScreen" component={SignupScreen} />
                 <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
+                <Stack.Screen name="ReservaElectrolinera" component={ReservaElectrolinera} />
                 <Stack.Screen name="StationList" component={Stations} />
               </Stack.Navigator>
             </NavigationContainer>
