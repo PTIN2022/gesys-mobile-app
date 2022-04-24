@@ -26,7 +26,7 @@ export default function LoginScreen({ navigation }) {
     }
     // navigation.navigate('StationList')
     //navigation.navigate('MainScreen') //Si tanto el correo como la contraseña son válidos, navegamos al mainscreen
-    navigation.navigate('Bookings')
+    navigation.navigate('BookingList')
   }
 
   //Establecemos el aspecto que tendrá la pantalla
