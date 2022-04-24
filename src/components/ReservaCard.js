@@ -31,6 +31,7 @@ const TextReserva = (props) => {
         </Text>
 
         <View style={{ flexDirection: "row" }}> 
+          
           <View style={{ flex: 1, marginLeft: '25%', marginRight:'20%'}}>
             <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { showDialog() }}>
             <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Cancelar</Text>
@@ -42,6 +43,7 @@ const TextReserva = (props) => {
             <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
             </TouchableOpacity>
           </View>
+
         </View>
 
       </View>
@@ -62,18 +64,10 @@ const TextReserva = (props) => {
          
         </Text>
 
-        <View style={{ flexDirection: "row" }}> 
-          <View style={{ flex: 1, marginLeft: '25%', marginRight:'20%'}}>
-            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.error }} onPress={() => { showDialog() }}>
-            <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Cancelar</Text>
-            </TouchableOpacity>
-          </View>
-          
-          <View style={{ flex: 1, marginLeft: '65%', marginRight:'10%'}}>
-            <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { showDialog() }}>
-            <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={{ flex: 1,marginLeft:'118%'}}>
+          <TouchableOpacity style={{ alignSelf: 'center',backgroundColor: theme.colors.primary}} onPress={() => { showDialog() }}>
+          <Text style={{ alignSelf: 'center',color: 'white', paddingLeft: 30, paddingRight: 30, paddingBottom:3, paddingTop:3}}>Detalle</Text>
+          </TouchableOpacity>
         </View>
 
       </View>

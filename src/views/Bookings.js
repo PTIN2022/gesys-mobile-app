@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 import { addBooking } from '../../Actions';
 import ReservaCard from '../components/ReservaCard';
 import { Avatar } from "react-native-paper";
+import Background from '../components/Background';
+import { ImageBackground, KeyboardAvoidingView } from 'react-native'
 
 class Bookings extends React.Component{
     constructor(props){
@@ -39,106 +41,109 @@ class Bookings extends React.Component{
 
     render(){       //para pintar por pantalla
         return(
-            <View>
-                {this.props.all_bookings.map((item) => {
-                    return(
-                        <View key={item.id}>
-                            <Divider />
-                            <ReservaCard
-                                id={item.id}
-                                name={item.name}
-                                date={item.date}
-                                status={item.status}
-                                import_due={item.import_due}
-                                amount_paid={item.amount_paid}
-                                time={item.time}
-                                openModal={this.toggleDialog}
-                            />
-                             
-                            
-                            <Portal> 
-                                <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
-                                    <Dialog.Title>Cancelar</Dialog.Title>
-                
-                                    <Dialog.Content>
-                                        <Paragraph>¿Seguro que quieres cancelar la reserva en {item.name} de la fecha {item.date}?</Paragraph>
-                                    </Dialog.Content>
-
-                                    <Dialog.Actions>
-                                        <Button color='red' onPress={() => this.setState({visible: false})}>Cerrar</Button>
-                                        <Button  loading={this.state.loading} onPress={() => (item.id, item.name)}>
-                                            {this.state.loading === false ? "Cancelar" : null}
-                                        </Button>
-                                    </Dialog.Actions>
-                                </Dialog>
-
-                                <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
-                                    <Dialog.Title>
-                                        Detalles Reserva: {"\n"}
-                                        <Avatar.Icon size={100} icon="map" />
-                                    </Dialog.Title>
-
-                                    <Dialog.Content>
-                                        <Paragraph> 
-                                            Numero de reserva: 
-                                            <Paragraph style={{marginLeft:"5%"}}>
-                                                {item.id}
-                                            </Paragraph>
-                                        </Paragraph>
-                                        <Paragraph> 
-                                            Estacion: 
-                                            <Paragraph style={{marginLeft:"15%"}}>
-                                                {item.name}
-                                            </Paragraph>
-                                        </Paragraph>
-                                        <Paragraph> Vehículo:</Paragraph>
-                                        <Paragraph> Fecha expedicion:</Paragraph>
-                                        <Paragraph> 
-                                            Fecha de reserva: 
-                                            <Paragraph style={{marginLeft:"6%"}}>
-                                                {item.date}
-                                            </Paragraph>
-                                        </Paragraph>
-                                        <Paragraph>
-                                            Tiempo reservado:
-                                            <Paragraph style={{marginLeft:"6%"}}>
-                                                {item.time}
-                                            </Paragraph>
-                                        </Paragraph>
-                                        <Paragraph> 
-                                            Importe adeudado:
-                                            <Paragraph style={{marginLeft:"6%"}}>
-                                                {item.import_due} € 
-                                            </Paragraph>
-                                        </Paragraph>
-                                        <Paragraph> 
-                                            Importe pagado:
-                                            <Paragraph style={{marginLeft:"8%"}}>
-                                                {item.amount_paid} € 
-                                            </Paragraph>
-                                        </Paragraph>
-                                        <Paragraph> 
-                                            Estado de la reserva:
-                                            <Paragraph style={{marginLeft:"3%"}}>
-                                                {item.status}
-                                            </Paragraph>
-                                        </Paragraph>
-                                    </Dialog.Content>
-
-                                    <Dialog.Actions>
-                                        <Button color='red' onPress={() => this.setState({visible: false})}>Cerrar</Button>
-                                        <Button backgroundColor="blue" onPress={() => this.setState({visible: false})}>Imprimir factura</Button>
-                                    </Dialog.Actions>
-                                </Dialog>
+            <ImageBackground source={require('../assets/fondo_possible.png')}>
+                <View>
+                    {this.props.all_bookings.map((item) => {
+                        return(
+                            <View key={item.id}>
+                                <Divider />
+                                <ReservaCard
+                                    id={item.id}
+                                    name={item.name}
+                                    date={item.date}
+                                    status={item.status}
+                                    import_due={item.import_due}
+                                    amount_paid={item.amount_paid}
+                                    time={item.time}
+                                    openModal={this.toggleDialog}
+                                />
                                 
-                            </Portal>
+                                
+                                <Portal> 
+                                    <Dialog delete={this.state.delete} onDismiss={this.toggleDialog}>
+                                        <Dialog.Title>Cancelar</Dialog.Title>
+                    
+                                        <Dialog.Content>
+                                            <Paragraph>¿Seguro que quieres cancelar la reserva en {item.name} de la fecha {item.date}?</Paragraph>
+                                        </Dialog.Content>
 
-                            <Divider />
-                        </View>
-                    );
-                })}
+                                        <Dialog.Actions>
+                                            <Button color='red' onPress={() => this.setState({delete: false})}>Cerrar</Button>
+                                            <Button  loading={this.state.loading} onPress={() => (item.id, item.name)}>
+                                                {this.state.loading === false ? "Cancelar" : null}
+                                            </Button>
+                                        </Dialog.Actions>
+                                    </Dialog>
 
-            </View>
+                                    <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
+                                        <Dialog.Title>
+                                            Detalles Reserva: {"\n"}
+                                            <Avatar.Icon size={100} icon="map" />
+                                        </Dialog.Title>
+
+                                        <Dialog.Content>
+                                            <Paragraph> 
+                                                Numero de reserva: 
+                                                <Paragraph style={{marginLeft:"5%"}}>
+                                                    {item.id}
+                                                </Paragraph>
+                                            </Paragraph>
+                                            <Paragraph> 
+                                                Estacion: 
+                                                <Paragraph style={{marginLeft:"15%"}}>
+                                                    {item.name}
+                                                </Paragraph>
+                                            </Paragraph>
+                                            <Paragraph> Vehículo:</Paragraph>
+                                            <Paragraph> Fecha expedicion:</Paragraph>
+                                            <Paragraph> 
+                                                Fecha de reserva: 
+                                                <Paragraph style={{marginLeft:"6%"}}>
+                                                    {item.date}
+                                                </Paragraph>
+                                            </Paragraph>
+                                            <Paragraph>
+                                                Tiempo reservado:
+                                                <Paragraph style={{marginLeft:"6%"}}>
+                                                    {item.time}
+                                                </Paragraph>
+                                            </Paragraph>
+                                            <Paragraph> 
+                                                Importe adeudado:
+                                                <Paragraph style={{marginLeft:"6%"}}>
+                                                    {item.import_due} € 
+                                                </Paragraph>
+                                            </Paragraph>
+                                            <Paragraph> 
+                                                Importe pagado:
+                                                <Paragraph style={{marginLeft:"8%"}}>
+                                                    {item.amount_paid} € 
+                                                </Paragraph>
+                                            </Paragraph>
+                                            <Paragraph> 
+                                                Estado de la reserva:
+                                                <Paragraph style={{marginLeft:"3%"}}>
+                                                    {item.status}
+                                                </Paragraph>
+                                            </Paragraph>
+                                        </Dialog.Content>
+
+                                        <Dialog.Actions>
+                                            <Button color='red' onPress={() => this.setState({visible: false})}>Cerrar</Button>
+                                            <Button backgroundColor="blue" onPress={() => this.setState({visible: false})}>Imprimir factura</Button>
+                                        </Dialog.Actions>
+                                    </Dialog>
+                                    
+                                </Portal>
+
+                                <Divider />
+                            </View>
+                        );
+                    })}
+
+                </View>
+            
+            </ImageBackground>
         )
     }
 }
