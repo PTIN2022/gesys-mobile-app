@@ -95,7 +95,7 @@ class Stations extends React.Component{
 
 const styles = StyleSheet.create({
     container: {
-      marginTop: '50vh',
+      marginTop: '50',
     },
   });
   

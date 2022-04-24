@@ -16,37 +16,37 @@ export default function NoPassScreen({navigation}) {
   return (
 
     <Background>
-    <View style={styles.container}>
-      <Image source={require('../assets/logo.png')}
-        style={styles.ima}
-      />
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-      <StatusBar style="auto" />
-      <Button mode="contained" onPress={()=>{
-        const emailError = emailValidator(email.value) //Comprobamos si el correo introducido por el usuario es válido
-        if (emailError){
-          setEmail({ ...email, error: emailError })
-          return
-        }
-        alert('Tu solicitud ha sido aceptada. Por favor, revisa tu correo.')
-        navigation.replace('LoginScreen')
-      }}>
-        Recuperar contraseña
-      </Button>
+      <View style={styles.container}>
+        <Image source={require('../assets/logo.png')}
+          style={styles.ima}
+        />
+        <TextInput
+          label="Email"
+          returnKeyType="next"
+          value={email.value}
+          onChangeText={(text) => setEmail({ value: text, error: '' })}
+          error={!!email.error}
+          errorText={email.error}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
+          keyboardType="email-address"
+        />
+        <StatusBar style="auto" />
+        <Button mode="contained" onPress={()=>{
+          const emailError = emailValidator(email.value) //Comprobamos si el correo introducido por el usuario es válido
+          if (emailError){
+            setEmail({ ...email, error: emailError })
+            return
+          }
+          alert('Tu solicitud ha sido aceptada. Por favor, revisa tu correo.')
+          navigation.replace('LoginScreen')
+        }}>
+          Recuperar contraseña
+        </Button>
 
-    </View>
-</Background>
+      </View>
+    </Background>
 
 
   );

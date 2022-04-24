@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { theme } from './src/core/theme'
 import SafeArea from "./SafeArea";
+import Topbar from './src/components/Layout/Topbar'
 import 'react-native-gesture-handler';
 import {
   MainScreen,
@@ -12,19 +13,21 @@ import {
   ArchivoAux,
   SignupScreen,
   NoPassScreen,
+<<<<<<< HEAD
   ReservaElectrolinera,
   StationDetail,
   FormulariV,
   ListaV,
   ListaVAUX,
+=======
+  Bookings,
+>>>>>>> fatin
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 import { Provider as ReduxProvider } from 'react-redux';
 import { createStore } from 'redux';
 import gesysReducer from './Reducer';
 import Stations from './src/views/Stations';
-
-
 const store = createStore(gesysReducer);
 const Stack = createStackNavigator()
 class App extends React.Component {
@@ -41,7 +44,11 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
+<<<<<<< HEAD
               <Stack.Navigator initialRouteName="FormulariV" screenOptions={{ headerShown: false }}>
+=======
+              <Stack.Navigator  initialRouteName="BookingList" screenOptions={{headerShown: false}}>
+>>>>>>> fatin
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="MainScreen" component={MainScreen} />
                 <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
@@ -54,7 +61,7 @@ class App extends React.Component {
                 <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
                 <Stack.Screen name="ReservaElectrolinera" component={ReservaElectrolinera} />
                 <Stack.Screen name="StationList" component={Stations} />
-                <Stack.Screen name="StationDetail" component={StationDetail} />
+                <Stack.Screen name="BookingList" component={Bookings} />
               </Stack.Navigator>
             </NavigationContainer>
           </Provider>
