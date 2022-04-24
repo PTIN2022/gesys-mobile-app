@@ -1,17 +1,54 @@
 import Background from '../components/Background'
 import React, { useState } from 'react'
 import { Text,Platform, View, Image, Picker, StyleSheet } from 'react-native'
-import { Button } from 'react-native-paper';
+import { Button, ToggleButton } from 'react-native-paper';
 import { theme } from '../core/theme'
 import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 export default function ReservaElectrolinera() {
 
   let aux_date = new Date();
   let welcomedate= aux_date.getFullYear()+'-'+(aux_date.getMonth()+1)+'-'+ aux_date.getDate();
   let goodbyedate= aux_date.getFullYear()+'-'+(aux_date.getMonth()+1)+'-'+ aux_date.getDate();
+  var buttonColor1 = theme.colors.primary;
+  var buttonColor2 = "white";
+  var buttonColor3 = "white";
+  var coloricon1= "white";
+  var coloricon2= "black";
+  var coloricon3= "black";
 
   const [selectedValue, setSelectedValue] = useState("java");
+  const [value, setValue] = React.useState('saldo');
+
+  function changeButtonColor(color){
+    if(color === "boto1"){
+      buttonColor1 = theme.colors.primary;
+      coloricon1 = "white";
+    }
+    else{
+      buttonColor1 = "white";
+      coloricon1="black";
+    }
+
+    if(color === "boto2"){
+      buttonColor2 = theme.colors.primary;
+      coloricon2 = "white";
+    }
+    else{
+      buttonColor2 = "white";
+      coloricon2="black";
+    }
+
+    if(color === "boto3"){
+      buttonColor3 = theme.colors.primary;
+      coloricon3 = "white";
+    }
+    else{
+      buttonColor3 = "white";
+      coloricon3="black";
+    }
+  }
 
   function useInput() {
     const [mydate, setDate] = useState(new Date());
@@ -52,7 +89,7 @@ export default function ReservaElectrolinera() {
   return (
       <Background>
         <View style={{ flexDirection: "row",justifyContent: "flex-end", marginBottom: 20 }}>
-          <Text style={styles.texto}>Elegir vehículo</Text>
+          <Text style={{color: 'black',fontSize: 25,position: 'absolute',right: -7,fontWeight: 'bold',}}> Elegir vehículo </Text>
         </View>
           <View style={{
             height: 2,
@@ -98,7 +135,7 @@ export default function ReservaElectrolinera() {
         </View>
         <View style={{flexDirection: 'row'}}>
           <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginLeft:13, width: 200, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button icon="calendar" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input1.displayDatepicker}> <Text style={{color:'black', fontSize: 23}}>{welcomedate} </Text></Button>
+            <Button icon="calendar" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input1.displayDatepicker}> <Text style={{color:'black', fontSize: 23}}>{input1.mydate.toLocaleDateString()} </Text></Button>
               {input1.isDisplayDate && (
                 <DateTimePicker
                   value={input1.mydate}
@@ -110,7 +147,7 @@ export default function ReservaElectrolinera() {
                 )}
           </View>
           <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginHorizontal:15, width: 135, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button  icon="clock" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input2.displayTimepicker}> <Text style={{color:'black', fontSize: 24}}>00:00 </Text></Button>
+            <Button  icon="clock" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input2.displayTimepicker}> <Text style={{color:'black', fontSize: 24}}>{input2.mydate.getHours() + ':' + input2.mydate.getMinutes()}  </Text></Button>
               {input2.isDisplayDate && (
               <DateTimePicker
                 value={input2.mydate}
@@ -134,19 +171,20 @@ export default function ReservaElectrolinera() {
         </View>
         <View style={{flexDirection: 'row'}}>
           <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginLeft:13, width: 200, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button icon="calendar" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input3.displayDatepicker}> <Text style={{color:'black', fontSize: 23}}>{welcomedate} </Text></Button>
+            <Button icon="calendar" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input3.displayDatepicker}> <Text style={{color:'black', fontSize: 23}}>{input3.mydate.toLocaleDateString()}  </Text></Button>
               {input3.isDisplayDate && (
                 <DateTimePicker
                   value={input3.mydate}
                   mode={input3.displaymode}
                   is24Hour={true}
                   display="default"
+                  minimumDate={input1.mydate}
                   onChange={input3.changeSelectedDate}
                 />
                 )}
           </View>
           <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginHorizontal:15, width: 135, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button  icon="clock" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input4.displayTimepicker}> <Text style={{color:'black', fontSize: 24}}>00:00 </Text></Button>
+            <Button  icon="clock" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input4.displayTimepicker}> <Text style={{color:'black', fontSize: 24}}>{input4.mydate.getHours() + ':' + input4.mydate.getMinutes()}  </Text></Button>
               {input4.isDisplayDate && (
               <DateTimePicker
                 value={input4.mydate}
@@ -171,22 +209,11 @@ export default function ReservaElectrolinera() {
             marginBottom: 10
         }} />
 
-        <View style={{flexDirection: 'row'}}>
-          <View style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:7, width: 100, height: 70, borderRadius:15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button icon="wallet" color="black" labelStyle={{fontSize: 40, justifyContent: 'center', alignItems: 'center'}} title={'open'} onPress={input1.displayDatepicker}></Button>
-          </View>
-          <View style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginHorizontal:15, width: 100, height: 70, borderRadius:15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button color="grey" labelStyle={{fontSize: 22,  width: 100, height: 70}} title={'open'} onPress={input1.displayTimepicker}>
-             <Image source={require('../assets/PayPal.png')} style={{height:60, width:30}} />
-            </Button>
-            
-          </View>
-          <View style={{borderColor: 'black', borderWidth:2, width: 100, height: 70, borderRadius:15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button  color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input1.displayTimepicker}>
-            <Image source={require('../assets/Visa.png')} style={{height:60, width:30}} />
-            </Button>
-          </View>
-        </View>
+        <ToggleButton.Row style={{marginTop:5}} onValueChange={value => setValue(value)} value={value} >
+          <ToggleButton icon="wallet" color={coloricon1} value="saldo" size={40} onPress={() => {changeButtonColor("boto1")}} style={{ justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:7, width: 100, height: 70, borderRadius:15, overflow: "hidden", backgroundColor:buttonColor1}} />
+          <ToggleButton icon={require('../assets/PayPal.png')} color={coloricon2} size={50} onPress={() => {changeButtonColor("boto2")}} value="paypal" style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:0, width: 100, height: 70, borderRadius:0, overflow: "hidden",backgroundColor:buttonColor2}}/>
+          <ToggleButton icon={require('../assets/Visa.png')} color={coloricon3} size={50} onPress={() => {changeButtonColor("boto3")}} value="visa" style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:0, width: 100, height: 70, borderRadius:15, overflow: "hidden", backgroundColor:buttonColor3}}/>
+        </ToggleButton.Row>
 
         <View style={{ flexDirection: "row",justifyContent: "flex-end", marginBottom: 20, marginTop:25 }}>
           <Text style={{color: 'black',fontSize: 25,position: 'absolute',right: 108,fontWeight: 'bold',}}>Pago</Text>
@@ -206,9 +233,11 @@ export default function ReservaElectrolinera() {
         <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginLeft:3, marginBottom:30, width: 350, height: 60, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
           <View style={styles.row}>
            <Text style={{color: 'white',fontSize: 24,position: 'absolute',right:250, top: 0,fontWeight: 'bold'}}>0.00 €</Text>
-           <Button  icon="lightning-bolt" color="grey" labelStyle={{fontSize: 22, justifyContent: 'flex-end'}} title={'open'} onPress={input1.displayTimepicker}>
-            
-            </Button>
+           <View style={{borderColor: 'black', borderWidth:2, marginHorizontal:200, marginTop:-4, width: 135, height: 40, borderRadius:15 , overflow: "hidden",backgroundColor: 'white'}}>
+           <Button icon="lightning-bolt" color="white" mode="contained" onPress={() => console.log('Pressed')}>
+              Reserva
+              </Button>
+            </View>   
           </View>
         
         </View>
