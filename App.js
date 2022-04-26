@@ -13,15 +13,12 @@ import {
   ArchivoAux,
   SignupScreen,
   NoPassScreen,
-<<<<<<< HEAD
   ReservaElectrolinera,
   StationDetail,
   FormulariV,
   ListaV,
   ListaVAUX,
-=======
   Bookings,
->>>>>>> fatin
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -44,23 +41,18 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-<<<<<<< HEAD
-              <Stack.Navigator initialRouteName="FormulariV" screenOptions={{ headerShown: false }}>
-=======
-              <Stack.Navigator  initialRouteName="BookingList" screenOptions={{headerShown: false}}>
->>>>>>> fatin
+              <Stack.Navigator  initialRouteName="LoginScreen" screenOptions={{headerShown: false}}>
                 <Stack.Screen name="LoginScreen" component={LoginScreen} />
                 <Stack.Screen name="MainScreen" component={MainScreen} />
                 <Stack.Screen name="ArchivoAux" component={ArchivoAux} />
-
                 <Stack.Screen name="FormulariV" component={FormulariV} />
                 <Stack.Screen name="ListaV" component={ListaV} />
                 <Stack.Screen name="ListaVAUX" component={ListaVAUX} />
-
                 <Stack.Screen name="SignupScreen" component={SignupScreen} />
                 <Stack.Screen name="NoPassScreen" component={NoPassScreen} />
                 <Stack.Screen name="ReservaElectrolinera" component={ReservaElectrolinera} />
                 <Stack.Screen name="StationList" component={Stations} />
+                <Stack.Screen name="StationDetail" component={StationDetail} />
                 <Stack.Screen name="BookingList" component={Bookings} />
               </Stack.Navigator>
             </NavigationContainer>
