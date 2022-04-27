@@ -30,6 +30,24 @@ const INITIAL_STATE = {
       import_due: 32,
       amount_paid: 32,
       time: "4h"
+    },
+    {
+      id: 2, // es el id de reserva. No el de la electrolinera.
+      name: "Station SuperMart",
+      date: "20/04/2022 8:30",
+      status: 'Terminada', // Puede ser una diferencia de fechas realmente.
+      import_due: 32,
+      amount_paid: 32,
+      time: "4h"
+    },
+    {
+      id: 2, // es el id de reserva. No el de la electrolinera.
+      name: "Station SuperMart",
+      date: "20/04/2022 8:30",
+      status: 'Terminada', // Puede ser una diferencia de fechas realmente.
+      import_due: 32,
+      amount_paid: 32,
+      time: "4h"
     }
   ],
   all_stations: [ // Guardmos las electrolineras.

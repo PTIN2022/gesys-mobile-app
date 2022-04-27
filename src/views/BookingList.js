@@ -1,4 +1,4 @@
-import {Text, Image, View, StyleSheet } from 'react-native'
+import {Text, Image, View, ScrollView } from 'react-native'
 import { connect } from 'react-redux';
 import React from 'react';
 import {Button, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
@@ -6,8 +6,8 @@ import { bindActionCreators } from 'redux';
 import { addBooking } from '../../Actions';
 import ReservaCard from '../components/ReservaCard';
 import { Avatar } from "react-native-paper";
-
-class Bookings extends React.Component{
+import AppBack from '../components/AppBack';
+class BookingList extends React.Component{
 
     constructor(props){
         super(props);
@@ -39,9 +39,11 @@ class Bookings extends React.Component{
         })
     }
 
-    render(){       //para pintar por pantalla
+    render(){    //para pintar por pantalla
         return(
             <View style={{backgroundColor: "lightgrey", flex: 1}}>
+                <AppBack title="Lista de reservas" backScreenName="MainScreen"/>
+                <ScrollView>
                 {this.props.all_bookings.map((item) => {
                     return(
                         <View key={item.id}>
@@ -55,7 +57,7 @@ class Bookings extends React.Component{
                                 time={item.time}
                                 openModal={this.toggleDialog}
                             />
-                            <Portal> 
+                            {/* <Portal> 
                                 <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                                     <Dialog.Title>Cancelar</Dialog.Title>
                                     <Dialog.Content>
@@ -68,10 +70,9 @@ class Bookings extends React.Component{
                                         </Button>
                                     </Dialog.Actions>
                                 </Dialog>
-                                <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
+                                <Dialog visible={this.state.visible} dismissable onDismiss={this.toggleDialog}>
                                     <Dialog.Title>
-                                        Detalles Reserva: {"\n"}
-                                        <Avatar.Icon size={100} icon="map" />
+                                        <Text>Detalles Reserva:</Text>
                                     </Dialog.Title>
                                     <Dialog.Content>
                                         <Text>Numero de reserva:{item.id}</Text>
@@ -89,11 +90,12 @@ class Bookings extends React.Component{
                                         <Button backgroundColor="blue" onPress={() => this.setState({visible: false})}>Imprimir factura</Button>
                                     </Dialog.Actions>
                                 </Dialog>
-                            </Portal>
+                            </Portal> */}
+                            
                         </View>
                     );
                 })}
-
+                </ScrollView>
             </View>
         )
     }
@@ -110,4 +112,4 @@ const mapDispatchToProps = dispatch => (
         addBooking,
     }, dispatch)
 );
-export default connect(mapStateToProps, mapDispatchToProps)(Bookings);
+export default connect(mapStateToProps, mapDispatchToProps)(BookingList);
