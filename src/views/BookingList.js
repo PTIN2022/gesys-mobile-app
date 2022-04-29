@@ -7,6 +7,7 @@ import { addBooking } from '../../Actions';
 import ReservaCard from '../components/ReservaCard';
 import { Avatar } from "react-native-paper";
 import AppBack from '../components/AppBack';
+import Background from "../components/Background"
 class BookingList extends React.Component{
 
     constructor(props){
@@ -41,7 +42,7 @@ class BookingList extends React.Component{
 
     render(){    //para pintar por pantalla
         return(
-            <View style={{backgroundColor: "lightgrey", flex: 1}}>
+            <Background>
                 <AppBack title="Lista de reservas" backScreenName="MainScreen"/>
                 <ScrollView>
                 {this.props.all_bookings.map((item) => {
@@ -96,7 +97,7 @@ class BookingList extends React.Component{
                     );
                 })}
                 </ScrollView>
-            </View>
+            </Background>
         )
     }
 }

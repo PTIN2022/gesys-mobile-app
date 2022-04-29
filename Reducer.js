@@ -10,6 +10,14 @@ const INITIAL_STATE = {
     {
       plate: '9892JJJ',
       model: 'Tesla model S'
+    },
+    {
+      plate: '9892BBB',
+      model: 'Tesla model B'
+    },
+    {
+      plate: '989CCC',
+      model: 'Tesla model A'
     }
   ],
   all_bookings: [ // Guardamos las reservas.
@@ -32,7 +40,7 @@ const INITIAL_STATE = {
       time: "4h"
     },
     {
-      id: 2, // es el id de reserva. No el de la electrolinera.
+      id: 3, // es el id de reserva. No el de la electrolinera.
       name: "Station SuperMart",
       date: "20/04/2022 8:30",
       status: 'Terminada', // Puede ser una diferencia de fechas realmente.
@@ -41,7 +49,7 @@ const INITIAL_STATE = {
       time: "4h"
     },
     {
-      id: 2, // es el id de reserva. No el de la electrolinera.
+      id: 4, // es el id de reserva. No el de la electrolinera.
       name: "Station SuperMart",
       date: "20/04/2022 8:30",
       status: 'Terminada', // Puede ser una diferencia de fechas realmente.

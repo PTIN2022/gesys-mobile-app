@@ -13,8 +13,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 21,
     color: theme.colors.primary,
-    fontWeight: 'bold',
-    justifyContent: 'flex-end',
-    paddingVertical: 12,
+    fontWeight: 'bold'
   },
 })
