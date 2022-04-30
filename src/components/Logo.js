@@ -8,11 +8,6 @@ export default function Logo() {
 
 //Establecemos el estilo del  logo.
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   image: {
     width: 180,
     height: 180,

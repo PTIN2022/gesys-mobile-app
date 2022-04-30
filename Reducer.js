@@ -4,21 +4,35 @@ const INITIAL_STATE = {
   current: [],
   all_vehicles: [ // Guardamos los vehículos.
     {
+      id: 1,
+      name: "Coche deportivo",
       plate: '1279FJD', // es el identificador del vehículo
-      model: 'Raspi 10x'
+      model: 'Ferrari 296 GTB'
     },
     {
-      plate: '9892JJJ',
-      model: 'Tesla model S'
+      id: 2,
+      name: "Coche familiar",
+      plate: '1275AAA', // es el identificador del vehículo
+      model: 'Seat Arona'
     },
     {
-      plate: '9892BBB',
-      model: 'Tesla model B'
+      id: 3,
+      name: "Todoterreno",
+      plate: '1275BBB', // es el identificador del vehículo
+      model: 'Jeep'
     },
     {
-      plate: '989CCC',
-      model: 'Tesla model A'
-    }
+      id: 4,
+      name: "Berlina 2",
+      plate: '1276FJD', // es el identificador del vehículo
+      model: 'Kia rio'
+    },
+    {
+      id: 5,
+      name: "El seat de toda la vida",
+      plate: '1279AAA', // es el identificador del vehículo
+      model: 'Seat Ibiza'
+    },
   ],
   all_bookings: [ // Guardamos las reservas.
     {
@@ -50,6 +64,15 @@ const INITIAL_STATE = {
     },
     {
       id: 4, // es el id de reserva. No el de la electrolinera.
+      name: "Station SuperMart",
+      date: "20/04/2022 8:30",
+      status: 'Terminada', // Puede ser una diferencia de fechas realmente.
+      import_due: 32,
+      amount_paid: 32,
+      time: "4h"
+    },
+    {
+      id: 5, // es el id de reserva. No el de la electrolinera.
       name: "Station SuperMart",
       date: "20/04/2022 8:30",
       status: 'Terminada', // Puede ser una diferencia de fechas realmente.

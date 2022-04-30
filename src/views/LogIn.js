@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TouchableOpacity, StyleSheet, View } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, AsyncStorage } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
@@ -24,15 +24,16 @@ export default function LoginScreen({ navigation }) {
       setPassword({ ...password, error: passwordError })
       return
     }
-    //navigation.navigate('StationList')
-    navigation.navigate('MainScreen') //Si tanto el correo como la contraseña son válidos, navegamos al mainscreen
-    //navigation.navigate('BookingList')
+    
+    navigation.navigate('Stations')
+    //Si tanto el correo como la contraseña son válidos, navegamos al mainscreen
+
   }
 
   //Establecemos el aspecto que tendrá la pantalla
   return (
     <Background>
-      <View style={{flexDirection: "column", alignItems: "center", padding: 10}}>
+      <View style={{flexDirection: "column", alignItems: "center", padding: "10%"}}>
         <Logo />
         <Header>Bienvenido a GeSyS</Header>
         <TextInput
@@ -58,7 +59,7 @@ export default function LoginScreen({ navigation }) {
         />
         <View style={styles.forgotPassword}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('NoPassScreen')}
+            onPress={() => navigation.navigate('Password')}
           >
             <Text style={styles.forgot}>Has olvidado tu contraseña?</Text>
           </TouchableOpacity>
@@ -68,14 +69,14 @@ export default function LoginScreen({ navigation }) {
         </Button>
         <View style={{flexDirection: "row", marginTop:10}}>
           <Text>No tienes una cuenta? </Text>
-          <TouchableOpacity onPress={() => navigation.replace('SignupScreen')}>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
             <Text style={styles.link}>Regístrate</Text>
           </TouchableOpacity>
         </View>
         <View style={{flexDirection: "row", marginTop:5}}>
           <Text>O bien,  </Text>
-          <TouchableOpacity onPress={() => navigation.replace('ArchivoAux')}>
-            <Text style={styles.noregister}>continúa sin registrarte ❯</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Stations')}>
+            <Text style={styles.link}>continúa sin registrarte ❯</Text>
           </TouchableOpacity>
         </View>
       </View>

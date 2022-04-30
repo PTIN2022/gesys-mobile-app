@@ -75,9 +75,9 @@ const s = StyleSheet.create({
     },
     bellBadge: {
         position: "absolute",
-        backgroundColor: "#00e39b",
-        top: 0.85,
-        left: 1.75,
+        backgroundColor: "#00e39bcc",
+        // top: 0.85,
+        // left: 1.75,
         borderRadius: 25,
         color: "white",
         fontWeight: "700",

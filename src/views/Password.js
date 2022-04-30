@@ -5,6 +5,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import { emailValidator } from '../helpers/emailValidator'
 import { useState } from 'react';
+import AppBack from '../components/AppBack';
 
 
 //Esta función exporta la pantalla de NoPassScreen para poder utilizarla como una view.
@@ -16,7 +17,8 @@ export default function NoPassScreen({navigation}) {
   return (
 
     <Background>
-      <View style={styles.container}>
+      <AppBack title="Recuperacion de contraseña" backScreenName="LogIn"/>
+      <View style={{flexDirection: "column", alignItems: "center", paddingHorizontal: "10%"}}>
         <Image source={require('../assets/logo.png')}
           style={styles.ima}
         />
@@ -32,19 +34,16 @@ export default function NoPassScreen({navigation}) {
           textContentType="emailAddress"
           keyboardType="email-address"
         />
-        <StatusBar style="auto" />
         <Button mode="contained" onPress={()=>{
           const emailError = emailValidator(email.value) //Comprobamos si el correo introducido por el usuario es válido
           if (emailError){
             setEmail({ ...email, error: emailError })
             return
           }
-          alert('Tu solicitud ha sido aceptada. Por favor, revisa tu correo.')
           navigation.replace('LoginScreen')
         }}>
           Recuperar contraseña
         </Button>
-
       </View>
     </Background>
 

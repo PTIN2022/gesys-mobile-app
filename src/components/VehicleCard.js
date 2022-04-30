@@ -20,30 +20,23 @@ function TextReserva (props) {
         <Card.Content style={{}}>
           <View style={{flexDirection: "row"}}>
             <View style={{justifyContent: "center", flex: 1, alignItems: "center"}}>
-              <Avatar.Icon {...props} icon="book" />
+              <Avatar.Icon {...props} icon="car-side" />
             </View>
             <View style={{flex: 4, paddingLeft: 20}}>
               <Header>{ props.name }</Header>
               <View style={{flexDirection: "row"}}> 
-                <Text style={{fontWeight: "700", marginRight: 10}}>Estado de la reserva:</Text>     
-                { props.status=='Activa' && 
-                  (<Text style={{backgroundColor: '#00e39b88', color: "black", borderRadius: 10, paddingHorizontal: 10}}> {props.status} </Text>)
-                }
-                { props.status=='Terminada' && 
-                  (<Text style={{backgroundColor: 'lightgrey', color: "black", borderRadius: 10, paddingHorizontal: 10}}> {props.status} </Text>)
-                }
+                <Text style={{fontWeight: "700", marginRight: 10}}>Matricula:</Text>     
+                <Text> {props.plate} </Text>
               </View>
               <View style={{flexDirection: "row", marginBottom: 15}}>
-                <Text style={{fontWeight: "700", marginRight: 10}}>Fecha de reserva: </Text>
-                <Text>{props.date}</Text>
+                <Text style={{fontWeight: "700", marginRight: 10}}>Modelo:</Text>
+                <Text>{props.model}</Text>
               </View>
             </View>
             </View>
           <View style={{flexDirection: "row-reverse"}}>
-                <Button style={{marginLeft: 10}} mode="contained" onPress={() => { showDialog() }}>Detalle</Button>
-                { props.status=='Activa' && 
-                  (<Button mode="outlined" color='red' onPress={() => { showDialog() }}>Cancelar</Button>)
-                }
+                <Button mode="contained"style={{marginLeft: 10}} >Favorito</Button>
+                <Button mode="outlined" color='red'>Eliminar</Button>
           </View>
         </Card.Content>
       </Card>

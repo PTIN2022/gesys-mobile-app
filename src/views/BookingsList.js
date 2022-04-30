@@ -43,12 +43,12 @@ class BookingList extends React.Component{
     render(){    //para pintar por pantalla
         return(
             <Background>
-                <AppBack title="Lista de reservas" backScreenName="MainScreen"/>
+                <AppBack title="Lista de reservas" backScreenName="Stations"/>
                 <ScrollView>
                 {this.props.all_bookings.map((item) => {
                     return(
-                        <View key={item.id}>
                             <ReservaCard
+                                key={item.id}
                                 id={item.id}
                                 name={item.name}
                                 date={item.date}
@@ -58,6 +58,7 @@ class BookingList extends React.Component{
                                 time={item.time}
                                 openModal={this.toggleDialog}
                             />
+                    )
                             {/* <Portal> 
                                 <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                                     <Dialog.Title>Cancelar</Dialog.Title>
@@ -92,9 +93,7 @@ class BookingList extends React.Component{
                                     </Dialog.Actions>
                                 </Dialog>
                             </Portal> */}
-                            
-                        </View>
-                    );
+
                 })}
                 </ScrollView>
             </Background>

@@ -16,7 +16,7 @@ export default function AppBack({title, backScreenName}) {
                     color={theme.colors.primary}
                     size={30}
                     style={{paddingHorizontal: 20, width: "auto"}}
-                    onPress={() => navigation.navigate(backScreenName)}
+                    onPress={() => navigation.replace(backScreenName)}
                 />
                 <Header>{title}</Header>
             </View>

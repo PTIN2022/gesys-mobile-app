@@ -1,12 +1,22 @@
-export { default as LoginScreen } from './LoginScreen'
-export { default as ArchivoAux } from './ArchivoAux'
-export { default as MainScreen } from './MainScreen'
-export { default as SignupScreen } from './SignupScreen'
-export { default as NoPassScreen } from './NoPassScreen'
-export { default as ReservaElectrolinera } from './ReservaElectrolinera'
+
+//Autenticacion de usuarios
+export { default as Landing } from './Landing'
+export { default as LogIn } from './LogIn'
+export { default as SignUp } from './SignUp'
+export { default as Password } from './Password'
+
+//Estaciones
+export { default as Stations } from './StationMap'
 export { default as StationDetail } from './StationDetail'
-export { default as ListaV } from './ListaV'
-export { default as Bookings} from './BookingList'
-export { default as ListaVAUX } from './ListaVAUX'
-export { default as FormulariV } from './FormulariV'
+
+//Vehiculos
+export { default as VehiclesList } from './VehiclesList'
+export { default as VehicleForm } from './VehicleForm'
+
+//Reservas
+export { default as BookingsList} from './BookingsList'
+export { default as BookingForm } from './BookingForm'
+
+
+
 
