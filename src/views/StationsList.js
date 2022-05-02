@@ -1,5 +1,5 @@
 import { Image, View, StyleSheet } from 'react-native'
-import ElectrolineraCard from '../components/ElectrolineraCard'
+import StationCard from '../components/StationCard'
 import { connect } from 'react-redux';
 import React from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
@@ -49,7 +49,7 @@ class StationsList extends React.Component{
                     // Iteramos las estaciones que tenemos cargadas en el store.
                     return (
                         <View key={item.id}>
-                            <ElectrolineraCard 
+                            <StationCard 
                                 id={item.id}
                                 name={item.name}
                                 capacity={item.capacity}
