@@ -16,7 +16,7 @@ function TextReserva (props) {
   const hideDialog = () => setVisible(false);
 
     return(
-      <Card style={{marginHorizontal: 5, marginBottom: 5, backgroundColor: "#ffffffdd"}}>
+      <Card mode="elevated" style={{marginHorizontal: 5, marginBottom: 5, backgroundColor: "#ffffffdd"}}>
         <Card.Content style={{}}>
           <View style={{flexDirection: "row"}}>
             <View style={{justifyContent: "center", flex: 1, alignItems: "center"}}>

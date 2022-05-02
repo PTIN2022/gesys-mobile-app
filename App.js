@@ -40,7 +40,7 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-              <Stack.Navigator  initialRouteName="Landing" screenOptions={{headerShown: false}}>
+              <Stack.Navigator  initialRouteName="BookingForm" screenOptions={{headerShown: false}}>
 
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />

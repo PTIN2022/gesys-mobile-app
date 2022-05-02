@@ -1,53 +1,68 @@
 import Background from '../components/Background'
 import React, { useState } from 'react'
-import { Text,Platform, View, Image, Picker, StyleSheet } from 'react-native'
-import { Button, ToggleButton } from 'react-native-paper';
+import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { Button, ToggleButton, IconButton, Card } from 'react-native-paper';
 import { theme } from '../core/theme'
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-
-export default function ReservaElectrolinera() {
+import AppBack from '../components/AppBack';
+import SelectInput from '../components/SelectInput';
+import Header from '../components/Header';
+export default function ReservaElectrolinera({navigation}) {
 
   let aux_date = new Date();
   let welcomedate= aux_date.getFullYear()+'-'+(aux_date.getMonth()+1)+'-'+ aux_date.getDate();
   let goodbyedate= aux_date.getFullYear()+'-'+(aux_date.getMonth()+1)+'-'+ aux_date.getDate();
-  var buttonColor1 = theme.colors.primary;
-  var buttonColor2 = "white";
-  var buttonColor3 = "white";
-  var coloricon1= "white";
-  var coloricon2= "black";
-  var coloricon3= "black";
+  
+  
+  const [btnColors, setBtnColors] = useState({
+    back1: theme.colors.primary,
+    icon1: "#fff",
+    back2: "#fff",
+    icon2: theme.colors.primary,
+    back3: "#fff",
+    icon3: theme.colors.primary,
+  })
 
-  const [selectedValue, setSelectedValue] = useState("java");
+
+  const [selectedValue, setSelectedValue] = useState("");
   const [value, setValue] = React.useState('saldo');
 
-  function changeButtonColor(color){
-    if(color === "boto1"){
-      buttonColor1 = theme.colors.primary;
-      coloricon1 = "white";
+  function changeButtonColor(boto){
+    switch (boto) {
+      case "boto1":
+        setBtnColors({
+          back1: theme.colors.primary,
+          icon1: "#fff",
+          back2: "#fff",
+          icon2: theme.colors.primary,
+          back3: "#fff",
+          icon3: theme.colors.primary,
+        })
+        break;
+      case "boto2":
+        setBtnColors({
+          back2: theme.colors.primary,
+          icon2: "#fff",
+          back1: "#fff",
+          icon1: theme.colors.primary,
+          back3: "#fff",
+          icon3: theme.colors.primary,
+        })
+        break;
+      case "boto3":
+        setBtnColors({
+          back3: theme.colors.primary,
+          icon3: "#fff",
+          back2: "#fff",
+          icon2: theme.colors.primary,
+          back1: "#fff",
+          icon1: theme.colors.primary,
+        })
+        break;
+      default:
+        break;
     }
-    else{
-      buttonColor1 = "white";
-      coloricon1="black";
-    }
-
-    if(color === "boto2"){
-      buttonColor2 = theme.colors.primary;
-      coloricon2 = "white";
-    }
-    else{
-      buttonColor2 = "white";
-      coloricon2="black";
-    }
-
-    if(color === "boto3"){
-      buttonColor3 = theme.colors.primary;
-      coloricon3 = "white";
-    }
-    else{
-      buttonColor3 = "white";
-      coloricon3="black";
-    }
+     
   }
 
   function useInput() {
@@ -88,159 +103,124 @@ export default function ReservaElectrolinera() {
   const input4 = useInput(new Date())
   return (
       <Background>
-        <View style={{ flexDirection: "row",justifyContent: "flex-end", marginBottom: 20 }}>
-          <Text style={{color: 'black',fontSize: 25,position: 'absolute',right: -7,fontWeight: 'bold',}}> Elegir vehículo </Text>
-        </View>
-          <View style={{
-            height: 2,
-            backgroundColor: 'rgba(0, 0, 0 ,0.7)',
-            alignSelf: 'center',
-            width: 335,
-            marginTop: 10,
-            marginBottom: 10
-        }} />
-        <View style={styles.row}>
-            <View style={{ borderRadius:15, borderWidth: 2, width:275, height:50, backgroundColor:'white', borderColor: 'black', borderRadius: 4 }}>
-                <Picker
-                    selectedValue={selectedValue}
-                    style={{ borderRadius:15, height: 50, width: 275 }}
-                    onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                >
-                    <Picker.Item label="Tesla Model X" value="TSLA" />
-                    <Picker.Item label="BMW Indie" value="BMW" />
-                </Picker>
-            </View>
-            <View style={{ justifyContent: 'center', marginHorizontal: 5, height:53, width:53 , minWidth:53, maxWidth:53, minHeight:53, maxHeight:53 }}>
-            <Button   mode="contained" labelStyle={{fontSize: 22, justifyContent: 'center', alignItems: 'center', width:53, backgroundColor:theme.colors.primary}} title={'open'} onPress={input1.displayTimepicker}> <Text style={{color:'white',fontWeight:'bold', fontSize: 24}}>+ </Text></Button>
-            </View>
-        </View>
-        <View style={{ marginTop: 25, flexDirection: "row",justifyContent: "flex-end", marginBottom: 20 }}>
-          <Text style={{color: 'black',fontSize: 25,position: 'absolute',right: -130,fontWeight: 'bold',}}>Fecha y tiempo de reserva</Text>
-        </View>
-          <View style={{
-            height: 2,
-            backgroundColor: 'rgba(0, 0, 0 ,0.7)',
-            alignSelf: 'center',
-            width: 335,
-            marginTop: 10,
-            marginBottom: 10
-        }} />
-        <View style={styles.row}>
-          <View style={{borderColor: 'black', borderWidth:2, marginLeft:13, width: 200, height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
-          <Text style={{color: 'white',fontSize: 24,position: 'absolute',right:9, top: 5,fontWeight: 'bold'}}>Fecha de llegada</Text>
-          </View>
-          <View style={{borderColor: 'black', borderWidth:2, marginHorizontal:15, width: 135, height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
-          <Text style={{color: 'white',fontSize: 24,position: 'absolute',right: 39, top: 5,fontWeight: 'bold'}}>Hora</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginLeft:13, width: 200, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button icon="calendar" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input1.displayDatepicker}> <Text style={{color:'black', fontSize: 23}}>{input1.mydate.toLocaleDateString()} </Text></Button>
-              {input1.isDisplayDate && (
-                <DateTimePicker
-                  value={input1.mydate}
-                  mode={input1.displaymode}
-                  is24Hour={true}
-                  display="default"
-                  onChange={input1.changeSelectedDate}
-                />
-                )}
-          </View>
-          <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginHorizontal:15, width: 135, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button  icon="clock" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input2.displayTimepicker}> <Text style={{color:'black', fontSize: 24}}>{input2.mydate.getHours() + ':' + input2.mydate.getMinutes()}  </Text></Button>
-              {input2.isDisplayDate && (
-              <DateTimePicker
-                value={input2.mydate}
-                mode={input2.displaymode}
-                is24Hour={true}
-                display="default"
-                onChange={input2.changeSelectedDate}
-              />
-              )}
-          </View>
-        </View>
+        <AppBack title="Formulario de reserva" backScreenName="Stations"/>
+            <ScrollView>
+              <Card style={{marginHorizontal:5 , padding: 20, backgroundColor: "#ffffffdd"}}>
+                  <Card.Content>
 
-        <View style={{marginTop: 20}}></View>
-        <View style={styles.row}>
-          <View style={{borderColor: 'black', borderWidth:2, marginLeft:13, width: 200, height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
-          <Text style={{color: 'white',fontSize: 24,position: 'absolute',right:20, top: 5,fontWeight: 'bold'}}>Fecha de salida</Text>
-          </View>
-          <View style={{borderColor: 'black', borderWidth:2, marginHorizontal:15, width: 135, height: 50, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
-          <Text style={{color: 'white',fontSize: 24,position: 'absolute',right: 39, top: 5,fontWeight: 'bold'}}>Hora</Text>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginLeft:13, width: 200, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button icon="calendar" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input3.displayDatepicker}> <Text style={{color:'black', fontSize: 23}}>{input3.mydate.toLocaleDateString()}  </Text></Button>
-              {input3.isDisplayDate && (
-                <DateTimePicker
-                  value={input3.mydate}
-                  mode={input3.displaymode}
-                  is24Hour={true}
-                  display="default"
-                  minimumDate={input1.mydate}
-                  onChange={input3.changeSelectedDate}
-                />
-                )}
-          </View>
-          <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginHorizontal:15, width: 135, height: 50, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: 'white'}}>
-            <Button  icon="clock" color="grey" labelStyle={{fontSize: 22, justifyContent: 'space-between'}} title={'open'} onPress={input4.displayTimepicker}> <Text style={{color:'black', fontSize: 24}}>{input4.mydate.getHours() + ':' + input4.mydate.getMinutes()}  </Text></Button>
-              {input4.isDisplayDate && (
-              <DateTimePicker
-                value={input4.mydate}
-                mode={input4.displaymode}
-                is24Hour={true}
-                display="default"
-                onChange={input4.changeSelectedDate}
-              />
-              )}
-          </View>
-        </View>
+                    <Header>Vehiculo de la reserva:</Header>
+                    <View style={{flexDirection: "row", alignItems: "center", marginVertical: 15}}>
+                      <SelectInput 
+                        data={["Coche1", "Coche2", "Coche3"]}
+                        btnText="Selecciona un vehiculo"
+                        onSelectValue={value=>{
+                          setSelectedValue(value)
+                        }}
+                      />
+                      <TouchableOpacity style={styles.iconBtn} onPress={()=>navigation.navigate("VehicleForm")}>
+                        <Image source={require("../assets/add-car.png")} style={{width: "75%", height: "75%"}} color={"#fff"}></Image>
+                      </TouchableOpacity>
+                    </View>
 
-        <View style={{ flexDirection: "row",justifyContent: "flex-end", marginBottom: 20, marginTop:25 }}>
-          <Text style={styles.texto}>Métdo de pago</Text>
-        </View>
-          <View style={{
-            height: 2,
-            backgroundColor: 'rgba(0, 0, 0 ,0.7)',
-            alignSelf: 'center',
-            width: 335,
-            marginTop: 10,
-            marginBottom: 10
-        }} />
-
-        <ToggleButton.Row style={{marginTop:5}} onValueChange={value => setValue(value)} value={value} >
-          <ToggleButton icon="wallet" color={coloricon1} value="saldo" size={40} onPress={() => {changeButtonColor("boto1")}} style={{ justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:7, width: 100, height: 70, borderRadius:15, overflow: "hidden", backgroundColor:buttonColor1}} />
-          <ToggleButton icon={require('../assets/PayPal.png')} color={coloricon2} size={50} onPress={() => {changeButtonColor("boto2")}} value="paypal" style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:0, width: 100, height: 70, borderRadius:0, overflow: "hidden",backgroundColor:buttonColor2}}/>
-          <ToggleButton icon={require('../assets/Visa.png')} color={coloricon3} size={50} onPress={() => {changeButtonColor("boto3")}} value="visa" style={{justifyContent: 'center', alignItems: 'center', borderColor: 'black', borderWidth:2, marginLeft:0, width: 100, height: 70, borderRadius:15, overflow: "hidden", backgroundColor:buttonColor3}}/>
-        </ToggleButton.Row>
-
-        <View style={{ flexDirection: "row",justifyContent: "flex-end", marginBottom: 20, marginTop:25 }}>
-          <Text style={{color: 'black',fontSize: 25,position: 'absolute',right: 108,fontWeight: 'bold',}}>Pago</Text>
-        </View>
-          <View style={{
-            height: 2,
-            backgroundColor: 'rgba(0, 0, 0 ,0.7)',
-            alignSelf: 'center',
-            width: 335,
-            marginTop: 10,
-            marginBottom: 10
-        }} />
-
-        <View style={{borderColor: 'black', borderWidth:2, borderBottomWidth:0, marginLeft:3, marginTop: 5, width: 350, height: 60, borderTopLeftRadius: 15, borderTopRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
-          <Text style={{color: 'white',fontSize: 24,position: 'absolute',right:185, top: 7,fontWeight: 'bold'}}>Importe total:</Text>
-        </View>
-        <View style={{borderColor: 'black', borderWidth:2, borderTopWidth:0, marginLeft:3, marginBottom:30, width: 350, height: 60, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, overflow: "hidden",backgroundColor: theme.colors.primary}}>
-          <View style={styles.row}>
-           <Text style={{color: 'white',fontSize: 24,position: 'absolute',right:250, top: 0,fontWeight: 'bold'}}>0.00 €</Text>
-           <View style={{borderColor: 'black', borderWidth:2, marginHorizontal:200, marginTop:-4, width: 135, height: 40, borderRadius:15 , overflow: "hidden",backgroundColor: 'white'}}>
-           <Button icon="lightning-bolt" color="white" mode="contained" onPress={() => console.log('Pressed')}>
-              Reserva
-              </Button>
-            </View>   
-          </View>
-        
-        </View>
+                    <Header>Fecha y hora de entrada:</Header>
+                    <View style={styles.row}>
+                      <TouchableOpacity onPress={input1.displayDatepicker} style={styles.timeInput}>
+                        <Text style={{fontSize: 15}}>{input1.mydate.toLocaleDateString()} </Text>
+                        <View style={{alignItems: "flex-end", flex:1}}>
+                          <IconButton labelStyle={{fontSize:15, margin:0}}  icon="calendar" color="#777"></IconButton>
+                        </View>
+                          {input1.isDisplayDate && (
+                            <DateTimePicker
+                              value={input1.mydate}
+                              mode={input1.displaymode}
+                              is24Hour={true}
+                              display="default"
+                              onChange={input1.changeSelectedDate}
+                            />
+                          )}
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={input2.displayTimepicker} style={{...styles.timeInput, marginLeft:10}}>
+                        <Text style={{fontSize: 15}}>{input2.mydate.getHours() + ':' + input2.mydate.getMinutes()}  </Text>
+                        <View style={{alignItems: "flex-end", flex:1}}>
+                          <IconButton labelStyle={{fontSize:15, margin:0}}  icon="clock" color="#777"></IconButton>
+                        </View>
+                          {input2.isDisplayDate && (
+                          <DateTimePicker
+                            value={input2.mydate}
+                            mode={input2.displaymode}
+                            is24Hour={true}
+                            display="default"
+                            onChange={input2.changeSelectedDate}
+                          />
+                          )}
+                      </TouchableOpacity>
+                    </View>
+                    <Header>Fecha y hora de salida:</Header>
+                    <View style={styles.row}>
+                      <TouchableOpacity onPress={input3.displayDatepicker} style={styles.timeInput}>
+                        <Text style={{fontSize: 15}}>{input3.mydate.toLocaleDateString()} </Text>
+                        <View style={{alignItems: "flex-end", flex:1}}>
+                          <IconButton labelStyle={{fontSize:15, margin:0}}  icon="calendar" color="#777"></IconButton>
+                        </View>
+                        {input3.isDisplayDate && (
+                          <DateTimePicker
+                            value={input3.mydate}
+                            mode={input3.displaymode}
+                            is24Hour={true}
+                            display="default"
+                            minimumDate={input1.mydate}
+                            onChange={input3.changeSelectedDate}
+                          />
+                        )}
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={input4.displayTimepicker} style={{...styles.timeInput, marginLeft:10}}>
+                        <Text style={{fontSize: 15}}>{input4.mydate.getHours() + ':' + input4.mydate.getMinutes()}  </Text>
+                        <View style={{alignItems: "flex-end", flex:1}}>
+                          <IconButton labelStyle={{fontSize:15, margin:0}}  icon="clock" color="#777"></IconButton>
+                        </View>
+                        {input4.isDisplayDate && (
+                          <DateTimePicker
+                            value={input4.mydate}
+                            mode={input4.displaymode}
+                            is24Hour={true}
+                            display="default"
+                            onChange={input4.changeSelectedDate}
+                          />
+                        )}
+                      </TouchableOpacity>
+                    </View>
+                    <Header>Metodo de pago:</Header>
+                    <View style={styles.row} onValueChange={value => setValue(value)} value={value} >
+                      <IconButton 
+                        icon="wallet"
+                        color={btnColors.icon1} 
+                        size={30}
+                        style={{...styles.toggleBtn, backgroundColor: btnColors.back1, borderTopRightRadius: 0, borderBottomRightRadius: 0}}
+                        onPress={() => changeButtonColor("boto1")} 
+                        >Cartera</IconButton>
+                      <IconButton 
+                        icon={require('../assets/PayPal.png')}
+                        color={btnColors.icon2}
+                        size={30}
+                        style={{...styles.toggleBtn, backgroundColor: btnColors.back2, borderRadius: 0}}
+                        onPress={() => changeButtonColor("boto2")} 
+                        ></IconButton>
+                      <IconButton
+                        icon={require('../assets/Visa.png')}
+                        color={btnColors.icon3}
+                        size={30}
+                        style={{...styles.toggleBtn, backgroundColor: btnColors.back3, borderTopLeftRadius: 0, borderBottomLeftRadius: 0}}
+                        onPress={() => changeButtonColor("boto3")} 
+                      ></IconButton>
+                    </View>
+                    <Header>Importe total:</Header>
+                    <View style={{...styles.row, alignItems: "center", marginVertical:10}}>
+                      <Text style={{padding: 5, paddingHorizontal:15, flex: 1, fontSize:20, marginRight:10, color: theme.colors.primary, fontWeight: "700", borderWidth:1, borderRadius:5}}>20$</Text>
+                      <View style={{flexDirection:'row-reverse'}}><Button mode='contained'>Reservar</Button></View>
+                    </View>
+                  </Card.Content>
+              </Card>
+            </ScrollView>
       </Background>
 
 )}
@@ -254,7 +234,6 @@ const styles = StyleSheet.create({
     },
     row: {
         flexDirection: 'row',
-        marginTop: 4,
     },
     imageViewStyle:{
       width: 200, 
@@ -270,6 +249,37 @@ const styles = StyleSheet.create({
       position: 'absolute', 
       right: 0,
       fontWeight: 'bold',
+    },
+    iconBtn: {
+      width: 60,
+      height: 60,
+      marginLeft: 10,
+      alignItems: 'center',
+      justifyContent: "center",
+      backgroundColor: theme.colors.primary,
+      borderRadius: 5
+    },
+    timeInput: {
+      flexDirection: "row", 
+      backgroundColor: 'white', 
+      flex:1, 
+      borderColor: "#777", 
+      borderWidth: 1, 
+      height: 60, 
+      alignItems: "center",
+      paddingLeft: 15,
+      paddingRight: 10,
+      borderRadius: 5,
+      marginVertical: 15
+    },
+    toggleBtn:{
+      flex: 1,
+      borderColor: theme.colors.primary,
+      borderWidth: 1,
+      borderRadius: 5,
+      margin: 0,
+      marginVertical: 15,
+      height: 60
     }
 });
 
