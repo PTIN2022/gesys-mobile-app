@@ -30,7 +30,7 @@ export default class StationDetail extends Component {
 						>
 							<Marker coordinate={{latitude: 41.221472, longitude: 1.730100}}>
 								<Image
-									source={require('../assets/charging-station.png')}
+									source={require('../assets/icons8-charging-station-96.png')}
 									style={{width: 40, height: 40}}
 									resizeMode="contain"
 								/>

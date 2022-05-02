@@ -56,6 +56,10 @@ export default function ElectrolineraCard (props){
                     </View>
                     <View style={{flex: 4, paddingLeft: 20}}>
                         <Header>{ props.name }</Header>
+                        <View style={{flexDirection: "row"}}>
+                            <Text style={{fontWeight: "700", marginRight: 10}}>Dirección:</Text>
+                            <Text>{props.direccion}</Text>
+                        </View>
                         <View style={{flexDirection: "row", marginBottom: 12}}>
                             <Text style={{fontWeight: "700", marginRight: 10}}>Ocupacion:</Text>
                             <Text style={{backgroundColor: getOcupationColor(), color: "black", borderRadius: 10, paddingHorizontal: 10}}>{props.curr_ocupation}/{props.capacity}</Text>
