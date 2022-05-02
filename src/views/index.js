@@ -8,6 +8,7 @@ export { default as Password } from './Password'
 //Estaciones
 export { default as Stations } from './StationMap'
 export { default as StationDetail } from './StationDetail'
+export { default as StationsList } from './StationsList'
 
 //Vehiculos
 export { default as VehiclesList } from './VehiclesList'

@@ -5,8 +5,10 @@ import React from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { addBooking } from '../../Actions';
+import Background from '../components/Background';
+import AppBack from '../components/AppBack';
 
-class Stations extends React.Component{
+class StationsList extends React.Component{
     constructor(props){
         super(props);
         this.state = {
@@ -41,7 +43,8 @@ class Stations extends React.Component{
     // Para pintar por pantalla.
     render(){
         return (
-            <View>
+            <Background>
+                <AppBack title="Lista de estaciones"/>
                 {this.props.all_stations.map((item) => {
                     // Iteramos las estaciones que tenemos cargadas en el store.
                     return (
@@ -70,11 +73,10 @@ class Stations extends React.Component{
                                     </Dialog.Actions>
                                 </Dialog>
                             </Portal>
-                            <Divider />
                         </View>
                     );
                 })}
-                <View style={styles.container}>
+                {/* <View style={styles.container}>
                     <Snackbar
                         style={{backgroundColor: 'green', color:'white'}}
                         visible={this.state.bookingSuccess}
@@ -87,8 +89,8 @@ class Stations extends React.Component{
                         onDismiss={() => this.setState({bookingError: false})}>
                         Ha habido un error al hacer la reserva.
                     </Snackbar>
-                </View>
-            </View>
+                </View> */}
+            </Background>
         )
     }
 }
@@ -112,4 +114,4 @@ const mapDispatchToProps = dispatch => (
     }, dispatch)
 );
   
-export default connect(mapStateToProps, mapDispatchToProps)(Stations);
+export default connect(mapStateToProps, mapDispatchToProps)(StationsList);

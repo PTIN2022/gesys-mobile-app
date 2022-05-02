@@ -12,6 +12,7 @@ import {
   SignUp,
   Password,
   Stations,
+  StationsList,
   StationDetail,
   VehiclesList,
   VehicleForm,
@@ -40,7 +41,7 @@ class App extends React.Component {
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-              <Stack.Navigator  initialRouteName="BookingForm" screenOptions={{headerShown: false}}>
+              <Stack.Navigator  initialRouteName="StationsList" screenOptions={{headerShown: false}}>
 
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />
@@ -51,6 +52,7 @@ class App extends React.Component {
                 {/*ESTACIONES*/}
                 <Stack.Screen name="Stations" component={Stations}/>
                 <Stack.Screen name="StationDetail" component={StationDetail} />
+                <Stack.Screen name="StationsList" component={StationsList} />
 
                 {/*VEHICULOS*/}
                 <Stack.Screen name="VehiclesList" component={VehiclesList} />
