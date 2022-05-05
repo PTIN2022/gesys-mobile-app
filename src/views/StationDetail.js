@@ -10,34 +10,37 @@ export default class StationDetail extends Component {
 
 	constructor(props){
 		super(props)
+		this.station=this.props.route.params.station
 	}
 
   render() {
 		return (
 			<Background>
-				<AppBack title="Detalle de estacion" backScreenName="Stations"/>
+				<AppBack title={`Detalle de la estacion ${this.station.id}`} backScreenName="Stations"/>
 					<Card mode="elevated" style={{marginHorizontal: 10, backgorundColor: "#ffffffdd"}}>
-						
-						<Card.Content>
-						<MapView 
+						<MapView
+							
 							style={s.map}
 							initialRegion={{
-								latitude: 41.221472,
-								longitude: 1.730100,
+								latitude: this.station.coordinates.latitude,
+								longitude: this.station.coordinates.longitude,
 								latitudeDelta: 0.003,
 								longitudeDelta: 0.003,
 							}}
 						>
-							<Marker coordinate={{latitude: 41.221472, longitude: 1.730100}}>
+							<Marker coordinate={{latitude: this.station.coordinates.latitude,
+								longitude: this.station.coordinates.longitude}}>
 								<Image
 									source={require('../assets/icons8-charging-station-96.png')}
-									style={{width: 40, height: 40}}
+									style={{width: 50, height: 50}}
 									resizeMode="contain"
 								/>
 							</Marker>
 						</MapView>
+						<Card.Content>
+						
 							<View style={{margin: 10}}>
-								<Header>EPEVG Charging Station</Header>
+								<Header>{this.station.name}</Header>
 							</View>
 							<View style={s.tableRow}>
 								<View style={{...s.viewCell, flex: 1}}><Text>Puntuación</Text></View>
@@ -66,7 +69,7 @@ export default class StationDetail extends Component {
 							</View>
 							<View style={s.tableRow} >
 								<View style={{...s.viewCell, flex: 1}}><Text>Ocupacion</Text></View>
-								<View style={{...s.viewCell, flex: 2}}><Text>20/35</Text></View>
+								<View style={{...s.viewCell, flex: 2}}><Text>{`${this.station.curr_ocupation}/${this.station.capacity}`}</Text></View>
 							</View>
 							<View style={s.tableRow}>
 								<View style={{...s.viewCell, flex: 1}}><Text>Dirección</Text></View>

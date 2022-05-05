@@ -87,8 +87,8 @@ const INITIAL_STATE = {
       id: 1,
       name: "Station Vilanova Casino",
       coordinates: {
-        latitude: 27.38,
-        longitude: 31.33
+        latitude: 41.2285,
+        longitude: 1.7289
       },
       capacity: 31,
       curr_ocupation: 30,
@@ -98,8 +98,8 @@ const INITIAL_STATE = {
       id: 2,
       name: "Station SuperMart",
       coordinates: {
-        latitude: 90.38,
-        longitude: 87.33
+        latitude: 41.2273,
+        longitude: 1.7185
       },
       capacity: 50,
       curr_ocupation: 2,
@@ -109,8 +109,8 @@ const INITIAL_STATE = {
       id: 3,
       name: "Station Lidl Granvia",
       coordinates: {
-        latitude: 10.1,
-        longitude: 15.12
+        latitude: 41.2147,
+        longitude: 1.7270
       },
       capacity: 20,
       curr_ocupation: 10,

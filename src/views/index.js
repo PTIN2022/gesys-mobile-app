@@ -6,7 +6,7 @@ export { default as SignUp } from './SignUp'
 export { default as Password } from './Password'
 
 //Estaciones
-export { default as Stations } from './StationMap'
+export { default as Stations } from './StationsMap'
 export { default as StationDetail } from './StationDetail'
 export { default as StationsList } from './StationsList'
 
