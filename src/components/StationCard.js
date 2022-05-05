@@ -36,7 +36,6 @@ import { Text } from "react-native";
 
 export default function ElectrolineraCard (props){
     const [visible, setVisible] = React.useState(true);
-    const showDialog = () => props.openModal();
     const hideDialog = () => setVisible(false);
 
     const getOcupationColor = () => {
@@ -67,7 +66,7 @@ export default function ElectrolineraCard (props){
                     </View>
                 </View>
                 <View style={{flexDirection: "row-reverse"}}>
-                    <Button mode="contained"style={{marginLeft: 10}} onPress={() => {showDialog()}}>Reservar</Button>
+                    <Button mode="contained"style={{marginLeft: 10}} onPress={() => props.openModal(props.id, props.name)}>Reservar</Button>
                 </View>
             </Card.Content>
         </Card>

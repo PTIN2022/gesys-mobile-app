@@ -81,42 +81,8 @@ const INITIAL_STATE = {
       time: "4h"
     }
   ],
-  all_stations: [ // Guardmos las electrolineras.
-    // Ponemos los datos iniciales (de momento ficticios) a la store.
-    {
-      id: 1,
-      name: "Station Vilanova Casino",
-      coordinates: {
-        latitude: 41.2285,
-        longitude: 1.7289
-      },
-      capacity: 31,
-      curr_ocupation: 30,
-      slots: ["10:30"]
-    },
-    {
-      id: 2,
-      name: "Station SuperMart",
-      coordinates: {
-        latitude: 41.2273,
-        longitude: 1.7185
-      },
-      capacity: 50,
-      curr_ocupation: 2,
-      slots: ["10:30"]
-    },
-    {
-      id: 3,
-      name: "Station Lidl Granvia",
-      coordinates: {
-        latitude: 41.2147,
-        longitude: 1.7270
-      },
-      capacity: 20,
-      curr_ocupation: 10,
-      slots: ["12:30"]
-    }
-  ]
+  all_stations: []
+
 };
 
 const gesysReducer = (state = INITIAL_STATE, action) => {
