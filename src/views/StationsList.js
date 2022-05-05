@@ -48,8 +48,8 @@ class StationsList extends React.Component{
                         id: e.id,
                         name: e.estacion,
                         coordinates: {
-                            latitude: e.latitude,
-                            longitude: e.longitude
+                            latitude: e.latitud,
+                            longitude: e.longitud
                         },
                         capacity: e.ocupation_max,
                         curr_ocupation: e.ocupation_now,
