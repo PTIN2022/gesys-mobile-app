@@ -25,7 +25,7 @@ function Sidebar(props){
               <Text style={s.username}>Username</Text>
             </View>
             <View style={s.avatarContainer}>
-              <Menu.Item style={s.item} onPress={(e)=> nav("LogIn")} icon="account" title="Cuenta" />
+              <Menu.Item style={s.item} onPress={(e)=> nav("Profile")} icon="account" title="Cuenta" />
               <Menu.Item style={s.item} onPress={(e)=> nav("VehiclesList")} icon="car" title="Vehículos" />
               <Menu.Item style={s.item} onPress={(e)=> nav("StationsList")} icon="ev-station" title="Estaciones" />
               <Menu.Item style={s.item} onPress={(e)=> nav("BookingsList")} icon="book" title="Reservas"/>

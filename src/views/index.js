@@ -18,6 +18,7 @@ export { default as VehicleForm } from './VehicleForm'
 export { default as BookingsList} from './BookingsList'
 export { default as BookingForm } from './BookingForm'
 
-
-
+//Información del usuario
+export { default as Profile } from './Profile'
+export { default as ModifyProfile } from './ModifyProfile'
 

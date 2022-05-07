@@ -18,6 +18,8 @@ import {
   VehicleForm,
   BookingsList,
   BookingForm,
+  Profile,
+  ModifyProfile,
 } from './src/views'
 import Layout from './src/components/Layout/Layout';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -62,6 +64,9 @@ class App extends React.Component {
                 <Stack.Screen name="BookingsList" component={BookingsList} />
                 <Stack.Screen name="BookingForm" component={BookingForm} />
 
+                {/*USUARIO*/}
+                <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
               </Stack.Navigator>
             </NavigationContainer>
           </Provider>
