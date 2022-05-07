@@ -4,12 +4,12 @@ import { connect } from 'react-redux';
 import React, {useState} from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput  } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
-import { addBooking, addStation } from '../../Actions';
+import { addBooking, addStation } from '../state/actions';
 import Background from '../components/Background';
 import AppBack from '../components/AppBack';
 import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-
+import {fetchEstaciones} from '../state/actions/Estaciones'
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
 class StationsList extends React.Component{
@@ -36,27 +36,28 @@ class StationsList extends React.Component{
 
     }
 
-    componentDidMount(){       
-        let self = this;
-        fetch(API + "/estaciones")
-        .then(response => response.json())
-        .then(function(data) {
-            let new_data2 = data.map((e) => {
-                let exists = self.props.all_stations.some(i => i.id == e.id);
-                if(exists == false){
-                    self.props.addStation({
-                        id: e.id,
-                        name: e.estacion,
-                        coordinates: {
-                            latitude: e.latitud,
-                            longitude: e.longitud
-                        },
-                        capacity: e.ocupation_max,
-                        curr_ocupation: e.ocupation_now,
-                    })
-                }
-            })
-        });
+    componentDidMount(){   
+        this.props.fetchEstaciones()    
+        // let self = this;
+        // fetch(API + "/estaciones")
+        // .then(response => response.json())
+        // .then(function(data) {
+        //     let new_data2 = data.map((e) => {
+        //         let exists = self.props.all_stations.some(i => i.id == e.id);
+        //         if(exists == false){
+        //             self.props.addStation({
+        //                 id: e.id,
+        //                 name: e.estacion,
+        //                 coordinates: {
+        //                     latitude: e.latitud,
+        //                     longitude: e.longitud
+        //                 },
+        //                 capacity: e.ocupation_max,
+        //                 curr_ocupation: e.ocupation_now,
+        //             })
+        //         }
+        //     })
+        // });
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
@@ -132,17 +133,18 @@ class StationsList extends React.Component{
         return (
             <Background>
                 <AppBack title="Lista de estaciones" backScreenName="Stations"/>
-                {this.props.all_stations.map((item) => {
+                {this.props.estaciones.map((item) => {
                     // Iteramos las estaciones que tenemos cargadas en el store.
                     return (
                         <View key={item.id}>
                             <StationCard 
                                 id={item.id}
-                                name={item.name}
-                                capacity={item.capacity}
-                                curr_ocupation={item.curr_ocupation}
-                                longitude={item.coordinates.longitude}
-                                latitude={item.coordinates.latitude}
+                                estacion={item.estacion}
+                                ocupation_max={item.ocupation_max}
+                                ocupation_now={item.ocupation_now}
+                                longitude={item.longitud}
+                                latitude={item.latitud}
+                                direccion={item.direccion}
                                 openModal={this.toggleDialog}
                             />
                         </View>
@@ -231,16 +233,15 @@ const styles = StyleSheet.create({
   
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = (state) => {
-    const { all_stations } = state;
-    return { all_stations };
+const mapStateToProps = ({Estaciones}) => {
+    const { estaciones } = Estaciones;
+    return { estaciones };
 };
 
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
-        addBooking,
-        addStation
-    }, dispatch)
-);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchEstaciones: () => dispatch(fetchEstaciones())
+    }
+}
   
 export default connect(mapStateToProps, mapDispatchToProps)(StationsList);

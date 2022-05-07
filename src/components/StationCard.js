@@ -39,7 +39,7 @@ export default function ElectrolineraCard (props){
     const hideDialog = () => setVisible(false);
 
     const getOcupationColor = () => {
-        var ocupRatio = (props.curr_ocupation/props.capacity)*100
+        var ocupRatio = (props.ocupation_now/props.ocupation_max)*100
         return  (ocupRatio <= 100.0) && (ocupRatio > 70.0) ? "#ff000077" :   
                 (ocupRatio <= 70.0) && (ocupRatio > 30.0) ? "#ffc20077" :
                 (ocupRatio <= 30.0) ? "#00e39b77" : "grey"; 
@@ -54,14 +54,14 @@ export default function ElectrolineraCard (props){
                         <Avatar.Icon {...props} icon="car-electric" />
                     </View>
                     <View style={{flex: 4, paddingLeft: 20}}>
-                        <Header>{ props.name }</Header>
+                        <Header>{ props.estacion }</Header>
                         <View style={{flexDirection: "row"}}>
                             <Text style={{fontWeight: "700", marginRight: 10}}>Dirección:</Text>
                             <Text>{props.direccion}</Text>
                         </View>
                         <View style={{flexDirection: "row", marginBottom: 12}}>
                             <Text style={{fontWeight: "700", marginRight: 10}}>Ocupacion:</Text>
-                            <Text style={{backgroundColor: getOcupationColor(), color: "black", borderRadius: 10, paddingHorizontal: 10}}>{props.curr_ocupation}/{props.capacity}</Text>
+                            <Text style={{backgroundColor: getOcupationColor(), color: "black", borderRadius: 10, paddingHorizontal: 10}}>{props.ocupation_now}/{props.ocupation_max}</Text>
                         </View>
                     </View>
                 </View>

@@ -1,18 +1,20 @@
-import { SafeAreaView, AsyncStorage } from "react-native";
+import { SafeAreaView } from "react-native";
 import { Provider } from 'react-native-paper'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { Provider as ReduxProvider } from 'react-redux'
+import createMyStore from "./src/state/store"
 import { theme } from './src/core/theme'
 import SafeArea from "./SafeArea";
 import 'react-native-gesture-handler';
+import Layout from './src/components/Layout/Layout';
 import {
   Landing,
   LogIn,
   SignUp,
   Password,
   Stations,
-  // StationsList,
   StationDetail,
   VehiclesList,
   VehicleForm,
@@ -21,11 +23,9 @@ import {
   Profile,
   ModifyProfile,
 } from './src/views'
-import Layout from './src/components/Layout/Layout';
-import { Provider as ReduxProvider } from 'react-redux';
-import { createStore } from 'redux';
-import gesysReducer from './Reducer';
-const store = createStore(gesysReducer);
+  let store = createMyStore()
+
+
 const Stack = createStackNavigator()
 class App extends React.Component {
 
@@ -35,7 +35,8 @@ class App extends React.Component {
   }
 
   render() {
-    
+
+
 
     return (
       <ReduxProvider store={store}>
@@ -54,7 +55,6 @@ class App extends React.Component {
                 {/*ESTACIONES*/}
                 <Stack.Screen name="Stations" component={Stations}/>
                 <Stack.Screen name="StationDetail" component={StationDetail} />
-                {/* <Stack.Screen name="StationsList" component={StationsList} /> */}
 
                 {/*VEHICULOS*/}
                 <Stack.Screen name="VehiclesList" component={VehiclesList} />

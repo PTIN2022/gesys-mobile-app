@@ -6,7 +6,7 @@ import AppBack from '../components/AppBack';
 import VehicleCard from '../components/VehicleCard'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addVehicle } from '../../Actions';
+import { addVehicle } from '../state/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
@@ -20,7 +20,7 @@ function VehiclesList(props) {
             <AppBack title="Lista de vehiculos" backScreenName="Stations"/>
             <Button style={{margin: 5}} icon="pencil-plus" mode="contained" onPress={()=>navigator.navigate("VehicleForm")}>Nuevo vehiculo</Button>
             <ScrollView>
-                {props.all_vehicles.map(vehicle=>{
+                {props.vehiculos.map(vehicle=>{
                     return (
                         <VehicleCard 
                             key={vehicle.id} 
@@ -37,9 +37,9 @@ function VehiclesList(props) {
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = (state) => {
-    const { all_vehicles } = state;
-    return { all_vehicles };
+const mapStateToProps = ({Vehiculos}) => {
+    const { vehiculos } = Vehiculos;
+    return { vehiculos };
 };
 
 const mapDispatchToProps = dispatch => (

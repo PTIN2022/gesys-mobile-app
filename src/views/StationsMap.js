@@ -3,36 +3,71 @@ import {Card, IconButton} from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps'
 import { StyleSheet, Image, Text, View, Clipboard } from 'react-native';
 import { connect } from 'react-redux';
+import {fetchEstaciones} from '../state/actions/Estaciones'
+
+class StationsMap extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state={
+      region: {
+        latitude: 41.2239200,
+        longitude: 1.7251100,
+        latitudeDelta: 0.020,
+        longitudeDelta: 0.020
+      },
+      fake_estaciones: [
+          {
+              id: 1,
+              estacion: "hola",
+              latitud: 41.22353710912193, 
+              longitud: 1.7204303853213787,
+              ocupation_max: 10,
+              ocupation_now: 5
+          },
+          {
+              id: 2,
+              estacion: "hola",
+              latitud: 41.22301989408491, 
+              longitud: 1.7290154658257961,
+              ocupation_max: 20,
+              ocupation_now: 18
+          },
+          {
+              id: 3,
+              estacion: "hola",
+              latitud: 41.21592322008729, 
+              longitud: 1.7236034385859966,
+              ocupation_max: 25,
+              ocupation_now: 1
+          },
+      ]
+    };
+  }
+
+  componentDidMount(){
+    this.props.fetchEstaciones()
+  }
 
 
-function StationsMap(props) {
-
-  const [region, setRegion] = useState({
-    latitude: 41.2239200,
-    longitude: 1.7251100,
-    latitudeDelta: 0.020,
-    longitudeDelta: 0.020,
-  })
-
-  return (
+  render () {
+    return (
     <View>
       <MapView 
         style={s.map}
-        initialRegion={region}
-        onRegionChange={newRegion=>setRegion(newRegion)}
+        initialRegion={this.state.region}
+        onRegionChange={newRegion=>this.setState({region: newRegion})}
       >
-        {props.all_stations.map(item => {
+        {this.state.fake_estaciones.map(item => {
 
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
                   <Marker
-                      onPress={()=>props.navigation.navigate("StationDetail", {
-                        station: item
-                      })}
+                      onPress={()=>this.props.navigation.navigate("StationDetail")}
                       key={item.id}
                       coordinate={{
-                        latitude: item.coordinates.latitude,
-                        longitude: item.coordinates.longitude
+                        latitude: item.latitud,
+                        longitude: item.longitud
                       }}
                   >
                     <Image
@@ -45,14 +80,15 @@ function StationsMap(props) {
         })}
       </MapView>
       {/* ESTA CARD MUESTRA EN REAL TIME LAT Y LONG DE EL MAPA */}
-      <Card style={{position: "absolute", top: 5, right:5, backgroundColor: "#0009"}} onPress={()=> Clipboard.setString(`${region.latitude}, ${region.longitude}`)}>
+      {/* <Card style={{position: "absolute", top: 5, right:5, backgroundColor: "#0009"}} onPress={()=> Clipboard.setString(`${region.latitude}, ${region.longitude}`)}>
         <View style={{flexDirection: "row", alignItems: "center", padding: 5}}>
           <IconButton icon="content-copy" color='white' size={18}></IconButton>
-          <Text style={{color: "white", fontSize: 16}}>{region.latitude}, {region.longitude}</Text>
+          <Text style={{color: "white", fontSize: 16}}>{this.state.region.latitude}, {this.state.region.longitude}</Text>
         </View>
-      </Card>
+      </Card> */}
     </View>
   )
+}
 }
 
 const s = StyleSheet.create({
@@ -64,10 +100,15 @@ const s = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = (state) => {
-  const { all_stations } = state;
-  return { all_stations };
+const mapStateToProps = ({Estaciones}) => {
+  const {estaciones} = Estaciones;
+  return { estaciones };
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+      fetchEstaciones: () => dispatch(fetchEstaciones())
+  }
+}
 
-export default connect(mapStateToProps)(StationsMap);
+export default connect(mapStateToProps, mapDispatchToProps)(StationsMap);

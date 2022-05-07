@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import {Button, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
-import { addBooking } from '../../Actions';
+import { addBooking } from '../state/actions';
 import ReservaCard from '../components/ReservaCard';
 import { Avatar } from "react-native-paper";
 import AppBack from '../components/AppBack';
@@ -45,7 +45,7 @@ class BookingList extends React.Component{
             <Background>
                 <AppBack title="Lista de reservas" backScreenName="Stations"/>
                 <ScrollView>
-                {this.props.all_bookings.map((item) => {
+                {this.props.reservas.map((item) => {
                     return(
                             <ReservaCard
                                 key={item.id}
@@ -102,9 +102,9 @@ class BookingList extends React.Component{
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = (state) => {
-    const { all_bookings } = state;
-    return { all_bookings };
+const mapStateToProps = ({Reservas}) => {
+    const { reservas } = Reservas;
+    return { reservas };
 };
 
 const mapDispatchToProps = dispatch => (
