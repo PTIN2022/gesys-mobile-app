@@ -41,17 +41,23 @@ export default Estaciones = (state = initial_state, action) => {
             return {
                 ...state,
                 estaciones: [],
+                successEstaciones: false,
+                errorEstaciones: false,
                 fetchingEstaciones: true
             }
         case FETCHING_ESTACIONES_SUCCESS: 
             return {
                 ...state,
                 estaciones: action.payload,
-                fetchingEstaciones: false
+                successEstaciones: true,
+                fetchingEstaciones: false,
+                errorEstaciones: false,
             }
         case FETCHING_ESTACIONES_ERROR:
             return {
                 ...state,
+                estaciones: [],
+                successEstaciones: false,
                 fetchingEstaciones: false,
                 errorEstaciones: true
             }

@@ -17,6 +17,8 @@ export default getEstacion = (state = initial_state, action) => {
             return {
                 ...state,
                 estacion: {},
+                successEstacion: false,
+                errorEstacion: false,
                 fetchingEstacion: true
             }
         case FETCHING_ESTACION_SUCCESS: 
@@ -24,11 +26,14 @@ export default getEstacion = (state = initial_state, action) => {
                 ...state,
                 estacion: action.payload,
                 successEstacion: true,
+                errorEstacion: false,
                 fetchingEstacion: false
             }
         case FETCHING_ESTACION_ERROR:
             return {
                 ...state,
+                estacion: {},
+                successEstacion: false,
                 fetchingEstacion: false,
                 errorEstacion: true
             }

@@ -130,7 +130,9 @@ class StationsList extends React.Component{
 
     // Para pintar por pantalla.
     render(){
-        return (
+        return !this.props.successEstaciones ? 
+			(<Text>Sin datos</Text>)
+		: (
             <Background>
                 <AppBack title="Lista de estaciones" backScreenName="Stations"/>
                 {this.props.estaciones.map((item) => {
@@ -234,8 +236,8 @@ const styles = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({Estaciones}) => {
-    const { estaciones } = Estaciones;
-    return { estaciones };
+    const { estaciones, successEstaciones } = Estaciones;
+    return { estaciones, successEstaciones };
 };
 
 const mapDispatchToProps = dispatch => {

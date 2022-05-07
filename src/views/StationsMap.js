@@ -51,7 +51,9 @@ class StationsMap extends React.Component {
 
 
   render () {
-    return (
+    return !this.props.successEstaciones ? 
+			(<Text>Sin datos</Text>)
+		: (
     <View>
       <MapView 
         style={s.map}
@@ -101,8 +103,8 @@ const s = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({Estaciones}) => {
-  const {estaciones} = Estaciones;
-  return { estaciones };
+  const {estaciones, successEstaciones} = Estaciones;
+  return { estaciones, successEstaciones };
 };
 
 const mapDispatchToProps = dispatch => {
