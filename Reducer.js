@@ -81,7 +81,35 @@ const INITIAL_STATE = {
       time: "4h"
     }
   ],
-  all_stations: []
+  all_stations: [
+    {
+      id: 1,
+      coordinates:{
+        latitude: 41.22353710912193, 
+        longitude: 1.7204303853213787
+      },
+      capacity: 10,
+      curr_ocupation: 5
+    },
+    {
+      id: 2,
+      coordinates:{
+        latitude: 41.22301989408491, 
+        longitude: 1.7290154658257961
+      },
+      capacity: 20,
+      curr_ocupation: 18
+    },
+    {
+      id: 3,
+      coordinates:{
+        latitude: 41.21592322008729, 
+        longitude: 1.7236034385859966
+      },
+      capacity: 25,
+      curr_ocupation: 1
+    }
+  ]
 
 };
 

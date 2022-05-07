@@ -12,7 +12,7 @@ import {
   SignUp,
   Password,
   Stations,
-  StationsList,
+  // StationsList,
   StationDetail,
   VehiclesList,
   VehicleForm,
@@ -52,7 +52,7 @@ class App extends React.Component {
                 {/*ESTACIONES*/}
                 <Stack.Screen name="Stations" component={Stations}/>
                 <Stack.Screen name="StationDetail" component={StationDetail} />
-                <Stack.Screen name="StationsList" component={StationsList} />
+                {/* <Stack.Screen name="StationsList" component={StationsList} /> */}
 
                 {/*VEHICULOS*/}
                 <Stack.Screen name="VehiclesList" component={VehiclesList} />
