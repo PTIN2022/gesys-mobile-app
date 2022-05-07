@@ -24,6 +24,7 @@ import {
   ModifyProfile,
   About,
   PrivacyPolicy,
+  UsageTerms
 } from './src/views'
   let store = createMyStore()
 
@@ -73,6 +74,7 @@ class App extends React.Component {
                 {/*APP*/}
                 <Stack.Screen name="About" component={About} />
                 <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+                <Stack.Screen name="UsageTerms" component={UsageTerms} />
 
               </Stack.Navigator>
             </NavigationContainer>

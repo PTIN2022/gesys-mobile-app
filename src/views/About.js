@@ -39,7 +39,7 @@ export default function About({ navigation }) {
 							</View>
 						</TouchableHighlight>
 
-						<TouchableHighlight underlayColor={"grey"} style={{borderRadius:10}} onPress={() => navigation.navigate('PrivacyPolicy')}>
+						<TouchableHighlight underlayColor={"grey"} style={{borderRadius:10}} onPress={() => navigation.navigate('UsageTerms')}>
 							<View>
 								<View style={s.InfoContainer}>
 									<View style={s.row}>

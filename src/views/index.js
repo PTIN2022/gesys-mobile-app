@@ -25,3 +25,4 @@ export { default as ModifyProfile } from './ModifyProfile'
 //Información app
 export { default as About } from './About'
 export { default as PrivacyPolicy } from './PrivacyPolicy'
+export { default as UsageTerms } from './UsageTerms'
