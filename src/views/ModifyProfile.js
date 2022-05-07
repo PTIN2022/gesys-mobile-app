@@ -15,7 +15,7 @@ export default function ModifyProfile({ navigation }) {
 	const chooseImg = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.All,
-			aspect: [4, 3],
+			aspect: [1, 1],
 			quality: 1,			
 			allowsEditing: true,
 		});

@@ -31,7 +31,7 @@ function Sidebar(props){
               <Menu.Item style={s.item} onPress={(e)=> nav("BookingsList")} icon="book" title="Reservas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Informacion")} icon="information" title="Información" />
+              <Menu.Item style={s.item} onPress={(e)=> nav("About")} icon="information" title="Información" />
             </View>
         </View>      
     );

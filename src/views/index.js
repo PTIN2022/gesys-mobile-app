@@ -22,3 +22,6 @@ export { default as BookingForm } from './BookingForm'
 export { default as Profile } from './Profile'
 export { default as ModifyProfile } from './ModifyProfile'
 
+//Información app
+export { default as About } from './About'
+export { default as PrivacyPolicy } from './PrivacyPolicy'

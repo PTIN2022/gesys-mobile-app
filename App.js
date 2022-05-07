@@ -22,6 +22,8 @@ import {
   BookingForm,
   Profile,
   ModifyProfile,
+  About,
+  PrivacyPolicy,
 } from './src/views'
   let store = createMyStore()
 
@@ -67,6 +69,11 @@ class App extends React.Component {
                 {/*USUARIO*/}
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
+
+                {/*APP*/}
+                <Stack.Screen name="About" component={About} />
+                <Stack.Screen name="PrivacyPolicy" component={PrivacyPolicy} />
+
               </Stack.Navigator>
             </NavigationContainer>
           </Provider>
