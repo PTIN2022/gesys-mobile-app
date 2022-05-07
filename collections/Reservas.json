@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "0e76afc5-21b9-43a3-982a-c0f1b2c7d04c",
+		"name": "Reservas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "getReservas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postReserva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id_estacion\": 1,\r\n  \"fecha_inicio\": \"20-04-2022 11:00\",\r\n  \"fecha_final\": \"20-04-2022 17:00\",\r\n  \"id_vehiculo\": \"WWE1234\",\r\n  \"id_cliente\": \"5555555B\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReservaById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas/7",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteReservaById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas/7",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReservasByEstacion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas/estacion/2",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas",
+						"estacion",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReservasByDNI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas/bydni/5555555B",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas",
+						"bydni",
+						"5555555B"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReservasByMatricula",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}:{{RSV_PORT}}/reservas/bymatricula/WWE1234",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"port": "{{RSV_PORT}}",
+					"path": [
+						"reservas",
+						"bymatricula",
+						"WWE1234"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
