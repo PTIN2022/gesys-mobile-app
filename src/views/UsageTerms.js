@@ -13,7 +13,7 @@ export default function UsageTerms({ navigation }) {
 
 	return (
 		<Background>
-			<AppBack title="Política de privacidad"/>
+			<AppBack title="Términos de uso"/>
 			<ScrollView>
 				<Card mode="elevated" style={{marginHorizontal: 10, backgorundColor: "#ffffffdd", borderRadius: 20}}>
 					
