@@ -37,7 +37,7 @@ class StationsList extends React.Component{
     }
 
     componentDidMount(){   
-        this.props.fetchEstaciones()    
+        this.props.fetchEstaciones()
         // let self = this;
         // fetch(API + "/estaciones")
         // .then(response => response.json())
@@ -69,7 +69,6 @@ class StationsList extends React.Component{
                 station: id,
                 stationName: name,
             }}))
-            
     }
         
     book = (idStation, nameStation) => {
