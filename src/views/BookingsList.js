@@ -8,6 +8,9 @@ import ReservaCard from '../components/ReservaCard';
 import { Avatar } from "react-native-paper";
 import AppBack from '../components/AppBack';
 import Background from "../components/Background"
+import { fetchReservas } from '../state/actions/Reservas'
+const API = "http://craaxkvm.epsevg.upc.es:23601/api";
+
 class BookingList extends React.Component{
 
     constructor(props){
@@ -19,6 +22,9 @@ class BookingList extends React.Component{
             bookingSuccess: false,
             bookingError: false,
         }
+    }
+    componentDidMount(){
+        this.props.fetchReservas()
     }
 
     toggleDialog = () => {
@@ -41,7 +47,9 @@ class BookingList extends React.Component{
     }
 
     render(){    //para pintar por pantalla
-        return(
+        return !this.props.successReservas ?
+            (<Text>Sin datos</Text>)
+        : (
             <Background>
                 <AppBack title="Lista de reservas" backScreenName="Stations"/>
                 <ScrollView>
@@ -107,9 +115,15 @@ const mapStateToProps = ({Reservas}) => {
     return { reservas };
 };
 
-const mapDispatchToProps = dispatch => (
+/*const mapDispatchToProps = dispatch => (
     bindActionCreators({
         addBooking,
     }, dispatch)
-);
+);*/
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchReservas: () => dispatch(fetchReservas())
+    }
+}
 export default connect(mapStateToProps, mapDispatchToProps)(BookingList);
