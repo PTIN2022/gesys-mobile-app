@@ -69,5 +69,19 @@ export const fetchReserva = id => {
             .catch(error => {
                 console.log(error)
             })
+        
+       /* dispatch(getReserva())
+        apiFetchAddReserva()  //esta bien????
+            .then(([response, json]) => {
+                if (json.error != undefined) dispatch(getReservaError())
+                else dispatch(getReservaSuccess(json))
+            })
+            .then((json) => {
+                return json.?;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            */
     }
 }

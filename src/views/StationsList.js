@@ -10,6 +10,7 @@ import AppBack from '../components/AppBack';
 import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {fetchEstaciones} from '../state/actions/Estaciones'
+import { fetchReservas } from '../state/actions/Reservas'
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
 class StationsList extends React.Component{
@@ -71,21 +72,38 @@ class StationsList extends React.Component{
             }}))
     }
         
-    book = (idStation, nameStation) => {
+    book = (idStation, startDate, finalDate, idVehicle, idClient) => {      //<--- he añadido estoo
         this.setState({loading: true})
         
         // Just a simulation. It would really be a API call.
         setTimeout(() => {
             this.setState({loading: false, visible: false, bookingSuccess: true})
         }, 2000);
+
+        
         
         //this.props.addBooking({id: idStation, name: nameStation});
         this.props.addBooking({
             id: idStation, 
-            name: nameStation, 
-            date: Date(), 
-            status: 'Activa',
+            dateStart: startDate, //<--- añadida
+            finalDate: finalDate, 
+            car: idVehicle,
+            client : idClient,
         })
+
+        /* 
+        fetch('http://craaxkvm.epsevg.upc.es:/', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                firstParam: 'yourValue',
+                secondParam: 'yourOtherValue'
+            })
+        });
+        */
     }
 
     // Establecemos la hora de reserva "desde"
