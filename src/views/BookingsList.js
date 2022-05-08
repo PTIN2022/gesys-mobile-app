@@ -1,16 +1,16 @@
-import {Text, Image, View, ScrollView } from 'react-native'
+import { Text, Image, View, ScrollView } from 'react-native'
 import { connect } from 'react-redux';
 import React from 'react';
-import {Button, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
+import { Button, Dialog, Portal, Snackbar, Divider } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { addBooking } from '../state/actions';
 import ReservaCard from '../components/ReservaCard';
 import { Avatar } from "react-native-paper";
 import AppBack from '../components/AppBack';
 import Background from "../components/Background"
-class BookingList extends React.Component{
+class BookingList extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             visible: false,
@@ -21,32 +21,40 @@ class BookingList extends React.Component{
         }
     }
 
+    componentDidMount() {
+        console.log('BookingList')
+    }
+    componentDidUpdate() {
+        console.log('BookingList')
+    }
+
+
     toggleDialog = () => {
-        this.setState({visible: true})
+        this.setState({ visible: true })
     }
 
     book = (idBook, nameBook) => {
-        this.setState({loading: true})
+        this.setState({ loading: true })
         // Just a simulation. It would really be a API call.
         setTimeout(() => {
-            this.setState({loading: false, visible: false, bookingSuccess: true})
+            this.setState({ loading: false, visible: false, bookingSuccess: true })
         }, 2000);
-        
+
         this.props.delBooking({
-            id: idBook, 
-            name: nameBook, 
-            date: Date(), 
+            id: idBook,
+            name: nameBook,
+            date: Date(),
             status: 'Cancelada',
         })
     }
 
-    render(){    //para pintar por pantalla
-        return(
+    render() {    //para pintar por pantalla
+        return (
             <Background>
-                <AppBack title="Lista de reservas" backScreenName="Stations"/>
+                <AppBack title="Lista de reservas" backScreenName="Stations" />
                 <ScrollView>
-                {this.props.reservas.map((item) => {
-                    return(
+                    {this.props.reservas.map((item) => {
+                        return (
                             <ReservaCard
                                 key={item.id}
                                 id={item.id}
@@ -58,8 +66,8 @@ class BookingList extends React.Component{
                                 time={item.time}
                                 openModal={this.toggleDialog}
                             />
-                    )
-                            {/* <Portal> 
+                        )
+                        {/* <Portal> 
                                 <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                                     <Dialog.Title>Cancelar</Dialog.Title>
                                     <Dialog.Content>
@@ -94,7 +102,7 @@ class BookingList extends React.Component{
                                 </Dialog>
                             </Portal> */}
 
-                })}
+                    })}
                 </ScrollView>
             </Background>
         )
@@ -102,7 +110,7 @@ class BookingList extends React.Component{
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({Reservas}) => {
+const mapStateToProps = ({ Reservas }) => {
     const { reservas } = Reservas;
     return { reservas };
 };

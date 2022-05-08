@@ -1,6 +1,6 @@
 import { theme } from '../core/theme'
-import React from 'react';
-import { StyleSheet, View} from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Button } from "react-native-paper"
 import AppBack from '../components/AppBack';
 import VehicleCard from '../components/VehicleCard'
@@ -11,33 +11,49 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
 
-function VehiclesList(props) {
 
-    const navigator = useNavigation()
 
-    return (
-        <Background>
-            <AppBack title="Lista de vehiculos" backScreenName="Stations"/>
-            <Button style={{margin: 5}} icon="pencil-plus" mode="contained" onPress={()=>navigator.navigate("VehicleForm")}>Nuevo vehiculo</Button>
-            <ScrollView>
-                {props.vehiculos.map(vehicle=>{
-                    return (
-                        <VehicleCard 
-                            key={vehicle.id} 
-                            name={vehicle.name} 
-                            plate={vehicle.plate}
-                            model={vehicle.model} 
-                        />
-                    )
-                })}
-            </ScrollView>
-        </Background>
-    );
+class VehiclesList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
 
+    componentDidMount() {
+        console.log('VehiclesList')
+    }
+    componentDidUpdate() {
+        console.log('VehiclesList')
+    }
+
+
+
+    render() {
+        return (
+            <Background>
+                <AppBack title="Lista de vehiculos" backScreenName="Stations" />
+                <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("VehicleForm")}>Nuevo vehiculo</Button>
+                <ScrollView>
+                    {this.props.vehiculos.map(vehicle => {
+                        return (
+                            <VehicleCard
+                                key={vehicle.id}
+                                name={vehicle.name}
+                                plate={vehicle.plate}
+                                model={vehicle.model}
+                            />
+                        )
+                    })}
+                </ScrollView>
+            </Background>
+
+        );
+    }
 }
 
-// Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({Vehiculos}) => {
+
+
+const mapStateToProps = ({ Vehiculos }) => {
     const { vehiculos } = Vehiculos;
     return { vehiculos };
 };
@@ -47,6 +63,11 @@ const mapDispatchToProps = dispatch => (
         addVehicle,
     }, dispatch)
 );
+
+
+
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(VehiclesList);
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Component } from 'react'
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
@@ -16,6 +16,122 @@ import AppBack from '../components/AppBack'
 
 //Hacemos uso de los helpers para validar los datos introducidos por el usuario
 //Para eso exportamos la funcion SingupScreen que hará validacion de todos los apartados en su pantalla
+
+class SignUp extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      setName: '',
+      apellido: '',
+      setApellido: '',
+      email: '',
+      setEmail: '',
+      password: '',
+      setPassword: '',
+    };
+  }
+
+
+  componentDidMount() {
+    console.log('SignUp')
+  }
+  componentDidUpdate() {
+    console.log('SignUp')
+  }
+
+  render() {
+    const onSignUpPressed = () => {
+      const nameError = nameValidator(this.state.name.value)
+      const apellidoError = apellidoValidator(this.state.apellido.value)
+      const emailError = emailValidator(this.state.email.value)
+      const passwordError = passwordValidator(this.state.password.value)
+      if (emailError || passwordError || nameError) {
+        this.setState({ setName: ({ ...this.state.name, error: nameError }) })
+        this.setState({ setApellido: ({ ...this.state.apellido, error: apellidoError }) })
+        this.setState({ setEmail: ({ ...this.state.email, error: emailError }) })
+        this.setState({ setPassword: ({ ...this.state.password, error: passwordError }) })
+        return
+      }
+      this.props.navigation.reset({
+        index: 0,
+        routes: [{ name: 'Dashboard' }],
+      })
+    }
+
+
+    return (
+      <Background>
+        <AppBack title="Registro de usuario" backScreenName="LogIn" />
+
+        <View style={{ flexDirection: "column", alignItems: "center", paddingHorizontal: "10%" }}>
+          <Logo />
+          <TextInput
+            label="Nombre"
+            returnKeyType="next"
+            //Usamos el helper para validar
+            value={this.state.name.value}
+            onChangeText={(text) => this.setState({ setName: ({ value: text, error: '' }) })}
+            error={!!this.state.name.error}
+            errorText={this.state.name.error}
+          />
+          <TextInput
+            label="Apellido"
+            returnKeyType="next"
+            //Usamos el helper para validar
+            value={this.state.apellido.value}
+            onChangeText={(text) => this.setState({ setApellido: ({ value: text, error: '' }) })}
+            error={!!this.state.apellido.error}
+            errorText={this.state.apellido.error}
+          />
+          <TextInput
+            label="Email"
+            returnKeyType="next"
+            //Usamos el helper para validar
+            value={this.state.email.value}
+            onChangeText={(text) => this.setState({ setEmail: ({ value: text, error: '' }) })}
+            error={!!this.state.email.error}
+            errorText={this.state.email.error}
+            autoCapitalize="none"
+            autoCompleteType="email"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
+          <TextInput
+            label="Password"
+            returnKeyType="done"
+            //Usamos el helper para validar
+            value={this.state.password.value}
+            onChangeText={(text) => this.setState({ setPassword: ({ value: text, error: '' }) })}
+            error={!!this.state.password.error}
+            errorText={this.state.password.error}
+            secureTextEntry
+          />
+          <Button
+            mode="contained"
+            //Boton para activar los helpers, en caso de error nos resaltará los campos erroneos
+            onPress={onSignUpPressed}
+            style={{ marginTop: 24 }}
+          >
+            Registrate
+          </Button>
+          <View style={styles.row}>
+            <Text>Ya tienes una cuenta? </Text>
+            <TouchableOpacity onPress={() => navigation.replace('LoginScreen')}>
+              <Text style={styles.link}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Background>
+    );
+  }
+}
+
+export default SignUp;
+
+
+
+/*
 export default function SignupScreen({ navigation }) {
   const [name, setName] = useState({ value: '', error: '' })
   const [apellido, setApellido] = useState({ value: '', error: '' })
@@ -39,12 +155,12 @@ export default function SignupScreen({ navigation }) {
       routes: [{ name: 'Dashboard' }],
     })
   }
-//Comienza la pagina en si
+  //Comienza la pagina en si
   return (
     <Background>
-      <AppBack title="Registro de usuario" backScreenName="LogIn"/>
+      <AppBack title="Registro de usuario" backScreenName="LogIn" />
 
-      <View style={{flexDirection: "column", alignItems: "center", paddingHorizontal: "10%"}}>
+      <View style={{ flexDirection: "column", alignItems: "center", paddingHorizontal: "10%" }}>
         <Logo />
         <TextInput
           label="Nombre"
@@ -105,7 +221,7 @@ export default function SignupScreen({ navigation }) {
     </Background>
   )
 }
-
+*/
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
