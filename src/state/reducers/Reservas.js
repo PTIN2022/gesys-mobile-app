@@ -1,3 +1,9 @@
+import {
+  FETCHING_RESERVAS,
+  FETCHING_RESERVAS_SUCCESS,
+  FETCHING_RESERVAS_ERROR
+} from '../actionTypes'
+
 const initial_state = {
     reservas: [
         {
@@ -45,9 +51,38 @@ const initial_state = {
             amount_paid: 32,
             time: "4h"
           }
-    ]
+    ],
+    fetchingReservas: false,
+    errorReservas: false
 }
 
 export default Reservas = (state = initial_state, action) => {
-    return state
+    switch(action.type){
+        case FETCHING_RESERVAS: 
+            return {
+                ...state,
+                reservas: [],
+                successReservas: false,
+                errorReservas: false,
+                fetchingReservas: true
+            }
+        case FETCHING_RESERVAS_SUCCESS: 
+            return {
+                ...state,
+                reservas: action.payload,
+                successReservas: true,
+                fetchingReservas: false,
+                errorReservas: false,
+            }
+        case FETCHING_RESERVAS_ERROR:
+            return {
+                ...state,
+                reservas: [],
+                successReservas: false,
+                fetchingReservas: false,
+                errorReservas: true
+            }
+        default :
+            return state
+    }
 }
