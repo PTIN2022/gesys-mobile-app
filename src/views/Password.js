@@ -1,13 +1,71 @@
 import { StatusBar } from 'expo-status-bar';
-import {StyleSheet, View, Image} from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import Background from '../components/Background';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import { emailValidator } from '../helpers/emailValidator'
 import { useState } from 'react';
 import AppBack from '../components/AppBack';
+import React, { Component } from 'react'
 
 
+class Password extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ({ value: 'example@example.com', error: '' }),
+      setEmail: ({ value: 'example@example.com', error: '' })
+    };
+  }
+
+  componentDidMount() {
+    console.log('Password')
+  }
+  componentDidUpdate() {
+    console.log('Password')
+  }
+
+  render() {
+    return (
+      <Background>
+        <AppBack title="Recuperacion de contraseña" backScreenName="LogIn" />
+        <View style={{ flexDirection: "column", alignItems: "center", paddingHorizontal: "10%" }}>
+          <Image source={require('../assets/logo.png')}
+            style={styles.ima}
+          />
+          <TextInput
+            label="Email"
+            returnKeyType="next"
+            value={this.state.email.value}
+            onChangeText={(text) => this.setState({ setEmail: ({ value: text, error: '' }) })}
+            error={!!this.state.email.error}
+            errorText={this.state.email.error}
+            autoCapitalize="none"
+            autoCompleteType="email"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
+          <Button mode="contained" onPress={() => {
+            console.log(this.state.email.value)
+            const emailError = emailValidator(this.state.email.value) //Comprobamos si el correo introducido por el usuario es válido
+            if (emailError) {
+              setEmail({ ...this.state.email, error: emailError })
+              return
+            }
+            this.props.navigation.replace('LogIn')
+          }}>
+            Recuperar contraseña
+          </Button>
+        </View>
+      </Background>
+    );
+  }
+}
+
+export default Password;
+
+
+/*
 //Esta función exporta la pantalla de NoPassScreen para poder utilizarla como una view.
 export default function NoPassScreen({navigation}) {
 
@@ -50,7 +108,7 @@ export default function NoPassScreen({navigation}) {
 
   );
 }
-
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
