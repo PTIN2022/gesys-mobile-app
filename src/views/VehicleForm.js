@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
-import { Card, Button, TextInput} from "react-native-paper"
+import React, { Component } from 'react'
+import { Card, Button, TextInput } from "react-native-paper"
 import { theme } from '../core/theme'
 import AppBack from '../components/AppBack'
 import Header from '../components/Header'
@@ -11,31 +11,44 @@ import { useState } from 'react'
 
 
 
-export default function FormulariV({ navigation }) {
 
-    return (
-        
+
+class VehicleForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    componentDidMount() {
+        console.log('VehicleForm')
+    }
+    componentDidUpdate() {
+        console.log('VehicleForm')
+    }
+
+    render() {
+        return (
             <Background>
-                <AppBack title="Nuevo vehiculo" backScreenName="VehiclesList"/>
-                
-                <Card style={{marginHorizontal:5 , padding: 20, backgroundColor: "#ffffffdd"}}>
+                <AppBack title="Nuevo vehiculo" backScreenName="VehiclesList" />
+
+                <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>
                     <Header>Ingrese los datos del nuevo vehiculo:</Header>
-                    <View style={{flexDirection: "column", marginVertical: 15}}>
+                    <View style={{ flexDirection: "column", marginVertical: 15 }}>
                         <TextInput
                             mode="outlined"
-                            style={{marginBottom:10}}
+                            style={{ marginBottom: 10 }}
                             label="Nombre"
                             returnKeyType="next"
                         />
                         <TextInput
                             mode="outlined"
-                            style={{marginBottom:10}}
+                            style={{ marginBottom: 10 }}
                             label="Marca"
                             returnKeyType="next"
                         />
                         <TextInput
                             mode="outlined"
-                            style={{marginBottom:10}}
+                            style={{ marginBottom: 10 }}
                             label="Modelo"
                             returnKeyType="next"
                         />
@@ -45,14 +58,18 @@ export default function FormulariV({ navigation }) {
                             returnKeyType="next"
                         />
                     </View>
-                    
-                    <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
-                        <Button style={{width: "auto", }} mode="contained">Crear vehiculo</Button>
+
+                    <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+                        <Button style={{ width: "auto", }} mode="contained" onPress={() => this.props.navigation.navigate("VehiclesList")}>Crear vehiculo</Button>
                     </View>
                 </Card>
             </Background>
-    )
+        );
+    }
 }
+
+export default VehicleForm;
+
 
 const styles = StyleSheet.create({
     input: {
