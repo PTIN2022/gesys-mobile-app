@@ -72,38 +72,21 @@ class StationsList extends React.Component{
             }}))
     }
         
-    book = (idStation, startDate, finalDate, idVehicle, idClient) => {      //<--- he añadido estoo
+    book = (idStation, nameStation) => {
         this.setState({loading: true})
         
         // Just a simulation. It would really be a API call.
         setTimeout(() => {
             this.setState({loading: false, visible: false, bookingSuccess: true})
         }, 2000);
-
-        
         
         //this.props.addBooking({id: idStation, name: nameStation});
         this.props.addBooking({
             id: idStation, 
-            dateStart: startDate, //<--- añadida
-            finalDate: finalDate, 
-            car: idVehicle,
-            client : idClient,
+            name: nameStation, 
+            date: Date(), 
+            status: 'Activa',
         })
-
-        /* 
-        fetch('http://craaxkvm.epsevg.upc.es:/', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                firstParam: 'yourValue',
-                secondParam: 'yourOtherValue'
-            })
-        });
-        */
     }
 
     // Establecemos la hora de reserva "desde"
