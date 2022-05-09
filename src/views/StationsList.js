@@ -9,7 +9,8 @@ import Background from '../components/Background';
 import AppBack from '../components/AppBack';
 import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { fetchEstaciones } from '../state/actions/Estaciones'
+import {fetchEstaciones} from '../state/actions/Estaciones'
+import { fetchReservas } from '../state/actions/Reservas'
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
 class StationsList extends React.Component {

@@ -52,6 +52,7 @@ class BookingList extends React.Component{
     }
 
     render(){    //para pintar por pantalla
+        //alert(this.props.successReservas)
         return !this.props.successReservas ?
             (<Text>Sin datos</Text>)
         : (
@@ -115,9 +116,9 @@ class BookingList extends React.Component{
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Reservas }) => {
-    const { reservas } = Reservas;
-    return { reservas };
+const mapStateToProps = ({Reservas}) => {
+    const { reservas, successReservas } = Reservas;
+    return { reservas, successReservas };
 };
 
 /*const mapDispatchToProps = dispatch => (

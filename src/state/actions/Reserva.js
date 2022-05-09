@@ -4,6 +4,10 @@ import {
     FETCHING_RESERVA_ERROR
 } from '../actionTypes'
 import { apiFetchReservaById } from '../../api'
+import { apiFetchReservaByEstacion } from '../../api'
+import { apiFetchReservaByDNI } from '../../api'
+import { apiFetchReservaByMatricula } from '../../api'
+
 
 export const getReserva = () => {
     return {
@@ -65,5 +69,19 @@ export const fetchReserva = id => {
             .catch(error => {
                 console.log(error)
             })
+        
+       /* dispatch(getReserva())
+        apiFetchAddReserva()  //esta bien????
+            .then(([response, json]) => {
+                if (json.error != undefined) dispatch(getReservaError())
+                else dispatch(getReservaSuccess(json))
+            })
+            .then((json) => {
+                return json.?;
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            */
     }
 }
