@@ -1,7 +1,7 @@
 import { Image, View, StyleSheet, Text } from 'react-native'
 import StationCard from '../components/StationCard'
 import { connect } from 'react-redux';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { addBooking, addStation } from '../state/actions';
@@ -11,6 +11,9 @@ import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {fetchEstaciones} from '../state/actions/Estaciones'
 import { fetchReservas } from '../state/actions/Reservas'
+import * as Location from 'expo-location';
+
+
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
 class StationsList extends React.Component {
@@ -27,43 +30,42 @@ class StationsList extends React.Component {
                 stationName: '',
                 from: new Date(),
                 upto: new Date(),
-                date: null,
+                date: new Date(),
             },
             showTimeFrom: false, // estados booleanos para mostrar o no el selector de hora
             showTimeUpto: false,
             showCalendar: false,
             data: null,
+            myLocation: {
+                longitude: null,
+                latuitude: null,
+            },
         }
 
     }
    
-    componentDidMount() {
+    async componentDidMount() {
         this.props.fetchEstaciones()
-        // let self = this;
-        // fetch(API + "/estaciones")
-        // .then(response => response.json())
-        // .then(function(data) {
-        //     let new_data2 = data.map((e) => {
-        //         let exists = self.props.all_stations.some(i => i.id == e.id);
-        //         if(exists == false){
-        //             self.props.addStation({
-        //                 id: e.id,
-        //                 name: e.estacion,
-        //                 coordinates: {
-        //                     latitude: e.latitud,
-        //                     longitude: e.longitud
-        //                 },
-        //                 capacity: e.ocupation_max,
-        //                 curr_ocupation: e.ocupation_now,
-        //             })
-        //         }
-        //     })
-        // });
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setErrorMsg('Permission to access location was denied');
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        this.setState({
+            myLocation: {
+                longitude: location.coords.longitude,
+                latitude: location.coords.latitude,
+            }
+        })
+        
     }
+ 
+
 
     //Per Completar
     componentDidUpdate() {
-        console.log('StationsList')
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
@@ -86,12 +88,12 @@ class StationsList extends React.Component {
         }, 2000);
 
         //this.props.addBooking({id: idStation, name: nameStation});
-        this.props.addBooking({
-            id: idStation,
-            name: nameStation,
-            date: Date(),
-            status: 'Activa',
-        })
+        // this.props.addBooking({
+        //     id: idStation,
+        //     name: nameStation,
+        //     date: Date(),
+        //     status: 'Activa',
+        // })
     }
 
     // Establecemos la hora de reserva "desde"
@@ -146,12 +148,13 @@ class StationsList extends React.Component {
                             <View key={item.id}>
                                 <StationCard
                                     id={item.id}
-                                    estacion={item.estacion}
+                                    estacion={item.nombre_est}
                                     ocupation_max={item.ocupation_max}
                                     ocupation_now={item.ocupation_now}
                                     longitude={item.longitud}
                                     latitude={item.latitud}
                                     direccion={item.direccion}
+                                    key={item.id}
                                     openModal={this.toggleDialog}
                                 />
                             </View>
