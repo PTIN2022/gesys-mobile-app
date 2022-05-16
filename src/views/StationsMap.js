@@ -65,7 +65,6 @@ class StationsMap extends React.Component {
   
   
   componentDidUpdate() {
-    console.log('StationsMap')
   }
 
 
