@@ -11,7 +11,6 @@ import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {fetchEstaciones} from '../state/actions/Estaciones'
 import { fetchReservas } from '../state/actions/Reservas'
-import * as Location from 'expo-location';
 
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
@@ -44,22 +43,8 @@ class StationsList extends React.Component {
 
     }
    
-    async componentDidMount() {
+    componentDidMount() {
         this.props.fetchEstaciones()
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-          setErrorMsg('Permission to access location was denied');
-          return;
-        }
-  
-        let location = await Location.getCurrentPositionAsync({});
-        this.setState({
-            myLocation: {
-                longitude: location.coords.longitude,
-                latitude: location.coords.latitude,
-            }
-        })
-        
     }
  
 
@@ -142,10 +127,15 @@ class StationsList extends React.Component {
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
+                    {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
+                        <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+                        :
+                        null
+                    }
                     {this.props.estaciones.map((item) => {
                         // Iteramos las estaciones que tenemos cargadas en el store.
                         return (
-                            <View key={item.id}>
+                            <View key={item.id_estacion}>
                                 <StationCard
                                     id={item.id}
                                     estacion={item.nombre_est}
@@ -243,9 +233,10 @@ const styles = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones }) => {
+const mapStateToProps = ({ Estaciones, Locations }) => {
     const { estaciones, successEstaciones } = Estaciones;
-    return { estaciones, successEstaciones };
+    const { currentLocation } = Locations;
+    return { estaciones, successEstaciones, currentLocation };
 };
 
 const mapDispatchToProps = dispatch => {

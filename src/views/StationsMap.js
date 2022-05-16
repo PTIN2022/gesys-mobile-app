@@ -4,6 +4,9 @@ import MapView, { Marker } from 'react-native-maps'
 import { StyleSheet, Image, Text, View, Clipboard } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchEstaciones } from '../state/actions/Estaciones'
+import { setLocation } from '../state/actions/Location'
+import * as Location from 'expo-location';
+
 
 class StationsMap extends React.Component {
 
@@ -45,11 +48,22 @@ class StationsMap extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchEstaciones()
+    
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('Permiso denegado para acceder a la ubicación.');
+    } else {
+      let location = await Location.getCurrentPositionAsync({});
+      this.props.setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
+      })
+    } 
   }
-
-
+  
+  
   componentDidUpdate() {
     console.log('StationsMap')
   }
@@ -60,6 +74,11 @@ class StationsMap extends React.Component {
       (<Text>Sin datos</Text>)
       : (
         <View>
+          {this.props.currentLocation.longitude != null && this.props.currentLocation.latitude!= null ?
+            <Text>Tu ubicación {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+            :
+            null
+          }
           <MapView
             style={s.map}
             initialRegion={this.state.region}
@@ -86,13 +105,13 @@ class StationsMap extends React.Component {
               );
             })}
           </MapView>
-          {/* ESTA CARD MUESTRA EN REAL TIME LAT Y LONG DE EL MAPA */}
-          {/* <Card style={{position: "absolute", top: 5, right:5, backgroundColor: "#0009"}} onPress={()=> Clipboard.setString(`${region.latitude}, ${region.longitude}`)}>
-        <View style={{flexDirection: "row", alignItems: "center", padding: 5}}>
-          <IconButton icon="content-copy" color='white' size={18}></IconButton>
-          <Text style={{color: "white", fontSize: 16}}>{this.state.region.latitude}, {this.state.region.longitude}</Text>
-        </View>
-      </Card> */}
+              {/* ESTA CARD MUESTRA EN REAL TIME LAT Y LONG DE EL MAPA */}
+              {/* <Card style={{position: "absolute", top: 5, right:5, backgroundColor: "#0009"}} onPress={()=> Clipboard.setString(`${region.latitude}, ${region.longitude}`)}>
+                    <View style={{flexDirection: "row", alignItems: "center", padding: 5}}>
+                      <IconButton icon="content-copy" color='white' size={18}></IconButton>
+                      <Text style={{color: "white", fontSize: 16}}>{this.state.region.latitude}, {this.state.region.longitude}</Text>
+                    </View>
+                  </Card> */}
         </View>
       )
   }
@@ -107,14 +126,16 @@ const s = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones }) => {
+const mapStateToProps = ({ Estaciones, Locations }) => {
   const { estaciones, successEstaciones } = Estaciones;
-  return { estaciones, successEstaciones };
+  const { currentLocation } = Locations;
+  return { estaciones, successEstaciones, currentLocation };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEstaciones: () => dispatch(fetchEstaciones())
+    fetchEstaciones: () => dispatch(fetchEstaciones()),
+    setCurrentLocation: (data) => dispatch(setLocation(data))
   }
 }
 
