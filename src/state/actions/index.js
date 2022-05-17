@@ -1,7 +1,7 @@
 export * from './Estacion'
 export * from './Estaciones'
 export * from './Location'
-
+export * from './Reservas'
 // // Acción para añadir la estación a la store.
 // export const addStation = station => (
 //     {

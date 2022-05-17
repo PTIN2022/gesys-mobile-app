@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
-import { addBooking, addStation } from '../state/actions';
+import { addStation } from '../state/actions';
 import Background from '../components/Background';
 import AppBack from '../components/AppBack';
 import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {fetchEstaciones} from '../state/actions/Estaciones'
 import { fetchReservas } from '../state/actions/Reservas'
-
+import { addBooking } from '../state/actions/Reservas';
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
@@ -40,7 +40,6 @@ class StationsList extends React.Component {
                 latuitude: null,
             },
         }
-
     }
    
     componentDidMount() {
@@ -72,13 +71,15 @@ class StationsList extends React.Component {
             this.setState({ loading: false, visible: false, bookingSuccess: true })
         }, 2000);
 
-        //this.props.addBooking({id: idStation, name: nameStation});
-        // this.props.addBooking({
-        //     id: idStation,
-        //     name: nameStation,
-        //     date: Date(),
-        //     status: 'Activa',
-        // })
+        if(this.state.selected.from != null && this.state.selected.upto != null){
+            this.props.addBooking({
+                id_estacion: this.state.selected.station,
+                fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
+                fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
+                id_vehiculo: "-",
+                id_cliente: "xx",
+            })
+        }
     }
 
     // Establecemos la hora de reserva "desde"
@@ -114,7 +115,7 @@ class StationsList extends React.Component {
                 showCalendar: false,
                 selected: {
                     ...prev.selected,
-                    date: String(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear())
+                    date: String(d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear())
                 }
             }))
         }
@@ -137,7 +138,7 @@ class StationsList extends React.Component {
                         return (
                             <View key={item.id_estacion}>
                                 <StationCard
-                                    id={item.id}
+                                    id={item.id_estacion}
                                     estacion={item.nombre_est}
                                     ocupation_max={item.ocupation_max}
                                     ocupation_now={item.ocupation_now}
@@ -241,7 +242,8 @@ const mapStateToProps = ({ Estaciones, Locations }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchEstaciones: () => dispatch(fetchEstaciones())
+        fetchEstaciones: () => dispatch(fetchEstaciones()),
+        addBooking: (data) => dispatch(addBooking(data))
     }
 }
 

@@ -43,3 +43,16 @@ export const apiFetchReservaByMatricula = id => {
     console.log(url)
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
+
+export const apiPostReserva = data => {
+    let url = `${BASE_URL}:${RSV_PORT}/reservas`
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+

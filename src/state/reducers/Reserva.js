@@ -1,7 +1,10 @@
 import {
     FETCHING_RESERVA,
     FETCHING_RESERVA_SUCCESS,
-    FETCHING_RESERVA_ERROR
+    FETCHING_RESERVA_ERROR,
+    POST_RESERVA,
+    POST_RESERVA_SUCCESS,
+    POST_RESERVA_ERROR
 } from '../actionTypes'
 
 const initial_state = {
@@ -12,6 +15,7 @@ const initial_state = {
 }
 
 export default getReserva = (state = initial_state, action) => {
+    console.log(action)
     switch(action.type){
         case FETCHING_RESERVA: 
             return {

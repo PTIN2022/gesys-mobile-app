@@ -23,14 +23,13 @@ class BookingList extends React.Component{
             bookingError: false,
         }
     }
+
     componentDidMount(){
         this.props.fetchReservas()
     }
     
     componentDidUpdate() {
-        console.log('BookingList')
     }
-
 
     toggleDialog = () => {
         this.setState({ visible: true })
@@ -52,6 +51,7 @@ class BookingList extends React.Component{
     }
 
     render(){    //para pintar por pantalla
+        console.log(this.props.reservas)
         //alert(this.props.successReservas)
         return !this.props.successReservas ?
             (<Text>Sin datos</Text>)
@@ -60,13 +60,17 @@ class BookingList extends React.Component{
                 <AppBack title="Lista de reservas" backScreenName="Stations" />
                 <ScrollView>
                     {this.props.reservas.map((item) => {
+                        console.log(Date.parse(item.fecha_entrada))
                         return (
                             <ReservaCard
-                                key={item.id}
-                                id={item.id}
-                                name={item.name}
-                                date={item.date}
-                                status={item.status}
+                                key={item.id_reserva}
+                                id={item.id_reserva}
+                                // name={item.name}
+                                from={item.fecha_entrada}
+                                upto={item.fecha_salida}
+                                charger={item.id_cargador}
+                                car={item.id_vehiculo}
+                                status={1 == 1 ? "Activa" : "Terminada"}
                                 import_due={item.import_due}
                                 amount_paid={item.amount_paid}
                                 time={item.time}
