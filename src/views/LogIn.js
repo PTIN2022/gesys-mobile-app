@@ -110,7 +110,7 @@ class LogIn extends Component {
               <Text style={styles.forgot}>Network </Text>
             </TouchableOpacity>
             <Text> | </Text>
-            <TouchableOpacity onPress={() => this.props.navigation.replace('ArchivoAux')}>
+            <TouchableOpacity onPress={() => this.props.navigation.replace('Error')}>
               <Text style={styles.forgot}>Contact </Text>
             </TouchableOpacity>
             <Text> | </Text>
