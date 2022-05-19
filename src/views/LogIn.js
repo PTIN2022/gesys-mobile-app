@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect } from 'react'
 import { TouchableOpacity, StyleSheet, View, AsyncStorage } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
@@ -9,53 +9,80 @@ import TextInput from '../components/TextInput'
 import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
+import { connect } from 'react-redux';
+import { doLogin } from '../state/actions/Login';
+import {bindActionCreators} from 'redux';
+import * as Actions from '../state/actions'
+import store from '../state/store';
 
 
 class LogIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+      email:  {
+        value: '',
+        error: null,
+      },
       setEmail: '',
-      password: 'Secret!2022',
+      password: {
+        value: '',
+        error: null,
+      },
       setPassword: '',
+      loginError: false,
     };
-
-
-
-
   }
 
   componentDidMount() {
-    console.log('LogIn')
-  }
-  componentDidUpdate() {
-    console.log('LogIn')
   }
 
+  onLoginPressed = () => {
+    const emailError = emailValidator(this.state.email.value) //Comprobamos que el correo introducido sea válido
+    const passwordError = passwordValidator(this.state.password.value) //Comprobamos que la contraseña introducida sea válida
+    
+    if (emailError || passwordError) {
+      this.setState(prev => ({
+        email: {
+          ...prev.email,
+          value: prev.email.value,
+          error: emailError
+        },
+        password: {
+          ...prev.password,
+          value: prev.password.value,
+          error: passwordError
+        }
+      }))
+      return
+    }
+    // this.props.navigation.navigate('Stations')
+    this.props.doLogin(this.state.email.value, this.state.password.value, (val) => {
+      if(val){
+        this.setState({
+          loginError: false
+        })
+        this.props.navigation.reset({
+          index: 0,
+          routes: [{name: 'Stations'}],
+        });
+      } else {
+        this.setState({
+          loginError: true
+        })
+      }
+    })
+
+  } 
 
   render() {
-    const onLoginPressed = () => {
-      const emailError = emailValidator(this.state.email.value) //Comprobamos que el correo introducido sea válido
-      console.log(this.state.password)
-      const passwordError = passwordValidator(this.state.password.value) //Comprobamos que la contraseña introducida sea válida
-      if (emailError || passwordError) {
-        this.setState({ setEmail: ({ ...this.state.email, error: emailError }) })
-        this.setState({ setPassword: ({ ...this.state.password, error: passwordError }) })
-        return
-      }
-      this.props.navigation.navigate('Stations')
-
-
-    }
-
-
-
+    console.log(this.props)
     return (
       <Background>
         <View style={{ flexDirection: "column", alignItems: "center", padding: "10%" }}>
           <Logo />
           <Header>Bienvenido a GeSyS</Header>
+          {this.state.loginError === true ? <Text>Error, credenciales incorrectas.</Text> : null}
           <TextInput
             label="Email"
             returnKeyType="next"
@@ -84,7 +111,7 @@ class LogIn extends Component {
               <Text style={styles.forgot}>Has olvidado tu contraseña?</Text>
             </TouchableOpacity>
           </View>
-          <Button mode="contained" onPress={onLoginPressed}>
+          <Button mode="contained" onPress={this.onLoginPressed}>
             Login
           </Button>
           <View style={{ flexDirection: "row", marginTop: 10 }}>
@@ -126,7 +153,16 @@ class LogIn extends Component {
 
 }
 
-export default LogIn;
+// Cargamos los datos que tenemos en el store.
+const mapStateToProps = ({ Login }) => {
+  return {Login};
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogIn);
 
 
 

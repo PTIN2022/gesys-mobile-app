@@ -12,6 +12,9 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {fetchEstaciones} from '../state/actions/Estaciones'
 import { fetchReservas } from '../state/actions/Reservas'
 import { addBooking } from '../state/actions/Reservas';
+import * as Location from 'expo-location';
+import { setLocation } from '../state/actions/Location'
+
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
@@ -42,8 +45,19 @@ class StationsList extends React.Component {
         }
     }
    
-    componentDidMount() {
-        this.props.fetchEstaciones()
+    async componentDidMount() {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            console.log('Permiso denegado para acceder a la ubicación.');
+        } else {
+            let location = await Location.getCurrentPositionAsync({});
+            this.props.setCurrentLocation({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+            })
+        } 
+
+        this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
     }
  
 
@@ -71,7 +85,7 @@ class StationsList extends React.Component {
             this.setState({ loading: false, visible: false, bookingSuccess: true })
         }, 2000);
 
-        if(this.state.selected.from != null && this.state.selected.upto != null){
+        if(this.state.selected.from !== null && this.state.selected.upto !== null){
             this.props.addBooking({
                 id_estacion: this.state.selected.station,
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
@@ -124,12 +138,20 @@ class StationsList extends React.Component {
     // Para pintar por pantalla.
     render() {
         return !this.props.successEstaciones ?
-            (<Text>Sin datos</Text>)
+            (<Text>
+                {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
+                    <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+                    :
+                    null
+                }
+            </Text>)
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
                     {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
-                        <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+                        <
+                            
+                        Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
                         :
                         null
                     }
@@ -242,8 +264,9 @@ const mapStateToProps = ({ Estaciones, Locations }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchEstaciones: () => dispatch(fetchEstaciones()),
-        addBooking: (data) => dispatch(addBooking(data))
+        fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
+        addBooking: (data) => dispatch(addBooking(data)),
+        setCurrentLocation: (data) => dispatch(setLocation(data))
     }
 }
 

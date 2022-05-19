@@ -26,15 +26,16 @@ export const getEstacionesError = () => {
     }
 }
 
-export const fetchEstaciones = () => {
+export const fetchEstaciones = (latitude, longitude) => {
 
     return (dispatch) => {
         dispatch(getEstaciones())
-        apiFetchEstaciones()
+        apiFetchEstaciones(latitude, longitude)
         .then(([response, json]) => {
             dispatch(getEstacionesSuccess(json))
         })
         .catch(error => {
+            console.log(error)
             dispatch(getEstacionesError())
         })
     }

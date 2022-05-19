@@ -39,11 +39,8 @@ class App extends React.Component {
   }
 
   render() {
-
-
-
     return (
-      <ReduxProvider store={store}>
+      <ReduxProvider store={store}> 
         <SafeAreaView style={SafeArea.AndroidSafeArea}>
           <Provider theme={theme}>
             <NavigationContainer >
@@ -52,7 +49,7 @@ class App extends React.Component {
 
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />
-                <Stack.Screen name="LogIn" component={LogIn}/>
+                <Stack.Screen name="LogIn" component={LogIn} initialParams={store} />
                 <Stack.Screen name="SignUp" component={SignUp}/>
                 <Stack.Screen name="Password" component={Password}/>
 

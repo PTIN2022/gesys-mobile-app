@@ -49,7 +49,7 @@ class StationsMap extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.fetchEstaciones()
+    // this.props.fetchEstaciones()
     
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
@@ -60,7 +60,10 @@ class StationsMap extends React.Component {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
       })
-    } 
+    }
+
+    this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
+ 
   }
   
   
@@ -70,7 +73,13 @@ class StationsMap extends React.Component {
 
   render() {
     return !this.props.successEstaciones ?
-      (<Text>Sin datos</Text>)
+      (<Text>
+        {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
+          <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+          :
+          null
+        }
+    </Text>)
       : (
         <View>
           {this.props.currentLocation.longitude != null && this.props.currentLocation.latitude!= null ?
