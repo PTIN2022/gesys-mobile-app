@@ -5,6 +5,8 @@ import { View } from 'react-native';
 import Header from './Header';
 import { Button, Paragraph, Dialog, Portal, Provider } from 'react-native-paper';
 import { Text } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { theme } from '../core/theme'
 
 
 // const TextElectrolinera = (props) => {
@@ -37,6 +39,8 @@ import { Text } from "react-native";
 export default function ElectrolineraCard (props){
     const [visible, setVisible] = React.useState(true);
     const hideDialog = () => setVisible(false);
+    const navigation = useNavigation();
+
 
     const getOcupationColor = () => {
         var ocupRatio = (props.ocupation_now/props.ocupation_max)*100
@@ -67,6 +71,7 @@ export default function ElectrolineraCard (props){
                 </View>
                 <View style={{flexDirection: "row-reverse"}}>
                     <Button mode="contained"style={{marginLeft: 10}} onPress={() => props.openModal(props.id, props.estacion)}>Reservar</Button>
+                    <Button mode="contained"style={{marginLeft: 10, backgroundColor: "#427fd4"}} onPress={() => navigation.navigate('StationDetail')}>Detalles</Button>
                 </View>
             </Card.Content>
         </Card>

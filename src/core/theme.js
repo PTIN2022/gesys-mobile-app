@@ -9,7 +9,7 @@ export const theme = {
     ...DefaultTheme.colors,
     text: '#000000',
     primary: '#0E3BAC',
-    secondary: '#00e39b',
+    secondary: '#CCDDE8',
     error: '#f13a59',
     link: '#0044cc',
   },
