@@ -25,7 +25,11 @@ class BookingList extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchReservas()
+		if(this.props.Login.logged === false){
+			this.props.navigation.navigate('LogIn');
+		} else {
+            this.props.fetchReservas()
+        }
     }
     
     componentDidUpdate() {
@@ -120,9 +124,9 @@ class BookingList extends React.Component{
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({Reservas}) => {
+const mapStateToProps = ({Reservas, Login}) => {
     const { reservas, successReservas } = Reservas;
-    return { reservas, successReservas };
+    return { reservas, successReservas, Login };
 };
 
 /*const mapDispatchToProps = dispatch => (

@@ -49,7 +49,7 @@ class App extends React.Component {
 
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />
-                <Stack.Screen name="LogIn" component={LogIn} initialParams={store} />
+                <Stack.Screen name="LogIn" component={LogIn} />
                 <Stack.Screen name="SignUp" component={SignUp}/>
                 <Stack.Screen name="Password" component={Password}/>
 

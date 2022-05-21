@@ -31,7 +31,7 @@ function Header (props) {
                         <Badge style={s.bellBadge} size={20}>2</Badge>
                     </View>
                     <View style={s.avatarContainer}>
-                        <Text style={s.username}> Username </Text>
+                        <Text style={s.username}> {props.username || "Username"} </Text>
                         <Avatar.Image style={s.avatar} size={50} source={require('../../assets/avatar.png')} />
                     </View>
             </View>
