@@ -3,29 +3,26 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from "react-native-paper"
 import AppBack from '../components/AppBack';
-import VehicleCard from '../components/VehicleCard'
+import DealCard from '../components/DealCard'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addVehicle } from '../state/actions';
+import { addDeal } from '../state/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
 
 
 
-class VehiclesList extends Component {
+class DealsList extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            deals: props.deals
+        };
     }
 
-    componentDidMount() {
-		if(this.props.Login.logged === false){
-			this.props.navigation.navigate('LogIn');
-		}
-    }
-    componentDidUpdate() {
-
+    componentDidUpdate(prevProps) {
+        if (prevProps.deals != this.props.deals) this.setState({deals: this.props})
     }
 
 
@@ -33,16 +30,18 @@ class VehiclesList extends Component {
     render() {
         return (
             <Background>
-                <AppBack title="Lista de vehiculos" backScreenName="Stations" />
-                <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("VehicleForm")}>Nuevo vehiculo</Button>
+                <AppBack title="Lista de ofertas disponibles" backScreenName="Stations" />
                 <ScrollView>
-                    {this.props.vehiculos.map(vehicle => {
+                    {this.state.deals.map(deal => {
                         return (
-                            <VehicleCard
-                                key={vehicle.id}
-                                name={vehicle.name}
-                                plate={vehicle.plate}
-                                model={vehicle.model}
+                            <DealCard
+                                key={deal.id}
+                                title={deal.id_promo}
+                                estacion={deal.estacion}
+                                descuento={deal.descuento}
+                                fecha_inicio={deal.fecha_inicio}
+                                fecha_fin={deal.fecha_fin}
+                                estado={deal.estado}
                             />
                         )
                     })}
@@ -55,19 +54,22 @@ class VehiclesList extends Component {
 
 
 
-const mapStateToProps = ({ Vehiculos, Login }) => {
-    const { vehiculos } = Vehiculos;
-    return { vehiculos, Login };
+const mapStateToProps = ({ Deals }) => {
+    const { deals } = Deals;
+    return { deals };
 };
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        addVehicle,
+        addDeal,
     }, dispatch)
 );
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(VehiclesList);
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(DealsList);
 
 
 const styles = StyleSheet.create({

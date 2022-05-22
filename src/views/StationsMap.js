@@ -1,24 +1,22 @@
 import React, { Component, useState } from 'react';
 import { Card, IconButton } from 'react-native-paper';
 import MapView, { Marker } from 'react-native-maps'
-import { StyleSheet, Image, Text, View, Clipboard } from 'react-native';
+import { StyleSheet, Image, Text, View, Clipboard, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { fetchEstaciones } from '../state/actions/Estaciones'
 import { setLocation } from '../state/actions/Location'
 import * as Location from 'expo-location';
-
+import Header from '../components/Header';
+import { theme } from '../core/theme';
+        
 
 class StationsMap extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      region: {
-        latitude: 41.2239200,
-        longitude: 1.7251100,
-        latitudeDelta: 0.020,
-        longitudeDelta: 0.020
-      },
+      region: null,
+      currentLocation: null,
       fake_estaciones: [
         {
           id: 1,
@@ -48,48 +46,98 @@ class StationsMap extends React.Component {
     };
   }
 
+  getRegionForCoordinates(points) {
+    // points should be an array of { latitude: X, longitude: Y }
+    let minX, maxX, minY, maxY;
+  
+    // init first point
+    ((point) => {
+      minX = point.latitude;
+      maxX = point.latitude;
+      minY = point.longitude;
+      maxY = point.longitude;
+    })(points[0]);
+  
+    // calculate rect
+    points.map((point) => {
+      minX = Math.min(minX, point.latitude);
+      maxX = Math.max(maxX, point.latitude);
+      minY = Math.min(minY, point.longitude);
+      maxY = Math.max(maxY, point.longitude);
+    });
+  
+    const midX = (minX + maxX) / 2;
+    const midY = (minY + maxY) / 2;
+    const deltaX = (maxX - minX);
+    const deltaY = (maxY - minY);
+  
+    return {
+      latitude: midX,
+      longitude: midY,
+      latitudeDelta: deltaX,
+      longitudeDelta: deltaY
+    };
+  }
+
   async componentDidMount() {
-    this.props.fetchEstaciones()
-    
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       console.log('Permiso denegado para acceder a la ubicación.');
     } else {
       let location = await Location.getCurrentPositionAsync({});
-      this.props.setCurrentLocation({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+      this.props.fetchEstaciones(location.coords.latitude, location.coords.longitude)
+      this.setState({
+        currentLocation: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
+        },
+        region: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.020,
+          longitudeDelta: 0.020
+        }
       })
+      
     } 
-  }
-  
-  
-  componentDidUpdate() {
+   
   }
 
 
   render() {
-    return !this.props.successEstaciones ?
-      (<Text>Sin datos</Text>)
+    return !this.props.successEstaciones  || this.state.region==null && this.state.currentLocation==null 
+      ? (<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+            <Header>Cargando localización</Header>
+            <ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
+          </View>
+        )
       : (
         <View>
-          {this.props.currentLocation.longitude != null && this.props.currentLocation.latitude!= null ?
-            <Text>Tu ubicación {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
-            :
-            null
-          }
           <MapView
             style={s.map}
             initialRegion={this.state.region}
             onRegionChange={newRegion => this.setState({ region: newRegion })}
           >
-            {this.state.fake_estaciones.map(item => {
-
+            {this.state.currentLocation.longitude != null && this.state.currentLocation.latitude!= null 
+              ?
+                <Marker
+                  coordinate={this.state.currentLocation}
+                >
+                  <Image
+                    source={require('../assets/icons8-place-marker.gif')}
+                    style={{ width: 75, height: 75 }}
+                    resizeMode="contain"
+                  />
+                </Marker>
+              :
+              null
+          }
+            {this.state.fake_estaciones.map((item, id) => {
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
                 <Marker
+                  key={id}
                   onPress={() => this.props.navigation.navigate("StationDetail")}
-                  key={item.id}
                   coordinate={{
                     latitude: item.latitud,
                     longitude: item.longitud
@@ -133,7 +181,7 @@ const mapStateToProps = ({ Estaciones, Locations }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEstaciones: () => dispatch(fetchEstaciones()),
+    fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
     setCurrentLocation: (data) => dispatch(setLocation(data))
   }
 }

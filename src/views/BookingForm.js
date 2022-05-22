@@ -9,9 +9,6 @@ import SelectInput from '../components/SelectInput';
 import Header from '../components/Header';
 
 
-
-
-
 class BookingForm extends Component {
   constructor(props) {
     super(props);
@@ -26,16 +23,9 @@ class BookingForm extends Component {
   }
 
   render() {
-
-
-
-
-
-
     let aux_date = new Date();
     let welcomedate = aux_date.getFullYear() + '-' + (aux_date.getMonth() + 1) + '-' + aux_date.getDate();
     let goodbyedate = aux_date.getFullYear() + '-' + (aux_date.getMonth() + 1) + '-' + aux_date.getDate();
-
 
     const [btnColors, setBtnColors] = useState({
       back1: theme.colors.primary,
