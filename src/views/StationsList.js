@@ -4,13 +4,17 @@ import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
-import { addBooking, addStation } from '../state/actions';
+import { addStation } from '../state/actions';
 import Background from '../components/Background';
 import AppBack from '../components/AppBack';
 import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {fetchEstaciones} from '../state/actions/Estaciones'
 import { fetchReservas } from '../state/actions/Reservas'
+import { addBooking } from '../state/actions/Reservas';
+import * as Location from 'expo-location';
+import { setLocation } from '../state/actions/Location'
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
@@ -40,11 +44,22 @@ class StationsList extends React.Component {
                 latuitude: null,
             },
         }
-
     }
    
-    componentDidMount() {
-        this.props.fetchEstaciones()
+    async componentDidMount() {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+            console.log('Permiso denegado para acceder a la ubicación.');
+        } else {
+            let location = await Location.getCurrentPositionAsync({});
+            this.props.setCurrentLocation({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude
+            })
+            if(this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+                this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
+            }
+        } 
     }
  
 
@@ -72,13 +87,15 @@ class StationsList extends React.Component {
             this.setState({ loading: false, visible: false, bookingSuccess: true })
         }, 2000);
 
-        //this.props.addBooking({id: idStation, name: nameStation});
-        // this.props.addBooking({
-        //     id: idStation,
-        //     name: nameStation,
-        //     date: Date(),
-        //     status: 'Activa',
-        // })
+        if(this.state.selected.from !== null && this.state.selected.upto !== null){
+            this.props.addBooking({
+                id_estacion: this.state.selected.station,
+                fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
+                fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
+                id_vehiculo: "-",
+                id_cliente: "xx",
+            })
+        }
     }
 
     // Establecemos la hora de reserva "desde"
@@ -114,7 +131,7 @@ class StationsList extends React.Component {
                 showCalendar: false,
                 selected: {
                     ...prev.selected,
-                    date: String(d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear())
+                    date: String(d.getDate() + "-" + d.getMonth() + "-" + d.getFullYear())
                 }
             }))
         }
@@ -123,33 +140,43 @@ class StationsList extends React.Component {
     // Para pintar por pantalla.
     render() {
         return !this.props.successEstaciones ?
-            (<Text>Sin datos</Text>)
+            (<Text>
+                {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
+                    <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+                    :
+                    null
+                }
+            </Text>)
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
                     {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
-                        <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+                        <
+                            
+                        Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
                         :
                         null
                     }
-                    {this.props.estaciones.map((item) => {
-                        // Iteramos las estaciones que tenemos cargadas en el store.
-                        return (
-                            <View key={item.id_estacion}>
-                                <StationCard
-                                    id={item.id}
-                                    estacion={item.nombre_est}
-                                    ocupation_max={item.ocupation_max}
-                                    ocupation_now={item.ocupation_now}
-                                    longitude={item.longitud}
-                                    latitude={item.latitud}
-                                    direccion={item.direccion}
-                                    key={item.id}
-                                    openModal={this.toggleDialog}
-                                />
-                            </View>
-                        );
-                    })}
+                    <ScrollView>
+                        {this.props.estaciones.Estaciones.map((item) => {
+                            // Iteramos las estaciones que tenemos cargadas en el store.
+                            return (
+                                <View key={item.id_estacion}>
+                                    <StationCard
+                                        estacion={item.nombre_est}
+                                        ocupation_max={item.ocupacion_actual}
+                                        ocupation_now={item.ocupacion_actual}
+                                        longitude={item.longitud}
+                                        latitude={item.latitud}
+                                        direccion={item.direccion}
+                                        key={item.id}
+                                        openModal={this.toggleDialog}
+                                        disabledBtn={!this.props.Login.logged}
+                                    />
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
                     <Portal>
                         <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                             <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>
@@ -173,7 +200,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Desde"
                                         returnKeyType="next"
-                                        value={this.state.selected.from}
+                                        value={"" || this.state.selected.from}
                                         editable={true}
                                         onPressIn={() => this.setState({ showTimeFrom: true })}
                                     />
@@ -182,7 +209,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Hasta"
                                         returnKeyType="next"
-                                        value={this.state.selected.upto}
+                                        value={"" ||this.state.selected.upto}
                                         editable={true}
                                         onPressIn={() => this.setState({ showTimeUpto: true })}
                                     />
@@ -191,7 +218,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Fecha"
                                         returnKeyType="next"
-                                        value={this.state.selected.date}
+                                        value={"" || this.state.selected.date}
                                         editable={true}
                                         onPressIn={() => this.setState({ showCalendar: true })}
                                     />
@@ -233,15 +260,17 @@ const styles = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations }) => {
+const mapStateToProps = ({ Estaciones, Locations, Login }) => {
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
-    return { estaciones, successEstaciones, currentLocation };
+    return { estaciones, successEstaciones, currentLocation, Login };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchEstaciones: () => dispatch(fetchEstaciones())
+        fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
+        addBooking: (data) => dispatch(addBooking(data)),
+        setCurrentLocation: (data) => dispatch(setLocation(data))
     }
 }
 

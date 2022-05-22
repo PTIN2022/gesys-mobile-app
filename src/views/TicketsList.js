@@ -3,29 +3,27 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from "react-native-paper"
 import AppBack from '../components/AppBack';
-import VehicleCard from '../components/VehicleCard'
+import TicketCard from '../components/TicketCard'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addVehicle } from '../state/actions';
+import { addTicket } from '../state/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
 
 
 
-class VehiclesList extends Component {
+class TicketsList extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     componentDidMount() {
-		if(this.props.Login.logged === false){
-			this.props.navigation.navigate('LogIn');
-		}
+        console.log('TicketsList')
     }
     componentDidUpdate() {
-
+        console.log('TicketsList')
     }
 
 
@@ -33,16 +31,17 @@ class VehiclesList extends Component {
     render() {
         return (
             <Background>
-                <AppBack title="Lista de vehiculos" backScreenName="Stations" />
-                <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("VehicleForm")}>Nuevo vehiculo</Button>
+                <AppBack title="Lista de tickets" backScreenName="Stations" />
                 <ScrollView>
-                    {this.props.vehiculos.map(vehicle => {
+                    {this.props.tickets.map(ticket => {
                         return (
-                            <VehicleCard
-                                key={vehicle.id}
-                                name={vehicle.name}
-                                plate={vehicle.plate}
-                                model={vehicle.model}
+                            <TicketCard
+                                key={ticket.id}
+                                title={ticket.id_ticket}
+                                fecha={ticket.fecha}
+                                asunto={ticket.asunto}
+                                mensaje={ticket.mensaje}
+                                estado={ticket.estado}
                             />
                         )
                     })}
@@ -55,19 +54,22 @@ class VehiclesList extends Component {
 
 
 
-const mapStateToProps = ({ Vehiculos, Login }) => {
-    const { vehiculos } = Vehiculos;
-    return { vehiculos, Login };
+const mapStateToProps = ({ Tickets }) => {
+    const { tickets } = Tickets;
+    return { tickets };
 };
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        addVehicle,
+        addTicket,
     }, dispatch)
 );
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(VehiclesList);
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TicketsList);
 
 
 const styles = StyleSheet.create({

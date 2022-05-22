@@ -4,9 +4,7 @@ import { ScrollView, StyleSheet, Image, Text, View } from 'react-native';
 import AppBack from '../components/AppBack';
 import Background from '../components/Background';
 import { theme } from '../core/theme'
-
-
-
+import { connect } from 'react-redux';
 
 
 class Profile extends Component {
@@ -16,10 +14,12 @@ class Profile extends Component {
 	}
 
 	componentDidMount() {
-		console.log('Profile')
+		if(this.props.Login.logged === false){
+			this.props.navigation.navigate('LogIn');
+		}
 	}
+
 	componentDidUpdate() {
-		console.log('Profile')
 	}
 
 	render() {
@@ -80,7 +80,18 @@ class Profile extends Component {
 	}
 }
 
-export default Profile;
+// Cargamos los datos que tenemos en el store.
+const mapStateToProps = ({ Login }) => {
+	return {Login};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+
+	}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
 
 
 

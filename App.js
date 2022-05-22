@@ -20,6 +20,8 @@ import {
   VehicleForm,
   BookingsList,
   BookingForm,
+  DealsList,
+  TicketsList,
   Profile,
   ModifyProfile,
   About,
@@ -39,11 +41,8 @@ class App extends React.Component {
   }
 
   render() {
-
-
-
     return (
-      <ReduxProvider store={store}>
+      <ReduxProvider store={store}> 
         <SafeAreaView style={SafeArea.AndroidSafeArea}>
           <Provider theme={theme}>
             <NavigationContainer >
@@ -52,7 +51,7 @@ class App extends React.Component {
 
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />
-                <Stack.Screen name="LogIn" component={LogIn}/>
+                <Stack.Screen name="LogIn" component={LogIn} />
                 <Stack.Screen name="SignUp" component={SignUp}/>
                 <Stack.Screen name="Password" component={Password}/>
 
@@ -67,6 +66,12 @@ class App extends React.Component {
                 {/*RESERVAS*/}
                 <Stack.Screen name="BookingsList" component={BookingsList} />
                 <Stack.Screen name="BookingForm" component={BookingForm} />
+
+                {/*TICKETS*/}
+                <Stack.Screen name="TicketsList" component={TicketsList} />
+
+                {/*OFERTAS*/}
+                <Stack.Screen name="DealsList" component={DealsList} />
 
                 {/*USUARIO*/}
                 <Stack.Screen name="Profile" component={Profile} />

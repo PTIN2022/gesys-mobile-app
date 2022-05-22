@@ -3,29 +3,27 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from "react-native-paper"
 import AppBack from '../components/AppBack';
-import VehicleCard from '../components/VehicleCard'
+import TemplateCard from '../components/TemplateCard'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addVehicle } from '../state/actions';
+import { addTemplate } from '../state/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
 
 
 
-class VehiclesList extends Component {
+class TemplatesList extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
 
     componentDidMount() {
-		if(this.props.Login.logged === false){
-			this.props.navigation.navigate('LogIn');
-		}
+        console.log('TemplatesList')
     }
     componentDidUpdate() {
-
+        console.log('TemplatesList')
     }
 
 
@@ -33,16 +31,16 @@ class VehiclesList extends Component {
     render() {
         return (
             <Background>
-                <AppBack title="Lista de vehiculos" backScreenName="Stations" />
-                <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("VehicleForm")}>Nuevo vehiculo</Button>
+                <AppBack title="Lista de templates" backScreenName="Stations" />
                 <ScrollView>
-                    {this.props.vehiculos.map(vehicle => {
+                    {this.props.templates.map(template => {
                         return (
-                            <VehicleCard
-                                key={vehicle.id}
-                                name={vehicle.name}
-                                plate={vehicle.plate}
-                                model={vehicle.model}
+                            <TemplateCard
+                                key={template.id}
+                                title={template.id}
+                                field1={template.field1}
+                                field2={template.field2}
+                                field3={template.field3}
                             />
                         )
                     })}
@@ -55,19 +53,22 @@ class VehiclesList extends Component {
 
 
 
-const mapStateToProps = ({ Vehiculos, Login }) => {
-    const { vehiculos } = Vehiculos;
-    return { vehiculos, Login };
+const mapStateToProps = ({ Templates }) => {
+    const { templates } = Templates;
+    return { templates };
 };
 
 const mapDispatchToProps = dispatch => (
     bindActionCreators({
-        addVehicle,
+        addTemplate,
     }, dispatch)
 );
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(VehiclesList);
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TemplatesList);
 
 
 const styles = StyleSheet.create({
