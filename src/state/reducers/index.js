@@ -7,14 +7,16 @@ import Locations from "./Location"
 import Templates from "./Templates"
 import Deals from "./Deals"
 import Tickets from './Tickets'
+import Login from './Login'
 
 export default combineReducers({
-    Estacion,
+    Estacion, 
     Estaciones,
     Reservas,
     Vehiculos,
     Locations,
     Deals,
     Tickets,
-    Templates
+    Templates,
+    Login
 })

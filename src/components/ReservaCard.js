@@ -33,9 +33,21 @@ function TextReserva (props) {
                   (<Text style={{backgroundColor: 'lightgrey', color: "black", borderRadius: 10, paddingHorizontal: 10}}> {props.status} </Text>)
                 }
               </View>
-              <View style={{flexDirection: "row", marginBottom: 15}}>
+              <View style={{flexDirection: "row", marginBottom: 10}}>
                 <Text style={{fontWeight: "700", marginRight: 10}}>Fecha de reserva: </Text>
-                <Text>{props.date}</Text>
+                <Text>{props.from} - {props.upto}</Text>
+              </View>
+              <View style={{flexDirection: "row", marginBottom: 10}}>
+                <Text style={{fontWeight: "700", marginRight: 10}}>Cargador: </Text>
+                <Text>{props.charger}</Text>
+              </View>
+              <View style={{flexDirection: "row", marginBottom: 10}}>
+                <Text style={{fontWeight: "700", marginRight: 10}}>Vehículo: </Text>
+                <Text>{props.car}</Text>
+              </View>
+              <View style={{flexDirection: "row", marginBottom: 10}}>
+                <Text style={{fontWeight: "700", marginRight: 10}}>Precio: </Text>
+                <Text>10</Text>
               </View>
             </View>
             </View>

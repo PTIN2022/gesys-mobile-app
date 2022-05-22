@@ -20,10 +20,12 @@ class VehiclesList extends Component {
     }
 
     componentDidMount() {
-        console.log('VehiclesList')
+		if(this.props.Login.logged === false){
+			this.props.navigation.navigate('LogIn');
+		}
     }
     componentDidUpdate() {
-        console.log('VehiclesList')
+
     }
 
 
@@ -53,9 +55,9 @@ class VehiclesList extends Component {
 
 
 
-const mapStateToProps = ({ Vehiculos }) => {
+const mapStateToProps = ({ Vehiculos, Login }) => {
     const { vehiculos } = Vehiculos;
-    return { vehiculos };
+    return { vehiculos, Login };
 };
 
 const mapDispatchToProps = dispatch => (
@@ -63,9 +65,6 @@ const mapDispatchToProps = dispatch => (
         addVehicle,
     }, dispatch)
 );
-
-
-
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(VehiclesList);

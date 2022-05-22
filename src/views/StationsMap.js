@@ -80,12 +80,12 @@ class StationsMap extends React.Component {
   }
 
   async componentDidMount() {
-    this.props.fetchEstaciones()
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       console.log('Permiso denegado para acceder a la ubicación.');
     } else {
       let location = await Location.getCurrentPositionAsync({});
+      this.props.fetchEstaciones(location.coords.latitude, location.coords.longitude)
       this.setState({
         currentLocation: {
           latitude: location.coords.latitude,
@@ -98,15 +98,17 @@ class StationsMap extends React.Component {
           longitudeDelta: 0.020
         }
       })
+      
     } 
+   
   }
 
 
   render() {
     return !this.props.successEstaciones  || this.state.region==null && this.state.currentLocation==null 
       ? (<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
-            <Header>Sigo?</Header>
-            <ActivityIndicator style={{margin:5}} size="large" color={theme.colors.primary} />
+            <Header>Cargando localización</Header>
+            <ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
           </View>
         )
       : (
@@ -130,13 +132,12 @@ class StationsMap extends React.Component {
               :
               null
           }
-            {this.state.fake_estaciones.map(item => {
-
+            {this.state.fake_estaciones.map((item, id) => {
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
                 <Marker
+                  key={id}
                   onPress={() => this.props.navigation.navigate("StationDetail")}
-                  key={item.id}
                   coordinate={{
                     latitude: item.latitud,
                     longitude: item.longitud
@@ -180,7 +181,7 @@ const mapStateToProps = ({ Estaciones, Locations }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEstaciones: () => dispatch(fetchEstaciones()),
+    fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
     setCurrentLocation: (data) => dispatch(setLocation(data))
   }
 }
