@@ -40,6 +40,7 @@ export const apiFetchReservaByMatricula = id => {
 
 export const apiPostReserva = data => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
+    console.log(url)
     return fetch(url, {
         method: 'POST',
         headers: {

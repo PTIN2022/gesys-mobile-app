@@ -171,6 +171,7 @@ class StationsList extends React.Component {
                                         direccion={item.direccion}
                                         key={item.id}
                                         openModal={this.toggleDialog}
+                                        disabledBtn={!this.props.Login.logged}
                                     />
                                 </View>
                             );
@@ -199,7 +200,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Desde"
                                         returnKeyType="next"
-                                        value={this.state.selected.from}
+                                        value={"" || this.state.selected.from}
                                         editable={true}
                                         onPressIn={() => this.setState({ showTimeFrom: true })}
                                     />
@@ -208,7 +209,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Hasta"
                                         returnKeyType="next"
-                                        value={this.state.selected.upto}
+                                        value={"" ||this.state.selected.upto}
                                         editable={true}
                                         onPressIn={() => this.setState({ showTimeUpto: true })}
                                     />
@@ -217,7 +218,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Fecha"
                                         returnKeyType="next"
-                                        value={this.state.selected.date}
+                                        value={"" || this.state.selected.date}
                                         editable={true}
                                         onPressIn={() => this.setState({ showCalendar: true })}
                                     />
@@ -259,10 +260,10 @@ const styles = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations }) => {
+const mapStateToProps = ({ Estaciones, Locations, Login }) => {
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
-    return { estaciones, successEstaciones, currentLocation };
+    return { estaciones, successEstaciones, currentLocation, Login };
 };
 
 const mapDispatchToProps = dispatch => {

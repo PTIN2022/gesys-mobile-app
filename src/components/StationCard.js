@@ -66,7 +66,7 @@ export default function ElectrolineraCard (props){
                     </View>
                 </View>
                 <View style={{flexDirection: "row-reverse"}}>
-                    <Button mode="contained"style={{marginLeft: 10}} onPress={() => props.openModal(props.id, props.estacion)}>Reservar</Button>
+                    <Button disabled={props.disabledBtn} mode="contained"style={{marginLeft: 10}} onPress={() => props.openModal(props.id, props.estacion)}>Reservar</Button>
                 </View>
             </Card.Content>
         </Card>

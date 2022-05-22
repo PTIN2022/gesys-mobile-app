@@ -97,8 +97,8 @@ class StationsMap extends React.Component {
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
                 <Marker
+                  key={item.id_estacion}
                   onPress={() => this.props.navigation.navigate("StationDetail")}
-                  key={item.id}
                   coordinate={{
                     latitude: item.latitud,
                     longitude: item.longitud

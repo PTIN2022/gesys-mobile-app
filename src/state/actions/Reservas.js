@@ -62,8 +62,12 @@ export const addBooking = (data) => {
     return (dispatch) => {
         apiPostReserva(data)
         .then(([response, json]) => {
-            if (json.error != undefined) dispatch(postReservaError())
+            if (json.error != undefined) {
+                alert("ERROR")
+                dispatch(postReservaError())
+            }
             else {
+                alert("Good")
                 let newData = {
                     fecha_entrada: json.fecha_entrada,
                     fecha_salida: json.fecha_salida,
@@ -75,7 +79,7 @@ export const addBooking = (data) => {
             }
         })
         .catch(error => {
-            console.log(error)
+            alert(error)
         })
     }
 }
