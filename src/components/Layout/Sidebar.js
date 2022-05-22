@@ -29,6 +29,8 @@ function Sidebar(props){
               <Menu.Item style={s.item} onPress={(e)=> nav("VehiclesList")} icon="car" title="Vehículos" />
               <Menu.Item style={s.item} onPress={(e)=> nav("Stations")} icon="ev-station" title="Estaciones" />
               <Menu.Item style={s.item} onPress={(e)=> nav("BookingsList")} icon="book" title="Reservas"/>
+              <Menu.Item style={s.item} onPress={(e)=> nav("DealsList")} icon="ticket-percent" title="Ofertas disponibles"/>
+              <Menu.Item style={s.item} onPress={(e)=> nav("TicketsList")} icon="email" title="Tu buzon"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
               <Menu.Item style={s.item} onPress={(e)=> nav("About")} icon="information" title="Información" />
