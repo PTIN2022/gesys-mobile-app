@@ -3,8 +3,8 @@ const EST_PORT = "23601"
 const RSV_PORT = "23701"
 
 export const apiFetchEstaciones =  (latitude, longitude) => {
-    let url = `${BASE_URL}:${EST_PORT}/api/estaciones`
-    // let url = `${BASE_URL}:${EST_PORT}/api/estaciones/coor/latitude/longitude`
+    let url = `${BASE_URL}:${RSV_PORT}/api/estaciones/coor/${latitude}/${longitude}`
+    console.log(url, "http://craaxkvm.epsevg.upc.es:23701/api/estaciones/coor/1/1")
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 

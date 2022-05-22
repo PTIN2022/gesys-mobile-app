@@ -49,8 +49,6 @@ class StationsMap extends React.Component {
   }
 
   async componentDidMount() {
-    // this.props.fetchEstaciones()
-    
     let { status } = await Location.requestForegroundPermissionsAsync();
     if (status !== 'granted') {
       console.log('Permiso denegado para acceder a la ubicación.');
@@ -60,10 +58,12 @@ class StationsMap extends React.Component {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude
       })
-    }
+      
+    } 
 
-    this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
- 
+    if(this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+      this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
+    }
   }
   
   
@@ -92,7 +92,7 @@ class StationsMap extends React.Component {
             initialRegion={this.state.region}
             onRegionChange={newRegion => this.setState({ region: newRegion })}
           >
-            {this.state.fake_estaciones.map(item => {
+            {this.props.estaciones.Estaciones.map(item => {
 
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
@@ -142,7 +142,7 @@ const mapStateToProps = ({ Estaciones, Locations }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEstaciones: () => dispatch(fetchEstaciones()),
+    fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
     setCurrentLocation: (data) => dispatch(setLocation(data))
   }
 }

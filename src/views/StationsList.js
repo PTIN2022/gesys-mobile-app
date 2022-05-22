@@ -14,6 +14,7 @@ import { fetchReservas } from '../state/actions/Reservas'
 import { addBooking } from '../state/actions/Reservas';
 import * as Location from 'expo-location';
 import { setLocation } from '../state/actions/Location'
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
@@ -55,9 +56,10 @@ class StationsList extends React.Component {
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
             })
+            if(this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+                this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
+            }
         } 
-
-        this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
     }
  
 
@@ -155,24 +157,25 @@ class StationsList extends React.Component {
                         :
                         null
                     }
-                    {this.props.estaciones.map((item) => {
-                        // Iteramos las estaciones que tenemos cargadas en el store.
-                        return (
-                            <View key={item.id_estacion}>
-                                <StationCard
-                                    id={item.id_estacion}
-                                    estacion={item.nombre_est}
-                                    ocupation_max={item.ocupation_max}
-                                    ocupation_now={item.ocupation_now}
-                                    longitude={item.longitud}
-                                    latitude={item.latitud}
-                                    direccion={item.direccion}
-                                    key={item.id}
-                                    openModal={this.toggleDialog}
-                                />
-                            </View>
-                        );
-                    })}
+                    <ScrollView>
+                        {this.props.estaciones.Estaciones.map((item) => {
+                            // Iteramos las estaciones que tenemos cargadas en el store.
+                            return (
+                                <View key={item.id_estacion}>
+                                    <StationCard
+                                        estacion={item.nombre_est}
+                                        ocupation_max={item.ocupacion_actual}
+                                        ocupation_now={item.ocupacion_actual}
+                                        longitude={item.longitud}
+                                        latitude={item.latitud}
+                                        direccion={item.direccion}
+                                        key={item.id}
+                                        openModal={this.toggleDialog}
+                                    />
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
                     <Portal>
                         <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
                             <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>

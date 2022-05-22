@@ -27,7 +27,6 @@ export const getEstacionesError = () => {
 }
 
 export const fetchEstaciones = (latitude, longitude) => {
-
     return (dispatch) => {
         dispatch(getEstaciones())
         apiFetchEstaciones(latitude, longitude)
