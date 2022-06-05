@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity} from 'react-native';
 import { Menu, Avatar } from 'react-native-paper';
 import {theme} from '../../core/theme';
 import { useNavigation } from '@react-navigation/native';
@@ -18,13 +18,14 @@ function Sidebar(props){
   }
 
 
-    return (
-        <View style={props.menuVisible? s.sidebarVisible : s.sidebarInvisible}>
+    return props.menuVisible && (
+        <View style={s.sidebarVisible}>
+          <View style={{width: screen.width*0.75, flexDirection: "column", backgroundColor: theme.colors.primary, opacity:0.95}}>
             <View style={s.avatarContainer}>
               <Avatar.Image style={s.avatar} size={100} source={require('../../assets/avatar.png')} />
               <Text style={s.username}>Username</Text>
             </View>
-            <View style={s.avatarContainer}>
+            <ScrollView style={s.itemsContainer} contentContainerStyle={{alignItems: "center"}} persistentScrollbar indicatorStyle="black">
               <Menu.Item style={s.item} onPress={(e)=> nav("Profile")} icon="account" title="Cuenta" />
               <Menu.Item style={s.item} onPress={(e)=> nav("VehiclesList")} icon="car" title="Vehículos" />
               <Menu.Item style={s.item} onPress={(e)=> nav("Stations")} icon="ev-station" title="Estaciones" />
@@ -34,38 +35,48 @@ function Sidebar(props){
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
               <Menu.Item style={s.item} onPress={(e)=> nav("About")} icon="information" title="Información" />
-            </View>
-        </View>      
+              <Menu.Item style={s.item} onPress={(e)=> nav("TicketsList")} icon="email" title="Tu buzon"/>
+            </ScrollView>
+          </View>
+          <TouchableOpacity style={{backgroundColor: "#000a", width: screen.width*0.4}} onPress={()=>props.toggleMenu()}></TouchableOpacity>
+            
+          
+        </View>
+           
     );
 
 }
+
+const screen = Dimensions.get('window')
 
 const s = StyleSheet.create({
   sidebarVisible:{
     position: "absolute",
     marginTop: 75,
-    paddingVertical: 25,
     zIndex: 10,
-    backgroundColor: theme.colors.primary,
-    width: "60%",
-    height : "1500%",
-    opacity: 0.95
-  },
-  sidebarInvisible:{
-    display: "none"
+    width: screen.height,
+    height : screen.height-75,
+    flexDirection: "row",
   },
   item: {
     backgroundColor: "#fff",
-    borderColor: theme.colors.primary,
+    width: screen.width*0.65,
     borderRadius: 5,
-    width: "90%",
-    marginVertical: 8
+    marginVertical: 5,
+    elevation: 500,
   },
   avatarContainer:{
     alignItems: 'center',
+    justifyContent: 'center',
+    height: screen.height*0.2,
+    marginTop: screen.height*0.025,
+  },
+  itemsContainer:{
+    flex: 1,
+    marginTop: screen.height*0.025,
+    marginBottom: screen.height*0.04,
   },
   username:{
-    margin: 10,
     fontSize: 20,
     color: "#fff",
     fontWeight: "700"
