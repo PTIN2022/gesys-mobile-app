@@ -30,18 +30,24 @@ class StationsList extends React.Component {
                 station: null,
                 stationName: '',
                 from: new Date(),
+                fromDT: null,
                 upto: new Date(),
+                uptoDT: null,
                 date: new Date(),
+                rate: 20.0,
+                currentRate: 0,
+                coupon: "",
+                cuponValid: null,
             },
             showTimeFrom: false, // estados booleanos para mostrar o no el selector de hora
             showTimeUpto: false,
             showCalendar: false,
             data: null,
-            myLocation: {
+            myLocation: { // Ubicación
                 longitude: null,
                 latuitude: null,
             },
-            checked: 1,
+            checked: 1, // Filtro
         }
     }
    
@@ -62,13 +68,14 @@ class StationsList extends React.Component {
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
-    toggleDialog = (id, name) => {
+    toggleDialog = (id, name, price=20.0) => {
         this.setState(prev => ({
             visible: true,
             selected: {
                 ...prev.selected,
                 station: id,
                 stationName: name,
+                selectedStationRate: price,
             }}))
     }
 
@@ -98,10 +105,26 @@ class StationsList extends React.Component {
                 showTimeFrom: false,
                 selected: {
                     ...prev.selected,
-                    from: String(d.getHours() + ":" + d.getMinutes())
+                    from: String(d.getHours() + ":" + d.getMinutes()),
+                    fromDT: d,
                 }
             }))
+            if(this.state.selected.uptoDT){
+                // Procesamos la cantidad estimada.
+                let precioPorMinutoEstacion = this.state.selected.rate / 60;
+                // Get difference in minutes for selected period.
+                let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT);
+                let mins = Math.floor((minutesOfBooking/1000)/60);
+                this.setState(prev => ({
+                    showTimeUpto: false,
+                    selected: {
+                        ...prev.selected,
+                        currentRate: precioPorMinutoEstacion * mins
+                    }
+                }))
+            }
         }
+
     }
 
     // Establecemos la hora de reserva "hasta"
@@ -111,9 +134,24 @@ class StationsList extends React.Component {
                 showTimeUpto: false,
                 selected: {
                     ...prev.selected,
-                    upto: String(d.getHours() + ":" + d.getMinutes())
+                    upto: String(d.getHours() + ":" + d.getMinutes()),
+                    uptoDT: d,
                 }
             }))
+            if(this.state.selected.fromDT){
+                // Procesamos la cantidad estimada.
+                let precioPorMinutoEstacion = this.state.selected.rate / 60;
+                // Get difference in minutes for selected period.
+                let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT);
+                let mins = Math.floor((minutesOfBooking/1000)/60);
+                this.setState(prev => ({
+                    showTimeUpto: false,
+                    selected: {
+                        ...prev.selected,
+                        currentRate: precioPorMinutoEstacion * mins
+                    }
+                }))
+            }
         }
     }
 
@@ -130,8 +168,6 @@ class StationsList extends React.Component {
         }
     }
 
-<<<<<<< HEAD
-=======
     swtich = (val) => {
         this.setState({checked: val})
         if(this.state.checked === 1){
@@ -145,7 +181,20 @@ class StationsList extends React.Component {
         }
     }
 
->>>>>>> 1d5b7a7 (Add radiobuttons instead)
+    changeCupon = (text) => {
+        this.setState(prev => ({
+            showCalendar: false,
+            selected: {
+                ...prev.selected,
+                coupon: text,
+            }
+        }))
+    }
+
+    checkCupon = () => {
+        // Fetch and check if cupon exists for this user?
+    }
+
     // Para pintar por pantalla.
     render() {
         return !this.props.successEstaciones 
@@ -158,9 +207,6 @@ class StationsList extends React.Component {
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
-<<<<<<< HEAD
-                    <ScrollView contentContainerStyle={{paddingBottom: "20%"}}>
-=======
                     {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
                         // <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
                         null
@@ -188,7 +234,6 @@ class StationsList extends React.Component {
                         </View>
                     </View>
                     <ScrollView>
->>>>>>> 1d5b7a7 (Add radiobuttons instead)
                         {this.props.estaciones.Estaciones.map((item) => {
                             // Iteramos las estaciones que tenemos cargadas en el store.
                             return (
@@ -232,7 +277,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Desde"
                                         returnKeyType="next"
-                                        value={"" || this.state.selected.from}
+                                        value={this.state.selected.from === "" ? "" : this.state.selected.from}
                                         editable={true}
                                         onPressIn={() => this.setState({ showTimeFrom: true })}
                                     />
@@ -241,7 +286,7 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Hasta"
                                         returnKeyType="next"
-                                        value={"" ||this.state.selected.upto}
+                                        value={this.state.selected.upto === "" ? "" : this.state.selected.upto}
                                         editable={true}
                                         onPressIn={() => this.setState({ showTimeUpto: true })}
                                     />
@@ -250,11 +295,36 @@ class StationsList extends React.Component {
                                         style={{ marginBottom: 10 }}
                                         label="Fecha"
                                         returnKeyType="next"
-                                        value={"" || this.state.selected.date}
+                                        value={this.state.selected.date === "" ? "" : this.state.selected.date}
                                         editable={true}
                                         onPressIn={() => this.setState({ showCalendar: true })}
                                     />
                                 </View>
+                                <View>
+                                    <Text>¿Dispones de alguno código para canjear?</Text>
+                                    <TextInput
+                                        mode="outlined"
+                                        style={{ marginBottom: 10 }}
+                                        label="Cupón"
+                                        value={this.state.selected.coupon === "" ? "" : this.state.selected.coupon}
+                                        editable={true}
+                                        onChange={text => {this.changeCupon(text)}}
+                                    />
+                                    {this.state.selected.cuponValid === true ? (
+                                        <Text style={{color: 'green'}} >Cupón inválido.</Text>
+                                    ) : ( 
+                                        this.state.selected.cuponValid === false ? (
+                                            <Text style={{color: 'green'}}>Cupón válido.</Text>
+                                        ) : (
+                                            null
+                                        )
+                                    )}
+                                    
+                                    <Button mode='contained' onPress={this.checkCupon}>Validar cupón</Button>
+                                </View>
+                                <Text style={{marginTop: 30}}>
+                                    Precio estimado: {this.state.selected.currentRate}€
+                                </Text>
                             </Card>
                             <Dialog.Actions>
                                 <Button loading={this.state.loading} onPress={() => this.book()}>
