@@ -2,7 +2,7 @@ import { Image, View, StyleSheet, Text, ActivityIndicator } from 'react-native'
 import StationCard from '../components/StationCard'
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
-import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput } from 'react-native-paper';
+import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput, RadioButton } from 'react-native-paper';
 import { bindActionCreators } from 'redux';
 import { addStation } from '../state/actions';
 import Background from '../components/Background';
@@ -41,6 +41,7 @@ class StationsList extends React.Component {
                 longitude: null,
                 latuitude: null,
             },
+            checked: 1,
         }
     }
    
@@ -129,6 +130,22 @@ class StationsList extends React.Component {
         }
     }
 
+<<<<<<< HEAD
+=======
+    swtich = (val) => {
+        this.setState({checked: val})
+        if(this.state.checked === 1){
+            // Ahora se quiere filtrar por ubicación.
+            if(this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+                this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
+            }    
+        } else if(this.state.checked === 2) {
+            this.props.fetchEstaciones(1, 1)
+            // PROMOCIONES
+        }
+    }
+
+>>>>>>> 1d5b7a7 (Add radiobuttons instead)
     // Para pintar por pantalla.
     render() {
         return !this.props.successEstaciones 
@@ -141,7 +158,37 @@ class StationsList extends React.Component {
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
+<<<<<<< HEAD
                     <ScrollView contentContainerStyle={{paddingBottom: "20%"}}>
+=======
+                    {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
+                        // <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
+                        null
+                        :
+                        null
+                    }
+                    <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row'}}>
+                        <View style={{width: 155, marginLeft: 10}}>
+                            <Text style={{fontWeight: 'bold', marginVertical: 7}}>Filtro por ubicación</Text>
+                            <Text style={{fontWeight: 'bold', marginVertical: 9}}>Filtro por promociones</Text>
+                        </View>
+                        <View>
+                            <RadioButton
+                                value="Ubicación"
+                                status={ this.state.checked === 1 ? 'checked' : 'unchecked' }
+                                onPress={() => this.swtich(1)}
+                                color="#427fd4"
+                                />
+                            <RadioButton
+                                value="Promociones"
+                                status={ this.state.checked === 2 ? 'checked' : 'unchecked' }
+                                onPress={() => this.swtich(2)}
+                                color="#427fd4"
+                            />
+                        </View>
+                    </View>
+                    <ScrollView>
+>>>>>>> 1d5b7a7 (Add radiobuttons instead)
                         {this.props.estaciones.Estaciones.map((item) => {
                             // Iteramos las estaciones que tenemos cargadas en el store.
                             return (
