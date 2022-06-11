@@ -19,7 +19,7 @@ export default class Stations extends Component {
             <View style={{ flex: 1 }}>
                 {this.state.mode == 0 && <StationsMap {...this.props} />}
                 {this.state.mode == 1 && <StationsList {...this.props} />}
-                <View style={{ position: 'absolute', flexDirection: "row", width: "100%", padding: "10%", justifyContent: "center", bottom: 0 }}>
+                <View style={{ position: 'absolute', flexDirection: "row", width: "100%", padding: 15, justifyContent: "center", bottom: 0 }}>
                     <Button
                         labelStyle={{ fontSize: 20 }}
                         style={{ flex: 1, borderColor: theme.colors.primary, borderWidth: 2, borderRightWidth: 0, borderBottomRightRadius: 0, borderTopRightRadius: 0, backgroundColor: !this.state.mode ? theme.colors.primary : "#ffffff99" }}

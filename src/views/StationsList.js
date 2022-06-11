@@ -141,8 +141,8 @@ class StationsList extends React.Component {
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
-                    <ScrollView>
-                        {this.props.estaciones.map((item) => {
+                    <ScrollView contentContainerStyle={{paddingBottom: "20%"}}>
+                        {this.props.estaciones.Estaciones.map((item) => {
                             // Iteramos las estaciones que tenemos cargadas en el store.
                             return (
                                 <View key={item.id_estacion}>
@@ -150,7 +150,7 @@ class StationsList extends React.Component {
                                         id={item.id_estacion}
                                         estacion={item.nombre_est}
                                         ocupation_max={item.capacidad}
-                                        ocupation_now={item.ocupacion_actual}
+                                        ocupation_now={item.ocupation_actual}
                                         longitude={item.longitud}
                                         latitude={item.latitud}
                                         direccion={item.direccion}

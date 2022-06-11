@@ -8,6 +8,7 @@ import { setLocation } from '../state/actions/Location'
 import * as Location from 'expo-location';
 import Header from '../components/Header';
 import { theme } from '../core/theme';
+import { NavigationHelpersContext } from '@react-navigation/native';
         
 
 class StationsMap extends React.Component {
@@ -15,16 +16,8 @@ class StationsMap extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentLocation: {
-        latitude: 41.2185,
-        longitude: 1.7243
-      },
-      region: {
-        latitude: 41.2185,
-        longitude: 1.7243,
-        latitudeDelta: 0.025,
-        longitudeDelta: 0.025
-      },
+      currentLocation: null,
+      region: null,
       selectedStation: null,
       fake_estaciones: [
         {
@@ -92,26 +85,26 @@ class StationsMap extends React.Component {
   }
 
   async componentDidMount() {
-    // let { status } = await Location.requestForegroundPermissionsAsync();
-    // if (status !== 'granted') {
-    //   console.log('Permiso denegado para acceder a la ubicación.');
-    // } else {
-    //   let location = await Location.getCurrentPositionAsync({});
-    //   this.props.fetchEstaciones(location.coords.latitude, location.coords.longitude)
-    //   this.setState({
-    //     currentLocation: {
-    //       latitude: location.coords.latitude,
-    //       longitude: location.coords.longitude
-    //     },
-    //     region: {
-    //       latitude: 41.2185,
-    //       longitude: 1.7243,
-    //       latitudeDelta: 0.020,
-    //       longitudeDelta: 0.020
-    //     }
-    //   })
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      console.log('Permiso denegado para acceder a la ubicación.');
+    } else {
+      let location = await Location.getCurrentPositionAsync({});
+      this.props.fetchEstaciones(location.coords.latitude, location.coords.longitude)
+      this.setState({
+        currentLocation: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude
+        },
+        region: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 1,
+          longitudeDelta: 1
+        }
+      })
       
-    // } 
+    } 
    
   }
 
@@ -123,7 +116,7 @@ class StationsMap extends React.Component {
 
 
   render() {
-    return this.props.successEstaciones  || this.state.region==null && this.state.currentLocation==null 
+    return !this.props.successEstaciones || this.state.region==null && this.state.currentLocation==null 
       ? (<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
             <Header>Cargando localización</Header>
             <ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
@@ -151,7 +144,7 @@ class StationsMap extends React.Component {
               :
               null
           }
-            {this.state.fake_estaciones.map((item) => {
+            {this.props.estaciones.Estaciones.map((item) => {
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
                 <Marker
@@ -176,16 +169,22 @@ class StationsMap extends React.Component {
           
           {this.state.selectedStation && (
               <View style={{position: "absolute", width: "100%", padding: 5}}>
-                <Card style={{backgroundColor: '#fffb'}}>
+                <Card style={{backgroundColor: '#fffe'}}>
                   <Card.Content style={{flexDirection: 'row'}}>
                     <View style={{flex:1}}>
-                      <Header>{this.state.selectedStation.estacion}</Header>
+                      <Header>{this.state.selectedStation.nombre_est}</Header>
                       <View style={{flexDirection: "row", marginRight: 10}}>
                           <Text>{this.state.selectedStation.direccion}</Text>
                       </View>
                     </View>
                     <View style={{flexDirection: "row-reverse", marginTop: 10}}>
-                        <Button mode="contained" style={{marginLeft: 10}}>Detalle</Button>
+                        <Button 
+                          mode="contained" 
+                          style={{marginLeft: 10}}
+                          onPress={() => this.props.navigation.navigate('StationDetail', {id: this.state.selectedStation.id_estacion})}
+                        >
+                          Detalle
+                        </Button>
                     </View>
                   </Card.Content>
                 </Card>
