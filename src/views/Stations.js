@@ -14,14 +14,6 @@ export default class Stations extends Component {
         }
     }
 
-
-    componentDidMount() {
-        console.log('Stations')
-    }
-    componentDidUpdate() {
-        console.log('Stations')
-    }
-
     render() {
         return (
             <View style={{ flex: 1 }}>

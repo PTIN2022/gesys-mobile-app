@@ -1,13 +1,14 @@
 import React from 'react';
 import { Card, Button } from 'react-native-paper';
 import MapView, { Marker, LatLng } from 'react-native-maps'
-import { ScrollView, StyleSheet, Image, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Image, Text, View, ActivityIndicator } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import Header from "../components/Header";
 import AppBack from '../components/AppBack';
 import Background from '../components/Background';
 import { connect } from 'react-redux';
-import { fetchEstacion } from '../state/actions/Estacion'
+import { fetchEstacion } from '../state/actions/Estacion';
+import { theme } from '../core/theme';
 class StationDetail extends React.Component {
 
 	constructor(props) {
@@ -15,7 +16,7 @@ class StationDetail extends React.Component {
 	}
 
 	componentDidMount() {
-		this.props.fetchEstacion(1)
+		this.props.fetchEstacion(this.props.route.params.id)
 	}
 
 	componentDidUpdate() {
@@ -23,11 +24,16 @@ class StationDetail extends React.Component {
 	}
 
 	render() {
-		return !this.props.successEstacion ?
-			(<Text>Sin datos</Text>)
+		return !this.props.successEstacion 
+			? (
+				<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+					<Header>Cargando localización</Header>
+					<ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
+				</View>
+			)
 			: (
 				<Background>
-					<AppBack title={`Detalle de la estacion ${this.props.estacion.id}`} backScreenName="Stations" />
+					<AppBack title={`Detalle de la estacion ${this.props.route.params.id}`} backScreenName="Stations" />
 					<Card mode="elevated" style={{ marginHorizontal: 10, backgorundColor: "#ffffffdd" }}>
 						<MapView
 							style={s.map}
