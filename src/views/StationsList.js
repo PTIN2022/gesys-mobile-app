@@ -16,6 +16,11 @@ import * as Location from 'expo-location';
 import { setLocation } from '../state/actions/Location'
 import { ScrollView } from 'react-native-gesture-handler';
 import { theme } from '../core/theme';
+import SelectDropdown from 'react-native-select-dropdown'
+import {Slider} from '@miblanchard/react-native-slider';
+
+
+const API = "http://craaxkvm.epsevg.upc.es:23601/api";
 
 class StationsList extends React.Component {
     constructor(props) {
@@ -29,11 +34,11 @@ class StationsList extends React.Component {
             selected: { // Guardamos un objeto con lo que enviaremos a la API
                 station: null,
                 stationName: '',
-                from: new Date(),
+                from: String(""),
                 fromDT: null,
-                upto: new Date(),
+                upto: String(""),
                 uptoDT: null,
-                date: new Date(),
+                date: String(""),
                 rate: 20.0,
                 currentRate: 0,
                 coupon: "",
@@ -48,6 +53,9 @@ class StationsList extends React.Component {
                 latuitude: null,
             },
             checked: 1, // Filtro
+            kmFilter: 0, // Para controlar el ratio de KM
+            disableSlider: false,
+            sliderColor: "#427fd4"
         }
     }
    
@@ -100,6 +108,7 @@ class StationsList extends React.Component {
 
     // Establecemos la hora de reserva "desde"
     setTimeFrom = (e, d) => {
+        console.log(d)
         if (d !== undefined) {
             this.setState(prev => ({
                 showTimeFrom: false,
@@ -176,6 +185,7 @@ class StationsList extends React.Component {
                 this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
             }    
         } else if(this.state.checked === 2) {
+            this.setDate({disableSlider: true})
             this.props.fetchEstaciones(1, 1)
             // PROMOCIONES
         }
@@ -193,6 +203,18 @@ class StationsList extends React.Component {
 
     checkCupon = () => {
         // Fetch and check if cupon exists for this user?
+    }
+
+    filterByRatio = (value) => {
+        this.setState({
+            kmFilter: value,
+            disableSlider: true,
+            sliderColor: "#DCDCDC"
+        })
+        // Fetch by ratio kilometer.
+        setTimeout(() => {
+            this.setState({disableSlider: false, sliderColor: "#427fd4"})
+        }, 1000)
     }
 
     // Para pintar por pantalla.
@@ -215,24 +237,46 @@ class StationsList extends React.Component {
                     }
                     <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row'}}>
                         <View style={{width: 155, marginLeft: 10}}>
-                            <Text style={{fontWeight: 'bold', marginVertical: 7}}>Filtro por ubicación</Text>
                             <Text style={{fontWeight: 'bold', marginVertical: 9}}>Filtro por promociones</Text>
+                            <Text style={{fontWeight: 'bold', marginVertical: 7}}>Filtro por ubicación</Text>
                         </View>
                         <View>
+                            <RadioButton
+                                value="Promociones"
+                                status={ this.state.checked === 2 ? 'checked' : 'unchecked' }
+                                onPress={() => this.swtich(2)}
+                                color="#427fd4"
+                                disabled={true}
+                            />
                             <RadioButton
                                 value="Ubicación"
                                 status={ this.state.checked === 1 ? 'checked' : 'unchecked' }
                                 onPress={() => this.swtich(1)}
                                 color="#427fd4"
                                 />
-                            <RadioButton
-                                value="Promociones"
-                                status={ this.state.checked === 2 ? 'checked' : 'unchecked' }
-                                onPress={() => this.swtich(2)}
-                                color="#427fd4"
-                            />
                         </View>
                     </View>
+                    <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row'}}>
+                        <View style={{width: 155, marginLeft: 10}}>
+                            <Text style={{fontWeight: 'bold', marginVertical: 9}}>Filtro por ratio</Text>
+                        </View>
+                        <View style={{width: 163, marginLeft: 10}}>
+                            <Slider
+                                value={this.state.kmFilter}
+                                onSlidingComplete={value => this.filterByRatio(value)}
+                                style={{backgroundColor: 'red'}}
+                                maximumValue={5}
+                                minimumValue={0}
+                                step={1}
+                                disabled={this.state.disableSlider}
+                                thumbTintColor={this.state.sliderColor}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{fontWeight: 'bold', marginVertical: 9, marginLeft: 3}}>{this.state.kmFilter} KM</Text>
+                        </View>
+                    </View>
+                
                     <ScrollView>
                         {this.props.estaciones.Estaciones.map((item) => {
                             // Iteramos las estaciones que tenemos cargadas en el store.
@@ -268,9 +312,9 @@ class StationsList extends React.Component {
                                         editable={false}
                                     />
 
-                                    {this.state.showTimeFrom && <RNDateTimePicker mode="time" value={new Date()} onChange={(e, d) => this.setTimeFrom(e, d)} />}
-                                    {this.state.showTimeUpto && <RNDateTimePicker mode="time" value={new Date()} onChange={(e, d) => this.setTimeUpto(e, d)} />}
-                                    {this.state.showCalendar && <RNDateTimePicker mode="date" value={new Date()} onChange={(e, d) => this.setDate(e, d)} />}
+                                    {this.state.showTimeFrom && <RNDateTimePicker mode="time" value={new Date()} onChange={this.setTimeFrom} />}
+                                    {this.state.showTimeUpto && <RNDateTimePicker mode="time" value={new Date()} onChange={this.setTimeUpto} />}
+                                    {this.state.showCalendar && <RNDateTimePicker mode="date" value={new Date()} onChange={this.setDate} />}
 
                                     <TextInput
                                         mode="outlined"

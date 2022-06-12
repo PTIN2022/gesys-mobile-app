@@ -1,15 +1,15 @@
 import { theme } from '../core/theme'
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Button } from "react-native-paper"
 import AppBack from '../components/AppBack';
 import VehicleCard from '../components/VehicleCard'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addVehicle } from '../state/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
+import { fetchVehicles } from '../state/actions/Vehicles'
 
 
 
@@ -23,12 +23,12 @@ class VehiclesList extends Component {
 		if(this.props.Login.logged === false){
 			this.props.navigation.navigate('LogIn');
 		}
+
+        console.log(this.props.fetchVehicles()); // pass the token? or the cliente id?
     }
+
     componentDidUpdate() {
-
     }
-
-
 
     render() {
         return (
@@ -36,16 +36,20 @@ class VehiclesList extends Component {
                 <AppBack title="Lista de vehiculos" backScreenName="Stations" />
                 <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("VehicleForm")}>Nuevo vehiculo</Button>
                 <ScrollView>
-                    {this.props.vehiculos.map(vehicle => {
-                        return (
-                            <VehicleCard
-                                key={vehicle.id}
-                                name={vehicle.name}
-                                plate={vehicle.plate}
-                                model={vehicle.model}
-                            />
-                        )
-                    })}
+                    {this.props.errorVehicles ? 
+                        <Text>No data found.</Text>
+                    :
+                        this.props.vehicles.map(vehicle => {
+                            return (
+                                <VehicleCard
+                                    key={vehicle.id}
+                                    name={vehicle.name}
+                                    plate={vehicle.plate}
+                                    model={vehicle.model}
+                                />
+                            )
+                        })
+                    }   
                 </ScrollView>
             </Background>
 
@@ -54,18 +58,18 @@ class VehiclesList extends Component {
 }
 
 
-
-const mapStateToProps = ({ Vehiculos, Login }) => {
-    const { vehiculos } = Vehiculos;
-    return { vehiculos, Login };
+const mapStateToProps = (data) => {
+    const { vehicles, errorVehicles } = data.Vehiculos;
+    const { Login } = data;
+    return { vehicles, Login, errorVehicles };
 };
 
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
-        addVehicle,
-    }, dispatch)
-);
 
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchVehicles: () => dispatch(fetchVehicles()),
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(VehiclesList);
 

@@ -13,6 +13,11 @@ export const apiFetchReservas = () => {
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
+export const apifetchVehicles = () => {
+    let url = `${BASE_URL}:${RSV_PORT}/vechiles`
+    return fetch(url).then(res => Promise.all([res, res.json()]))
+}
+
 export const apiFetchEstacionById = id => {
     let url = `${BASE_URL}:${EST_PORT}/api/estaciones/${id}`
     return fetch(url).then(res => Promise.all([res, res.json()]))
@@ -58,6 +63,19 @@ export const apiLogin = (data) => {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+export const apiAddVehicle = (data) => {
+    let url = `${BASE_URL}:${RSV_PORT}/vehicles`
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            // Header of token?
         },
         body: JSON.stringify(data)
     }).then(res => Promise.all([res, res.json()]))

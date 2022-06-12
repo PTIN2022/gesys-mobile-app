@@ -5,37 +5,56 @@ import { theme } from '../core/theme'
 import AppBack from '../components/AppBack'
 import Header from '../components/Header'
 import Background from '../components/Background'
-import { matriculaValidator } from '../helpers/matriculaValidator'
+import { passwordValidator } from '../helpers/passwordValidator'
+import { nameValidator } from '../helpers/nameValidator'
 import { useState } from 'react'
-
-
-
+import { addVehicle } from '../state/actions/Vehicles'
+import { connect } from 'react-redux';
 
 
 class VehicleForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            matricula:  {
-                value: '',
-                error: null,
-            },
-            setMatricula: '',
+            nombre: "",
+            marca: "",
+            modelo: "",
+            matricula: "",
+            disable: false,
+            error: false,
+            success: false
         };
     }
 
     componentDidMount() {
-        console.log('VehicleForm')
+		if(this.props.Login.logged === false){
+			this.props.navigation.navigate('LogIn');
+		}
     }
+
     componentDidUpdate() {
-        console.log('VehicleForm')
+
+    }
+
+    addVehicle = () => {
+        // this.setState({disable: true})
+        let data = {
+            nombre: this.state.nombre,
+            marca: this.state.marca,
+            modelo: this.state.modelo,
+            matricula: this.state.matricula,
+        }
+        this.props.addVehicle(data);
+        this.setState({disable: false})
     }
 
     render() {
         return (
             <Background>
                 <AppBack title="Nuevo vehiculo" backScreenName="VehiclesList" />
-
+                {this.props.Vehiculos.errorAddVehicle === false ? <Text>Vehículo añadido con éxito.</Text> : null}
+                {this.props.Vehiculos.errorAddVehicle ? <Text>Error al añadir el vehículo.</Text> : null}
+                
                 <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>
                     <Header>Ingrese los datos del nuevo vehiculo:</Header>
                     <View style={{ flexDirection: "column", marginVertical: 15 }}>
@@ -44,63 +63,56 @@ class VehicleForm extends Component {
                             style={{ marginBottom: 10 }}
                             label="Nombre"
                             returnKeyType="next"
+                            onChangeText={text => this.setState({nombre: text})}
+                            value={this.state.nombre}
                         />
                         <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
                             label="Marca"
                             returnKeyType="next"
+                            onChangeText={text => this.setState({marca: text})}
+                            value={this.state.marca}
                         />
                         <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
                             label="Modelo"
                             returnKeyType="next"
+                            onChangeText={text => this.setState({modelo: text})}
+                            value={this.state.modelo}
                         />
                         <TextInput
                             mode="outlined"
-                            onChangeText={(text) => this.setState({ matricula: ({ value: text, error: '' }) })}
                             label="Matricula"
-                            placeholder="EX.- 8291KEB"
-                            autoCapitalize="characters"
-                            value={this.state.matricula.value}
-                            error={!!this.state.matricula.error}
-                            errorText={this.state.matricula.error}
                             returnKeyType="next"
+                            onChangeText={text => this.setState({matricula: text})}
+                            value={this.state.matricula}
                         />
                     </View>
 
                     <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-                        <Button style={{ width: "auto", }} mode="contained" onPress={this.onCreatePressed}>Crear vehiculo</Button>
+                        <Button style={{ width: "auto", }} mode="contained" onPress={() => this.addVehicle()} disabled={this.state.disable}>Crear vehiculo</Button>
                     </View>
                 </Card>
             </Background>
         );
     }
+}
 
-    onCreatePressed = () => {
-        const matriculaError = matriculaValidator(this.state.matricula.value) //Comprobamos que el correo introducido sea válido
-        
-        if (matriculaError) {
-        this.setState(prev => ({
-            matricula: {
-                ...prev.matricula,
-                value: prev.matricula.value,
-                error: matriculaError
-            }
-        }))
-        console.log(matriculaError)
-        console.log(this.state.matricula.error)
-        return
-        }
-        else{
-            this.props.navigation.navigate("VehiclesList")
-        }
+const mapStateToProps = (data) => {
+    const { Login, Vehiculos } = data;
+    return { Login, Vehiculos };
+};
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addVehicle: (data) => dispatch(addVehicle(data)),
     }
 }
 
-export default VehicleForm;
-
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleForm);
 
 const styles = StyleSheet.create({
     input: {

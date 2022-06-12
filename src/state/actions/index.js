@@ -3,7 +3,7 @@ export * from './Estaciones'
 export * from './Location'
 export * from './Reservas'
 export * from './Login'
-
+export * from './Vehicles'
 // // Acción para añadir la estación a la store.
 // export const addStation = station => (
 //     {

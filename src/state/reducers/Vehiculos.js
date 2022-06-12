@@ -1,5 +1,13 @@
+import {
+  ADD_VEHICLE,
+  FETCHING_VEHICLES,
+  FETCHING_VEHICLES_ERROR,
+  FETCHING_VEHICLES_SUCCESS,
+  ADD_VEHICLE_SUCCESS,
+  ADD_VEHICLE_ERROR
+} from '../actionTypes/Vehicles'
 const initial_state = {
-    vehiculos: [
+    vehicles: [
         {
             id: 1,
             name: "Coche deportivo",
@@ -33,6 +41,47 @@ const initial_state = {
     ]
 }
 
-export default Vehiculos = (state = initial_state) => {
-    return state
+export default Vehiculos = (state = initial_state, action) => {
+  switch(action.type){
+    case FETCHING_VEHICLES: 
+        return {
+            ...state,
+            vehicles: [],
+            successVechicles: false,
+            errorVehicles: false,
+            fetchingVehicles: true
+        }
+    case FETCHING_VEHICLES_SUCCESS: 
+        return {
+            ...state,
+            vehicles: action.payload,
+            successVechicles: true,
+            fetchingVehicles: false,
+            errorVehicles: false,
+        }
+    case FETCHING_VEHICLES_ERROR:
+        return {
+            ...state,
+            vehicles: [],
+            successVechicles: false,
+            fetchingVehicles: false,
+            errorVehicles: true
+        }
+    case ADD_VEHICLE_SUCCESS:
+        return {
+            ...state,
+            vehicles: state.vehicles.concat(action.payload),
+            successAddVehicle: true,
+            errorAddVehicle: false,
+        }
+    case ADD_VEHICLE_ERROR:
+        return {
+            ...state,
+            vehicles: state.vehicles,
+            successAddVehicle: false,
+            errorAddVehicle: true,
+        }
+    default :
+        return state
+  }
 }
