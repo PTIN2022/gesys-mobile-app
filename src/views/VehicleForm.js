@@ -5,8 +5,7 @@ import { theme } from '../core/theme'
 import AppBack from '../components/AppBack'
 import Header from '../components/Header'
 import Background from '../components/Background'
-import { passwordValidator } from '../helpers/passwordValidator'
-import { nameValidator } from '../helpers/nameValidator'
+import { matriculaValidator } from '../helpers/matriculaValidator'
 import { useState } from 'react'
 
 
@@ -16,7 +15,13 @@ import { useState } from 'react'
 class VehicleForm extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            matricula:  {
+                value: '',
+                error: null,
+            },
+            setMatricula: '',
+        };
     }
 
     componentDidMount() {
@@ -54,17 +59,43 @@ class VehicleForm extends Component {
                         />
                         <TextInput
                             mode="outlined"
+                            onChangeText={(text) => this.setState({ matricula: ({ value: text, error: '' }) })}
                             label="Matricula"
+                            placeholder="EX.- 8291KEB"
+                            autoCapitalize="characters"
+                            value={this.state.matricula.value}
+                            error={!!this.state.matricula.error}
+                            errorText={this.state.matricula.error}
                             returnKeyType="next"
                         />
                     </View>
 
                     <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-                        <Button style={{ width: "auto", }} mode="contained" onPress={() => this.props.navigation.navigate("VehiclesList")}>Crear vehiculo</Button>
+                        <Button style={{ width: "auto", }} mode="contained" onPress={this.onCreatePressed}>Crear vehiculo</Button>
                     </View>
                 </Card>
             </Background>
         );
+    }
+
+    onCreatePressed = () => {
+        const matriculaError = matriculaValidator(this.state.matricula.value) //Comprobamos que el correo introducido sea válido
+        
+        if (matriculaError) {
+        this.setState(prev => ({
+            matricula: {
+                ...prev.matricula,
+                value: prev.matricula.value,
+                error: matriculaError
+            }
+        }))
+        console.log(matriculaError)
+        console.log(this.state.matricula.error)
+        return
+        }
+        else{
+            this.props.navigation.navigate("VehiclesList")
+        }
     }
 }
 
