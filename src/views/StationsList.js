@@ -1,4 +1,4 @@
-import { Image, View, StyleSheet, Text } from 'react-native'
+import { Image, View, StyleSheet, Text, ActivityIndicator } from 'react-native'
 import StationCard from '../components/StationCard'
 import { connect } from 'react-redux';
 import React, { useState, useEffect } from 'react';
@@ -15,9 +15,7 @@ import { addBooking } from '../state/actions/Reservas';
 import * as Location from 'expo-location';
 import { setLocation } from '../state/actions/Location'
 import { ScrollView } from 'react-native-gesture-handler';
-
-
-const API = "http://craaxkvm.epsevg.upc.es:23601/api";
+import { theme } from '../core/theme';
 
 class StationsList extends React.Component {
     constructor(props) {
@@ -60,12 +58,6 @@ class StationsList extends React.Component {
                 this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
             }
         } 
-    }
- 
-
-
-    //Per Completar
-    componentDidUpdate() {
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
@@ -139,33 +131,26 @@ class StationsList extends React.Component {
 
     // Para pintar por pantalla.
     render() {
-        return !this.props.successEstaciones ?
-            (<Text>
-                {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
-                    <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
-                    :
-                    null
-                }
-            </Text>)
+        return !this.props.successEstaciones 
+            ? (
+                <View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+                    <Header>Cargando localización</Header>
+                    <ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
+                </View>
+            )
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
-                    {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
-                        <
-                            
-                        Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
-                        :
-                        null
-                    }
-                    <ScrollView>
+                    <ScrollView contentContainerStyle={{paddingBottom: "20%"}}>
                         {this.props.estaciones.Estaciones.map((item) => {
                             // Iteramos las estaciones que tenemos cargadas en el store.
                             return (
                                 <View key={item.id_estacion}>
                                     <StationCard
+                                        id={item.id_estacion}
                                         estacion={item.nombre_est}
-                                        ocupation_max={item.ocupacion_actual}
-                                        ocupation_now={item.ocupacion_actual}
+                                        ocupation_max={item.capacidad}
+                                        ocupation_now={item.ocupation_actual}
                                         longitude={item.longitud}
                                         latitude={item.latitud}
                                         direccion={item.direccion}

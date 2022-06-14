@@ -71,7 +71,7 @@ export default function ElectrolineraCard (props){
                 </View>
                 <View style={{flexDirection: "row-reverse"}}>
                     <Button disabled={props.disabledBtn} mode="contained"style={{marginLeft: 10}} onPress={() => props.openModal(props.id, props.estacion)}>Reservar</Button>
-                    <Button mode="contained"style={{marginLeft: 10, backgroundColor: "#427fd4"}} onPress={() => navigation.navigate('StationDetail')}>Detalles</Button>
+                    <Button mode="contained"style={{marginLeft: 10}} color={theme.colors.primary} onPress={() => navigation.navigate('StationDetail', {id: props.id})}>Detalles</Button>
                 </View>
             </Card.Content>
         </Card>
