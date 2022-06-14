@@ -29,6 +29,10 @@ class SignUp extends Component {
       setEmail: '',
       password: '',
       setPassword: '',
+      DNI: '',
+      setDNI: '',
+      phone: '',
+      setPhone: '',
     };
   }
 
@@ -46,11 +50,15 @@ class SignUp extends Component {
       const apellidoError = apellidoValidator(this.state.apellido.value)
       const emailError = emailValidator(this.state.email.value)
       const passwordError = passwordValidator(this.state.password.value)
-      if (emailError || passwordError || nameError) {
+      const DNIError = DNIValidator(this.state.dni.value)
+      const phoneError = phoneValidator(this.state.phone.value)
+      if (emailError || passwordError || nameError || DNIError || phoneError) {
         this.setState({ setName: ({ ...this.state.name, error: nameError }) })
         this.setState({ setApellido: ({ ...this.state.apellido, error: apellidoError }) })
         this.setState({ setEmail: ({ ...this.state.email, error: emailError }) })
         this.setState({ setPassword: ({ ...this.state.password, error: passwordError }) })
+        this.setState({ setDNI: ({ ...this.state.DNI, error: DNIError }) })
+        this.setState({ setPhone: ({ ...this.state.phone, error: phoneError }) })
         return
       }
       this.props.navigation.reset({
@@ -67,6 +75,7 @@ class SignUp extends Component {
         <View style={{ flexDirection: "column", alignItems: "center", paddingHorizontal: "10%" }}>
           <Logo />
           <TextInput
+            style={{height:40}}
             label="Nombre"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -76,6 +85,7 @@ class SignUp extends Component {
             errorText={this.state.name.error}
           />
           <TextInput
+            style={{height:40}}
             label="Apellido"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -85,6 +95,7 @@ class SignUp extends Component {
             errorText={this.state.apellido.error}
           />
           <TextInput
+            style={{height:40}}
             label="Email"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -98,6 +109,28 @@ class SignUp extends Component {
             keyboardType="email-address"
           />
           <TextInput
+            style={{height:40}}
+            label="DNI, NIE o CIF"
+            returnKeyType="next"
+            //Usamos el helper para validar
+            value={this.state.password.value}
+            onChangeText={(text) => this.setState({ setPassword: ({ value: text, error: '' }) })}
+            error={!!this.state.password.error}
+            errorText={this.state.password.error}
+          />
+          <TextInput
+            style={{height:40}}
+            label="Phone number"
+            returnKeyType="next"
+            //Usamos el helper para validar
+            value={this.state.password.value}
+            onChangeText={(text) => this.setState({ setPassword: ({ value: text, error: '' }) })}
+            error={!!this.state.password.error}
+            errorText={this.state.password.error}
+            keyboardType="phone-pad"
+          />
+          <TextInput
+            style={{height:40}}
             label="Password"
             returnKeyType="done"
             //Usamos el helper para validar
