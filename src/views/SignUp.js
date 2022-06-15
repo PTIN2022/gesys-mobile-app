@@ -8,10 +8,14 @@ import Header from '../components/Header'
 import Button from '../components/Button'
 import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
+
 import { nameValidator } from '../helpers/nameValidator'
 import { apellidoValidator } from '../helpers/apellidoValidator'
+import { emailValidator } from '../helpers/emailValidator'
+import { passwordValidator } from '../helpers/passwordValidator'
+import { DNIValidator } from '../helpers/DNIValidator'
+import { phoneValidator } from '../helpers/phoneValidator'
+
 import AppBack from '../components/AppBack'
 
 //Hacemos uso de los helpers para validar los datos introducidos por el usuario
