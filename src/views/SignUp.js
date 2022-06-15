@@ -54,7 +54,7 @@ class SignUp extends Component {
       const apellidoError = apellidoValidator(this.state.apellido.value)
       const emailError = emailValidator(this.state.email.value)
       const passwordError = passwordValidator(this.state.password.value)
-      const DNIError = DNIValidator(this.state.dni.value)
+      const DNIError = DNIValidator(this.state.DNI.value)
       const phoneError = phoneValidator(this.state.phone.value)
       if (emailError || passwordError || nameError || DNIError || phoneError) {
         this.setState({ setName: ({ ...this.state.name, error: nameError }) })
@@ -117,20 +117,20 @@ class SignUp extends Component {
             label="DNI, NIE o CIF"
             returnKeyType="next"
             //Usamos el helper para validar
-            value={this.state.password.value}
-            onChangeText={(text) => this.setState({ setPassword: ({ value: text, error: '' }) })}
-            error={!!this.state.password.error}
-            errorText={this.state.password.error}
+            value={this.state.DNI.value}
+            onChangeText={(text) => this.setState({ setDNI: ({ value: text, error: '' }) })}
+            error={!!this.state.DNI.error}
+            errorText={this.state.DNI.error}
           />
           <TextInput
             style={{height:40}}
             label="Phone number"
             returnKeyType="next"
             //Usamos el helper para validar
-            value={this.state.password.value}
-            onChangeText={(text) => this.setState({ setPassword: ({ value: text, error: '' }) })}
-            error={!!this.state.password.error}
-            errorText={this.state.password.error}
+            value={this.state.phone.value}
+            onChangeText={(text) => this.setState({ setPhone: ({ value: text, error: '' }) })}
+            error={!!this.state.phone.error}
+            errorText={this.state.phone.error}
             keyboardType="phone-pad"
           />
           <TextInput
