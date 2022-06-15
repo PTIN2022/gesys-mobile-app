@@ -17,7 +17,7 @@ function Layout (props) {
   return (
     <View>
         <Sidebar menuVisible={menuVisible} toggleMenu={toggleMenu}/>
-        <Topbar menuVisible={menuVisible} toggleMenu={toggleMenu}/>
+        <Topbar menuVisible={menuVisible} toggleMenu={toggleMenu} {...props}/>
     </View> 
   )
 }

@@ -28,6 +28,7 @@ function Sidebar(props){
             <ScrollView style={s.itemsContainer} contentContainerStyle={{alignItems: "center"}} persistentScrollbar indicatorStyle="black">
               <Menu.Item style={s.item} onPress={(e)=> nav("Profile")} icon="account" title="Cuenta" />
               <Menu.Item style={s.item} onPress={(e)=> nav("VehiclesList")} icon="car" title="Vehículos" />
+              <Menu.Item style={s.item} onPress={(e)=> nav("Transactions")} icon="history" title="Transacciones" />
               <Menu.Item style={s.item} onPress={(e)=> nav("Stations")} icon="ev-station" title="Estaciones" />
               <Menu.Item style={s.item} onPress={(e)=> nav("BookingsList")} icon="book" title="Reservas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("DealsList")} icon="ticket-percent" title="Ofertas disponibles"/>
@@ -35,7 +36,6 @@ function Sidebar(props){
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
               <Menu.Item style={s.item} onPress={(e)=> nav("About")} icon="information" title="Información" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("TicketsList")} icon="email" title="Tu buzon"/>
             </ScrollView>
           </View>
           <TouchableOpacity style={{backgroundColor: "#000a", width: screen.width*0.4}} onPress={()=>props.toggleMenu()}></TouchableOpacity>

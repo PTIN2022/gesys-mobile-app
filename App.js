@@ -27,7 +27,8 @@ import {
   About,
   PrivacyPolicy,
   UsageTerms,
-  Error
+  Error,
+  Transactions
 } from './src/views'
   let store = createMyStore()
 
@@ -76,6 +77,9 @@ class App extends React.Component {
                 {/*USUARIO*/}
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
+
+                {/* TRANSACCIONES */}
+                <Stack.Screen name="Transactions" component={Transactions} />
 
                 {/*APP*/}
                 <Stack.Screen name="About" component={About} />

@@ -4,6 +4,7 @@ export * from './Location'
 export * from './Reservas'
 export * from './Login'
 export * from './Vehicles'
+export * from './Transacciones'
 // // Acción para añadir la estación a la store.
 // export const addStation = station => (
 //     {

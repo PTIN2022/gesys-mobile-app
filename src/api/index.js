@@ -43,6 +43,11 @@ export const apiFetchReservaByMatricula = id => {
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
+
+export const apiFetchTransacciones =  (latitude, longitude) => {
+    
+}
+
 export const apiPostReserva = data => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
     console.log(url)
