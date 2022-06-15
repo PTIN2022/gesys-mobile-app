@@ -4,12 +4,17 @@ const RSV_PORT = "23701"
 
 export const apiFetchEstaciones =  (latitude, longitude) => {
     let url = `${BASE_URL}:${RSV_PORT}/api/estaciones/coor/${latitude}/${longitude}`
-    console.log(url, "http://craaxkvm.epsevg.upc.es:23701/api/estaciones/coor/1/1")
+    console.log(url)
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
 export const apiFetchReservas = () => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
+    return fetch(url).then(res => Promise.all([res, res.json()]))
+}
+
+export const apifetchVehicles = () => {
+    let url = `${BASE_URL}:${RSV_PORT}/vechiles`
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
@@ -38,6 +43,11 @@ export const apiFetchReservaByMatricula = id => {
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
+
+export const apiFetchTransacciones =  (latitude, longitude) => {
+    
+}
+
 export const apiPostReserva = data => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
     console.log(url)
@@ -58,6 +68,19 @@ export const apiLogin = (data) => {
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+export const apiAddVehicle = (data) => {
+    let url = `${BASE_URL}:${RSV_PORT}/vehicles`
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            // Header of token?
         },
         body: JSON.stringify(data)
     }).then(res => Promise.all([res, res.json()]))

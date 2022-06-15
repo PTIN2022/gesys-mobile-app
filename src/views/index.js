@@ -34,3 +34,6 @@ export { default as About } from './About'
 export { default as PrivacyPolicy } from './PrivacyPolicy'
 export { default as UsageTerms } from './UsageTerms'
 export { default as Error } from './Error'
+
+// Información de las transacciones
+export { default as Transactions } from './Transactions'

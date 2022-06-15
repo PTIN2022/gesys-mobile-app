@@ -1,5 +1,7 @@
+
+
 import React, { Component, useEffect } from 'react'
-import { TouchableOpacity, StyleSheet, View, Linking } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, AsyncStorage } from 'react-native'
 import { Text } from 'react-native-paper'
 import Background from '../components/Background'
 import Logo from '../components/Logo'
@@ -31,10 +33,10 @@ class LogIn extends Component {
         setPassword: '',
         loginError: false,
         };
+        console.log(this.props)
     }
 
   render() {
-    console.log(this.props)
     return (
       <Background>
         <View style={{ flexDirection: "column", alignItems: "center", padding: "10%" }}>
@@ -201,11 +203,11 @@ class LogIn extends Component {
             </View>
             <View style={{ flexDirection: "column", flex: 1, justifyContent: "flex-end", alignItems: "center", paddingBottom: 10 }}>
             <View style={{ flexDirection: "row" }}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('About')}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ArchivoAux')}>
                 <Text style={styles.forgot}>About </Text>
                 </TouchableOpacity>
                 <Text> | </Text>
-                <TouchableOpacity onPress={()=>{ Linking.openURL('https://www.facebook.com/profile.php?id=100082530423223')}}>
+                <TouchableOpacity onPress={() => this.props.navigation.replace('ArchivoAux')}>
                 <Text style={styles.forgot}>Network </Text>
                 </TouchableOpacity>
                 <Text> | </Text>
@@ -213,7 +215,7 @@ class LogIn extends Component {
                 <Text style={styles.forgot}>Contact </Text>
                 </TouchableOpacity>
                 <Text> | </Text>
-                <TouchableOpacity onPress={()=>{ Linking.openURL('http://craaxkvm.epsevg.upc.es:23601')}}>
+                <TouchableOpacity onPress={() => this.props.navigation.replace('ArchivoAux')}>
                 <Text style={styles.forgot}>Website </Text>
                 </TouchableOpacity>
             </View>
