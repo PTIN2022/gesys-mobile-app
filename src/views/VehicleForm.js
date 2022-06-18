@@ -10,7 +10,8 @@ import { nameValidator } from '../helpers/nameValidator'
 import { useState } from 'react'
 import { addVehicle } from '../state/actions/Vehicles'
 import { connect } from 'react-redux';
-
+import Error from '../components/Error'
+import Success from '../components/Success'
 
 class VehicleForm extends Component {
     constructor(props) {
@@ -37,24 +38,35 @@ class VehicleForm extends Component {
     }
 
     addVehicle = () => {
-        // this.setState({disable: true})
-        let data = {
-            nombre: this.state.nombre,
-            marca: this.state.marca,
-            modelo: this.state.modelo,
-            matricula: this.state.matricula,
+        if(this.state.nombre === "") this.setState({nombreError: true})
+        if(this.state.marca === "") this.setState({marcaError: true})
+        if(this.state.modelo === "") this.setState({modeloError: true})
+        if(this.state.matricula === "") this.setState({matriculaError: true})
+        if(this.state.nombre !== "" && this.state.marca !== "" && this.state.modelo !== "" && this.state.matricula !== "") {
+
+            // this.setState({disable: true})
+            let data = {
+                nombre: this.state.nombre,
+                marca: this.state.marca,
+                modelo: this.state.modelo,
+                matricula: this.state.matricula,
+            }
+            this.props.addVehicle(data, (success) => {
+                if(success) this.setState({success: true})
+                else this.setState({error: true})
+            });
+            this.setState({disable: false})
         }
-        this.props.addVehicle(data);
-        this.setState({disable: false})
+
     }
 
     render() {
         return (
             <Background>
                 <AppBack title="Nuevo vehiculo" backScreenName="VehiclesList" />
-                {this.props.Vehiculos.errorAddVehicle === false ? <Text>Vehículo añadido con éxito.</Text> : null}
-                {this.props.Vehiculos.errorAddVehicle ? <Text>Error al añadir el vehículo.</Text> : null}
-                
+                {this.state.success ? <Success text={"Vehículo añadido."} /> : null}
+                {this.state.error ?  <Error text={"Error al añadir el vehículo."} /> : null}
+
                 <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>
                     <Header>Ingrese los datos del nuevo vehiculo:</Header>
                     <View style={{ flexDirection: "column", marginVertical: 15 }}>
@@ -63,31 +75,35 @@ class VehicleForm extends Component {
                             style={{ marginBottom: 10 }}
                             label="Nombre"
                             returnKeyType="next"
-                            onChangeText={text => this.setState({nombre: text})}
+                            onChangeText={text => this.setState({nombre: text, nombreError: false})}
                             value={this.state.nombre}
+                            error={this.state.nombreError}
                         />
                         <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
                             label="Marca"
                             returnKeyType="next"
-                            onChangeText={text => this.setState({marca: text})}
+                            onChangeText={text => this.setState({marca: text, marcaError: false})}
                             value={this.state.marca}
+                            error={this.state.marcaError}
                         />
                         <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
                             label="Modelo"
                             returnKeyType="next"
-                            onChangeText={text => this.setState({modelo: text})}
+                            onChangeText={text => this.setState({modelo: text, modeloError: false})}
                             value={this.state.modelo}
+                            error={this.state.modeloError}
                         />
                         <TextInput
                             mode="outlined"
                             label="Matricula"
                             returnKeyType="next"
-                            onChangeText={text => this.setState({matricula: text})}
+                            onChangeText={text => this.setState({matricula: text, matriculaError: false})}
                             value={this.state.matricula}
+                            error={this.state.matriculaError}
                         />
                     </View>
 
@@ -108,7 +124,7 @@ const mapStateToProps = (data) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addVehicle: (data) => dispatch(addVehicle(data)),
+        addVehicle: (data, fn) => dispatch(addVehicle(data, fn)),
     }
 }
 

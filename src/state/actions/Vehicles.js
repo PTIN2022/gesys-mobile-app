@@ -56,22 +56,22 @@ export const addVehicleSuccess = (data) => {
     }
 }
 
-export const addVehicle = (data) => {
+export const addVehicle = (data, fn) => {
     return (dispatch) => {
         apiAddVehicle(data)
         .then(([response, json]) => {
             if (json.error != undefined) {
                 dispatch(addVehicleError())
-                // fn(false)
+                fn(false)
             }
             else {
                 dispatch(addVehicleSuccess(json))
-                // fn(true)
+                fn(true)
             }
         })
         .catch(error => {
             console.log("Error al obtener vehiculos. Error en la API.");
-            // fn(false)
+            fn(false)
             dispatch(addVehicleError())
         })
     }

@@ -1,5 +1,3 @@
-
-
 import React, { Component, useEffect } from 'react'
 import { TouchableOpacity, StyleSheet, View, Linking } from 'react-native'
 import { Text } from 'react-native-paper'
