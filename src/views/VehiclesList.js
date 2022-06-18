@@ -24,7 +24,7 @@ class VehiclesList extends Component {
 			this.props.navigation.navigate('LogIn');
 		}
 
-        console.log(this.props.fetchVehicles()); // pass the token? or the cliente id?
+        this.props.fetchVehicles(); // pass the token? or the cliente id?
     }
 
     componentDidUpdate() {

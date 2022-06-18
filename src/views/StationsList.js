@@ -16,8 +16,9 @@ import * as Location from 'expo-location';
 import { setLocation } from '../state/actions/Location'
 import { ScrollView } from 'react-native-gesture-handler';
 import { theme } from '../core/theme';
-import SelectDropdown from 'react-native-select-dropdown'
 import {Slider} from '@miblanchard/react-native-slider';
+import SelectDropdown from 'react-native-select-dropdown'
+import { fetchVehicles } from '../state/actions/Vehicles'
 
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
@@ -73,6 +74,8 @@ class StationsList extends React.Component {
                 this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
             }
         } 
+
+        this.props.fetchVehicles(); // Pass the token?
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
@@ -101,7 +104,7 @@ class StationsList extends React.Component {
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
                 fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
                 id_vehiculo: "-",
-                id_cliente: "xx",
+                id_cliente: "xx", // this.props.Login.client_id
             })
         }
     }
@@ -178,6 +181,8 @@ class StationsList extends React.Component {
     }
 
     swtich = (val) => {
+        if(val === this.state.checked) return;
+
         this.setState({checked: val})
         if(this.state.checked === 1){
             // Ahora se quiere filtrar por ubicación.
@@ -300,9 +305,25 @@ class StationsList extends React.Component {
                     </ScrollView>
                     <Portal>
                         <Dialog visible={this.state.visible} onDismiss={this.toggleDialog}>
-                            <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>
+                            <Card style={{ marginHorizontal: 5, padding: 20 }}>
                                 <Header>Reserva</Header>
                                 <View style={{ flexDirection: "column", marginVertical: 15 }}>
+                                    <SelectDropdown
+                                        data={this.props.Vehicles}
+                                        onSelect={(selectedItem, index) => {
+                                            console.log(selectedItem, index)
+                                        }}
+                                        buttonTextAfterSelection={(selectedItem, index) => {
+                                            // text represented after item is selected
+                                            // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                            return selectedItem
+                                        }}
+                                        rowTextForSelection={(item, index) => {
+                                            // text represented for each item in dropdown
+                                            // if data array is an array of objects then return item.property to represent item in dropdown
+                                            return item
+                                        }}
+                                    />
                                     <TextInput
                                         mode="outlined"
                                         style={{ marginBottom: 10 }}
@@ -406,7 +427,8 @@ const styles = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations, Login }) => {
+const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
+    console.log(Vehiculos)
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
     return { estaciones, successEstaciones, currentLocation, Login };
@@ -416,7 +438,8 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
         addBooking: (data) => dispatch(addBooking(data)),
-        setCurrentLocation: (data) => dispatch(setLocation(data))
+        setCurrentLocation: (data) => dispatch(setLocation(data)),
+        fetchVehicles: () => dispatch(fetchVehicles()),
     }
 }
 
