@@ -30,7 +30,7 @@ function Header (props) {
                         <Badge style={s.bellBadge} size={20}>2</Badge>
                     </View>
                     <View style={s.avatarContainer}>
-                        <Text style={s.username}> {props.Login.cliente.nombre || ""} </Text>
+                        <Text style={s.username}> {props.Login.logged ? props.Login.cliente.nombre : ""} </Text>
                         <Avatar.Image style={s.avatar} size={50} source={require('../../assets/avatar.png')} />
                     </View>
             </View>

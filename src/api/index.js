@@ -13,8 +13,8 @@ export const apiFetchReservas = () => {
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
-export const apifetchVehicles = (token) => {
-    let url = `${BASE_URL}:${RSV_PORT}/api/vehiculos`
+export const apifetchVehicles = (token, cliente_id) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/vehiculos/cliente/${cliente_id}`
     return fetch(url, {
         method: 'GET',
         headers: {

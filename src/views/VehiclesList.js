@@ -24,7 +24,7 @@ class VehiclesList extends Component {
 			this.props.navigation.navigate('LogIn');
 		}
 
-        this.props.fetchVehicles(this.props.Login.token); // pass the token? or the cliente id?
+        this.props.fetchVehicles(this.props.Login.token, this.props.Login.cliente.id_usuari); // pass the token? or the cliente id?
     }
 
     componentDidUpdate() {
@@ -67,7 +67,7 @@ const mapStateToProps = (data) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchVehicles: (token) => dispatch(fetchVehicles(token)),
+        fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
     }
 }
 
