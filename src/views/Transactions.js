@@ -20,7 +20,7 @@ class Transactions extends React.Component {
         <View>
           <View style={{alignItems: 'center', marginTop: 20, backgroundColor: '#0E3BAC', justifyContent: 'center'}} height={100}>
             <Text style={{textAlignVertical: 'center', fontSize: 50, color: 'white'}}>
-              0
+              {this.props.Login.cliente.saldo}
               <Text style={{textAlignVertical: 'center', fontSize: 15, color: 'white'}}> puntos</Text>
             </Text>
           </View>

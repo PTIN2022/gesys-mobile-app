@@ -15,32 +15,42 @@ function TextReserva (props) {
   const showDialog = () => props.openModal();
   const hideDialog = () => setVisible(false);
 
-    return(
-      <Card mode="elevated" style={{marginHorizontal: 5, marginBottom: 5, backgroundColor: "#ffffffdd"}}>
-        <Card.Content style={{}}>
-          <View style={{flexDirection: "row"}}>
-            <View style={{justifyContent: "center", flex: 1, alignItems: "center"}}>
-              <Avatar.Icon {...props} icon="car-side" />
-            </View>
-            <View style={{flex: 4, paddingLeft: 20}}>
-              <Header>{ props.name }</Header>
-              <View style={{flexDirection: "row"}}> 
-                <Text style={{fontWeight: "700", marginRight: 10}}>Matricula:</Text>     
-                <Text> {props.plate} </Text>
-              </View>
-              <View style={{flexDirection: "row", marginBottom: 15}}>
-                <Text style={{fontWeight: "700", marginRight: 10}}>Modelo:</Text>
-                <Text>{props.model}</Text>
-              </View>
-            </View>
-            </View>
-          <View style={{flexDirection: "row-reverse"}}>
-                <Button mode="contained"style={{marginLeft: 10}} >Favorito</Button>
-                <Button mode="outlined" color='red'>Eliminar</Button>
+  const getBatteryColor = () => {
+    return  (props.charge <= 100.0) && (props.charge > 70.0) ? "green" :   
+            (props.charge <= 70.0) && (props.charge > 30.0) ? "orange" :
+            (props.charge <= 30.0) ? "red" : "grey"; 
+  }
+
+  return(
+    <Card mode="elevated" style={{marginHorizontal: 5, marginBottom: 5, backgroundColor: "#ffffffdd"}}>
+      <Card.Content style={{}}>
+        <View style={{flexDirection: "row"}}>
+          <View style={{justifyContent: "center", flex: 1, alignItems: "center"}}>
+            <Avatar.Icon {...props} icon="car-side" />
           </View>
-        </Card.Content>
-      </Card>
-    )
+          <View style={{flex: 4, paddingLeft: 20}}>
+            <Header>{ props.name }</Header>
+            <View style={{flexDirection: "row"}}> 
+              <Text style={{fontWeight: "700", marginRight: 10}}>Matricula:</Text>     
+              <Text> {props.plate} </Text>
+            </View>
+            <View style={{flexDirection: "row"}}>
+              <Text style={{fontWeight: "700", marginRight: 10}}>Modelo:</Text>
+              <Text>{props.model}</Text>
+            </View>
+            <View style={{flexDirection: "row", marginBottom: 15}}>
+              <Text style={{fontWeight: "700", marginRight: 10}}>Carga:</Text>
+              <Text style={{color: getBatteryColor()}}>{props.charge}%</Text>
+            </View>
+          </View>
+          </View>
+        <View style={{flexDirection: "row-reverse"}}>
+              <Button mode="contained"style={{marginLeft: 10}} >Favorito</Button>
+              <Button mode="outlined" color='red'>Eliminar</Button>
+        </View>
+      </Card.Content>
+    </Card>
+  )
 }
 
 export default TextReserva

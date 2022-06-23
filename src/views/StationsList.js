@@ -75,7 +75,7 @@ class StationsList extends React.Component {
             }
         } 
 
-        this.props.fetchVehicles(); // Pass the token?
+        this.props.fetchVehicles(this.props.Login.token); // Pass the token?
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
@@ -111,7 +111,7 @@ class StationsList extends React.Component {
 
     // Establecemos la hora de reserva "desde"
     setTimeFrom = (e, d) => {
-        console.log(d)
+
         if (d !== undefined) {
             this.setState(prev => ({
                 showTimeFrom: false,
@@ -126,6 +126,7 @@ class StationsList extends React.Component {
                 let precioPorMinutoEstacion = this.state.selected.rate / 60;
                 // Get difference in minutes for selected period.
                 let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT);
+
                 let mins = Math.floor((minutesOfBooking/1000)/60);
                 this.setState(prev => ({
                     showTimeUpto: false,
@@ -154,8 +155,8 @@ class StationsList extends React.Component {
                 // Procesamos la cantidad estimada.
                 let precioPorMinutoEstacion = this.state.selected.rate / 60;
                 // Get difference in minutes for selected period.
-                let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT);
-                let mins = Math.floor((minutesOfBooking/1000)/60);
+                let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT) / 1000 * 3600; // hours
+                let mins = Math.floor((minutesOfBooking/1000)/60); // To seconds
                 this.setState(prev => ({
                     showTimeUpto: false,
                     selected: {
@@ -428,7 +429,6 @@ const styles = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
-    console.log(Vehiculos)
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
     return { estaciones, successEstaciones, currentLocation, Login };
@@ -439,7 +439,7 @@ const mapDispatchToProps = dispatch => {
         fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
         addBooking: (data) => dispatch(addBooking(data)),
         setCurrentLocation: (data) => dispatch(setLocation(data)),
-        fetchVehicles: () => dispatch(fetchVehicles()),
+        fetchVehicles: (token) => dispatch(fetchVehicles(token)),
     }
 }
 

@@ -28,10 +28,10 @@ export const getVehiclesError = () => {
     }
 }
 
-export const fetchVehicles = (token = null, client_id = null) => {
+export const fetchVehicles = (token) => {
     return (dispatch) => {
         dispatch(getVehicles())
-        apifetchVehicles()
+        apifetchVehicles(token)
         .then(([response, json]) => {
             dispatch(getVehiclesSuccess(json))
         })

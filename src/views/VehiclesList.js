@@ -24,7 +24,7 @@ class VehiclesList extends Component {
 			this.props.navigation.navigate('LogIn');
 		}
 
-        this.props.fetchVehicles(); // pass the token? or the cliente id?
+        this.props.fetchVehicles(this.props.Login.token); // pass the token? or the cliente id?
     }
 
     componentDidUpdate() {
@@ -42,14 +42,14 @@ class VehiclesList extends Component {
                         this.props.vehicles.map(vehicle => {
                             return (
                                 <VehicleCard
-                                    key={vehicle.id}
-                                    name={vehicle.name}
-                                    plate={vehicle.plate}
-                                    model={vehicle.model}
+                                    key={vehicle.matricula}
+                                    plate={vehicle.matricula}
+                                    model={vehicle.modelo}
+                                    charge={vehicle.procentaje_bat}
                                 />
                             )
                         })
-                    }   
+                    }
                 </ScrollView>
             </Background>
 
@@ -67,7 +67,7 @@ const mapStateToProps = (data) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchVehicles: () => dispatch(fetchVehicles()),
+        fetchVehicles: (token) => dispatch(fetchVehicles(token)),
     }
 }
 

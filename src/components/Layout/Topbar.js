@@ -30,13 +30,13 @@ function Header (props) {
                         <Badge style={s.bellBadge} size={20}>2</Badge>
                     </View>
                     <View style={s.avatarContainer}>
-                        <Text style={s.username}> {props.Login.logged || ""} </Text>
+                        <Text style={s.username}> {props.Login.cliente.nombre || ""} </Text>
                         <Avatar.Image style={s.avatar} size={50} source={require('../../assets/avatar.png')} />
                     </View>
             </View>
             {props.Login.logged ? 
             <View style={s.balance}>
-                <Text style={s.balanceText}>0 puntos</Text>
+                <Text style={s.balanceText}>{props.Login.cliente.saldo} puntos</Text>
             </View>            
             : 
             null}

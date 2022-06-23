@@ -13,9 +13,14 @@ export const apiFetchReservas = () => {
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
-export const apifetchVehicles = () => {
-    let url = `${BASE_URL}:${RSV_PORT}/vehicles`
-    return fetch(url).then(res => Promise.all([res, res.json()]))
+export const apifetchVehicles = (token) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/vehiculos`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        }
+    }).then(res => Promise.all([res, res.json()]))
 }
 
 export const apiFetchEstacionById = id => {
@@ -48,25 +53,24 @@ export const apiFetchTransacciones =  (latitude, longitude) => {
     
 }
 
-export const apiPostReserva = data => {
+export const apiPostReserva = (data, token) => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
-    console.log(url)
     return fetch(url, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-access-tokens': token
         },
         body: JSON.stringify(data)
     }).then(res => Promise.all([res, res.json()]))
 }
 
 export const apiLogin = (data) => {
-    let url = `https://reqres.in/api/login`
+    let url = `${BASE_URL}:${RSV_PORT}/api/login`
     return fetch(url, {
         method: 'POST',
         headers: {
-            Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)

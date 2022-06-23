@@ -206,7 +206,8 @@ const s = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations }) => {
+const mapStateToProps = ({ Estaciones, Locations, Login }) => {
+
   const { estaciones, successEstaciones } = Estaciones;
   const { currentLocation } = Locations;
   return { estaciones, successEstaciones, currentLocation };
@@ -214,7 +215,7 @@ const mapStateToProps = ({ Estaciones, Locations }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEstaciones: (long, lat) => dispatch(fetchEstaciones(long, lat)),
+    fetchEstaciones: (long, lat, token) => dispatch(fetchEstaciones(long, lat, token)),
     setCurrentLocation: (data) => dispatch(setLocation(data))
   }
 }

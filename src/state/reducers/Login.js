@@ -17,8 +17,8 @@ export default (state = initial_state, action) => {
         case DO_LOGIN_SUCCESS: 
             return {
                 ...state,
-                token: "GESYS:TOKEN",
-                client_id: action.payload.client_id,
+                token: action.payload.token,
+                cliente: action.payload.cliente,
                 logged: true,
                 errorLogin: false,
             }
@@ -27,7 +27,7 @@ export default (state = initial_state, action) => {
                 ...state,
                 errorLogin: true,
                 token: null,
-                client_id: null,
+                cliente: null,
                 logged: false,
             }
         default:

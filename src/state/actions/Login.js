@@ -28,23 +28,22 @@ export const validateLoginError = () => {
 export const doLogin = (username, password, fn) => {
     return (dispatch) => {
         apiLogin({
-            username: username,
+            email: username,
             password: password,
         })
         .then(([response, json]) => {
             if (json.error != undefined) {
-                console.log("ERROR")
                 dispatch(validateLoginError())
                 fn(false)
             }
             else {
-                console.log("SUCCESS")
+                console.log(json)
                 dispatch(validateLoginSuccess(json))
                 fn(true)
             }
         })
         .catch(error => {
-            console.log(error)
+            fn(false)
         })
     }
 }

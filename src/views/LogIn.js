@@ -19,61 +19,62 @@ class LogIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        email:  {
-            value: '',
-            error: null,
-        },
-        setEmail: '',
-        password: {
-            value: '',
-            error: null,
-        },
-        setPassword: '',
-        loginError: false,
+            email:  {
+                value: '',
+                error: null,
+            },
+            setEmail: '',
+            password: {
+                value: '',
+                error: null,
+            },
+            setPassword: '',
+            loginError: false,
         };
-        console.log(this.props)
     }
 
     componentDidMount() {
+
     }
 
-    onLoginPressed = () => {
-        const emailError = emailValidator(this.state.email.value) //Comprobamos que el correo introducido sea válido
-        const passwordError = passwordValidator(this.state.password.value) //Comprobamos que la contraseña introducida sea válida
+    onLoginPressed = (e) => {
+        // const emailError = emailValidator(this.state.email.value) //Comprobamos que el correo introducido sea válido
+        // const passwordError = passwordValidator(this.state.password.value) //Comprobamos que la contraseña introducida sea válida
         
-        if (emailError || passwordError) {
-        this.setState(prev => ({
-            email: {
-                ...prev.email,
-                value: prev.email.value,
-                error: emailError
-            },
-            password: {
-                ...prev.password,
-                value: prev.password.value,
-                error: passwordError
-            }
-        }))
-        return
-        }
+        // if (emailError || passwordError) {
+        // this.setState(prev => ({
+        //     email: {
+        //         ...prev.email,
+        //         value: prev.email.value,
+        //         error: emailError
+        //     },
+        //     password: {
+        //         ...prev.password,
+        //         value: prev.password.value,
+        //         error: passwordError
+        //     }
+        // }))
+        // return
+        // }
         // this.props.navigation.navigate('Stations')
+
         this.props.doLogin(this.state.email.value, this.state.password.value, (val) => {
-        if(val){
-            this.setState({
-                loginError: false
-            })
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{name: 'Stations'}],
-            });
-        } else {
-            this.setState({
-                loginError: true
-            })
-        }
+            if(val){
+                this.setState({
+                    loginError: false
+                })
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [{name: 'Stations'}],
+                });
+            } else {
+                this.setState({
+                    loginError: true
+                })
+            }
         })
 
-    } 
+    }
 
     render() {
         return (
@@ -110,7 +111,7 @@ class LogIn extends Component {
                 <Text style={styles.forgot}>Has olvidado tu contraseña?</Text>
                 </TouchableOpacity>
             </View>
-            <Button mode="contained" onPress={this.onLoginPressed}>
+            <Button mode="contained" onPress={(e) => this.onLoginPressed(e)}>
                 Login
             </Button>
             <View style={{ flexDirection: "row", marginTop: 10 }}>
