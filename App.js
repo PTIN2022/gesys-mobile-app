@@ -30,11 +30,19 @@ import {
   UsageTerms,
   Error,
 <<<<<<< HEAD
+<<<<<<< HEAD
   Transactions,
   
 =======
   Historial
 >>>>>>> 531c714 (Add history)
+=======
+  Historial
+=======
+  Transactions,
+  
+>>>>>>> 03e30fc (jodeme mas esta vida gitana (NotificationList con reducer))
+>>>>>>> fe71835 (jodeme mas esta vida gitana (NotificationList con reducer))
 } from './src/views'
   let store = createMyStore()
 
