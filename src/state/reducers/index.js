@@ -9,6 +9,7 @@ import Deals from "./Deals"
 import Tickets from './Tickets'
 import Login from './Login'
 import Transactions from './Transacciones'
+import Notifications from "./Notifications"
 
 export default combineReducers({
     Estacion, 
@@ -20,5 +21,6 @@ export default combineReducers({
     Tickets,
     Templates,
     Login,
-    Transactions
+    Transactions,
+    Notifications,
 })

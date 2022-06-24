@@ -21,6 +21,7 @@ import {
   BookingsList,
   BookingForm,
   DealsList,
+  NotificationsList,
   TicketsList,
   Profile,
   ModifyProfile,
@@ -28,7 +29,8 @@ import {
   PrivacyPolicy,
   UsageTerms,
   Error,
-  Transactions
+  Transactions,
+  
 } from './src/views'
   let store = createMyStore()
 
@@ -73,6 +75,9 @@ class App extends React.Component {
 
                 {/*OFERTAS*/}
                 <Stack.Screen name="DealsList" component={DealsList} />
+                
+                {/*NOTIFICATIONS*/}
+                <Stack.Screen name="NotificationsList" component={NotificationsList} />
 
                 {/*USUARIO*/}
                 <Stack.Screen name="Profile" component={Profile} />

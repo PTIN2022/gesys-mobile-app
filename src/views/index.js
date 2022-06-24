@@ -24,6 +24,9 @@ export { default as DealsList} from './DealsList'
 //Tickets
 export {default as TicketsList} from './TicketsList'
 
+//Notificaciones
+export {default as NotificationsList} from './NotificationsList'
+
 
 //Información del usuario
 export { default as Profile } from './Profile'
