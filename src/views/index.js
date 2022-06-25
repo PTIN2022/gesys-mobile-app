@@ -39,4 +39,4 @@ export { default as UsageTerms } from './UsageTerms'
 export { default as Error } from './Error'
 
 // Información de las transacciones
-export { default as Transactions } from './Transactions'
+export { default as Historial } from './Historial'

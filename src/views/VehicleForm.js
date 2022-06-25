@@ -38,22 +38,21 @@ class VehicleForm extends Component {
     }
 
     addVehicle = () => {
-        if(this.state.nombre === "") this.setState({nombreError: true})
-        if(this.state.marca === "") this.setState({marcaError: true})
+        // if(this.state.nombre === "") this.setState({nombreError: true})
+        // if(this.state.marca === "") this.setState({marcaError: true})
         if(this.state.modelo === "") this.setState({modeloError: true})
         if(this.state.matricula === "") this.setState({matriculaError: true})
-        if(this.state.nombre !== "" && this.state.marca !== "" && this.state.modelo !== "" && this.state.matricula !== "") {
+        if(this.state.modelo !== "" && this.state.matricula !== "") {
 
             // this.setState({disable: true})
             let data = {
-                nombre: this.state.nombre,
-                marca: this.state.marca,
                 modelo: this.state.modelo,
                 matricula: this.state.matricula,
-                // client_id: this.props.Login.client_id
+                //client_id: this.props.Login.client_id
+                porcentaje_bat: 100,
             }
-            this.props.addVehicle(data, (success) => {
-                if(success) this.setState({success: true})
+            this.props.addVehicle(data, this.props.Login.token, (success) => {
+                if(success) this.setState({success: true, modelo: "", matricula: "", nombre: "", marca: ""})
                 else this.setState({error: true})
             });
             this.setState({disable: false})
@@ -125,7 +124,7 @@ const mapStateToProps = (data) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addVehicle: (data, fn) => dispatch(addVehicle(data, fn)),
+        addVehicle: (data, token, fn) => dispatch(addVehicle(data, token, fn)),
     }
 }
 

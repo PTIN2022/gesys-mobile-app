@@ -1,7 +1,7 @@
 import {
-    FETCHING_TRANSACTIONS,
-    FETCHING_TRANSACTIONS_SUCCESS,
-    FETCHING_TRANSACTIONS_ERROR,
+    FETCHING_HISTORIAL,
+    FETCHING_HISTORIAL_SUCCESS,
+    FETCHING_HISTORIAL_ERROR,
 } from '../actionTypes'
 
 const initial_state = {
@@ -13,26 +13,26 @@ const initial_state = {
 
 export default (state = initial_state, action) => {
     switch(action.type){
-        case FETCHING_TRANSACTIONS: 
+        case FETCHING_HISTORIAL: 
             return {
                 ...state,
-                transactions: {},
+                historial: {},
                 successTransaction: false,
                 errorTransaction: false,
                 fetchingTransaction: true
             }
-        case FETCHING_TRANSACTIONS_SUCCESS: 
+        case FETCHING_HISTORIAL_SUCCESS: 
             return {
                 ...state,
-                transactions: action.payload,
+                historial: action.payload,
                 successTransaction: true,
                 errorTransaction: false,
                 fetchingTransaction: false
             }
-        case FETCHING_TRANSACTIONS_ERROR:
+        case FETCHING_HISTORIAL_ERROR:
             return {
                 ...state,
-                transactions: {},
+                historial: {},
                 successTransaction: false,
                 fetchingTransaction: false,
                 errorTransaction: true

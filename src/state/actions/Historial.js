@@ -1,36 +1,37 @@
 
 import {
-    FETCHING_TRANSACTION,
-    FETCHING_TRANSACTION_SUCCESS,
-    FETCHING_TRANSACTION_ERROR
+    FETCHING_HISTORIAL,
+    FETCHING_HISTORIAL_SUCCESS,
+    FETCHING_HISTORIAL_ERROR
 } from '../actionTypes'
 
-import { apiFetchTransacciones } from '../../api'
+import { apiFetchHistorial } from '../../api'
 
 export const getTransacciones = () => {
     return {
-        type: FETCHING_TRANSACTION
+        type: FETCHING_HISTORIAL
     }
 }
 
 export const getTransaccionesSuccess = payload => {
     return {
-        type: FETCHING_TRANSACTION_SUCCESS,
+        type: FETCHING_HISTORIAL_SUCCESS,
         payload: payload
     }
 }
 
 export const getTransaccionesError = () => {
     return {
-        type: FETCHING_TRANSACTION_ERROR
+        type: FETCHING_HISTORIAL_ERROR
     }
 }
 
-export const fetchTransacciones = (latitude, longitude) => {
+export const fetchHistorial = (token) => {
     return (dispatch) => {
         dispatch(getTransacciones())
-        apiFetchTransacciones(latitude, longitude)
+        apiFetchHistorial(token)
         .then(([response, json]) => {
+            console.log(json)
             dispatch(getTransaccionesSuccess(json))
         })
         .catch(error => {

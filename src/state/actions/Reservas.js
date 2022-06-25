@@ -29,11 +29,10 @@ export const getReservasError= () => {
     }
 }
 
-export const fetchReservas = () => {
-
+export const fetchReservas = (dni) => {
     return (dispatch) => {
         dispatch(getReservas())
-        apiFetchReservas()
+        apiFetchReservas(dni)
             .then(([response, json]) => {
                 dispatch(getReservasSuccess(json))
             })

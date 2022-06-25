@@ -33,6 +33,7 @@ export const fetchVehicles = (token, id_cliente) => {
         dispatch(getVehicles())
         apifetchVehicles(token, id_cliente)
         .then(([response, json]) => {
+            console.log(json)
             dispatch(getVehiclesSuccess(json))
         })
         .catch(error => {
@@ -56,9 +57,9 @@ export const addVehicleSuccess = (data) => {
     }
 }
 
-export const addVehicle = (data, fn) => {
+export const addVehicle = (data, token, fn) => {
     return (dispatch) => {
-        apiAddVehicle(data)
+        apiAddVehicle(data, token)
         .then(([response, json]) => {
             if (json.error != undefined) {
                 dispatch(addVehicleError())
@@ -70,7 +71,8 @@ export const addVehicle = (data, fn) => {
             }
         })
         .catch(error => {
-            console.log("Error al obtener vehiculos. Error en la API.");
+            console.log(error)
+            console.log("Error al insertar el vehículo. Error en la API.");
             fn(false)
             dispatch(addVehicleError())
         })

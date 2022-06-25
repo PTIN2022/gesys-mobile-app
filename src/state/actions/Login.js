@@ -1,7 +1,8 @@
 import {
     DO_LOGIN,
     DO_LOGIN_ERROR,
-    DO_LOGIN_SUCCESS
+    DO_LOGIN_SUCCESS,
+    UPDATE_BALANCE,
 } from '../actionTypes'
 
 import { apiLogin } from '../../api'
@@ -37,7 +38,6 @@ export const doLogin = (username, password, fn) => {
                 fn(false)
             }
             else {
-                console.log(json)
                 dispatch(validateLoginSuccess(json))
                 fn(true)
             }
@@ -48,3 +48,16 @@ export const doLogin = (username, password, fn) => {
     }
 }
 
+
+export const updateClientBalance = payload => {
+    return {
+        type: UPDATE_BALANCE,
+        payload: payload
+    }
+}
+
+export const updateSaldo = (payload) => {
+    return (dispatch) =>{
+        dispatch(updateClientBalance(payload))
+    } 
+}

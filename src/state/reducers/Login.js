@@ -1,7 +1,8 @@
 import {
     DO_LOGIN,
     DO_LOGIN_ERROR,
-    DO_LOGIN_SUCCESS
+    DO_LOGIN_SUCCESS,
+    UPDATE_BALANCE
 } from '../actionTypes'
 
 const initial_state = {
@@ -22,13 +23,21 @@ export default (state = initial_state, action) => {
                 logged: true,
                 errorLogin: false,
             }
-            case DO_LOGIN_ERROR:
-                return {
+        case DO_LOGIN_ERROR:
+            return {
                 ...state,
                 errorLogin: true,
                 token: null,
                 cliente: null,
                 logged: false,
+            }
+        case UPDATE_BALANCE:
+            return {
+                ...state,
+                cliente: {
+                    ...state.cliente,
+                    saldo: action.payload,
+                }
             }
         default:
             return state;

@@ -9,7 +9,8 @@ import * as Location from 'expo-location';
 import Header from '../components/Header';
 import { theme } from '../core/theme';
 import { NavigationHelpersContext } from '@react-navigation/native';
-        
+import { fetchVehicles } from '../state/actions/Vehicles'
+
 
 class StationsMap extends React.Component {
 
@@ -90,7 +91,7 @@ class StationsMap extends React.Component {
       console.log('Permiso denegado para acceder a la ubicación.');
     } else {
       let location = await Location.getCurrentPositionAsync({});
-      this.props.fetchEstaciones(location.coords.latitude, location.coords.longitude)
+      this.props.fetchEstaciones(location.coords.latitude, location.coords.longitude, 1000000)
       this.setState({
         currentLocation: {
           latitude: location.coords.latitude,
@@ -104,8 +105,12 @@ class StationsMap extends React.Component {
         }
       })
       
-    } 
-   
+    }
+
+    if(this.props.Login.logged) {
+      this.props.fetchVehicles(this.props.Login.token, this.props.Login.cliente.id_usuari);
+    }
+
   }
 
   selectStation(item){
@@ -210,13 +215,14 @@ const mapStateToProps = ({ Estaciones, Locations, Login }) => {
 
   const { estaciones, successEstaciones } = Estaciones;
   const { currentLocation } = Locations;
-  return { estaciones, successEstaciones, currentLocation };
+  return { estaciones, successEstaciones, currentLocation, Login };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchEstaciones: (long, lat, token) => dispatch(fetchEstaciones(long, lat, token)),
-    setCurrentLocation: (data) => dispatch(setLocation(data))
+    fetchEstaciones: (long, lat, ratio, token) => dispatch(fetchEstaciones(long, lat, ratio, token)),
+    setCurrentLocation: (data) => dispatch(setLocation(data)),
+    fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
   }
 }
 

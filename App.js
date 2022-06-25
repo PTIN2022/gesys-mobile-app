@@ -29,8 +29,12 @@ import {
   PrivacyPolicy,
   UsageTerms,
   Error,
+<<<<<<< HEAD
   Transactions,
   
+=======
+  Historial
+>>>>>>> 531c714 (Add history)
 } from './src/views'
   let store = createMyStore()
 
@@ -83,8 +87,8 @@ class App extends React.Component {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="ModifyProfile" component={ModifyProfile} />
 
-                {/* TRANSACCIONES */}
-                <Stack.Screen name="Transactions" component={Transactions} />
+                {/* HISTORIAL */}
+                <Stack.Screen name="Historial" component={Historial} />
 
                 {/*APP*/}
                 <Stack.Screen name="About" component={About} />

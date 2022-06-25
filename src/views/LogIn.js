@@ -13,7 +13,8 @@ import { connect } from 'react-redux';
 import { doLogin } from '../state/actions/Login';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../state/actions'
-
+import Error from '../components/Error'
+import Success from '../components/Success'
 
 class LogIn extends Component {
     constructor(props) {
@@ -82,7 +83,7 @@ class LogIn extends Component {
             <View style={{ flexDirection: "column", alignItems: "center", padding: "10%" }}>
             <Logo />
             <Header>Bienvenido a GeSyS</Header>
-            {this.state.loginError === true ? <Text style={{ backgroundColor: 'red', color: 'white' }}>Credenciales incorrectas.</Text> : null}
+            {this.state.loginError === true ? <Error text={"Credenciales incorrectas."} /> : null}
             <TextInput
                 label="Email"
                 returnKeyType="next"

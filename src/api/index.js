@@ -2,19 +2,20 @@ const BASE_URL = "http://craaxkvm.epsevg.upc.es"
 const EST_PORT = "23601"
 const RSV_PORT = "23701"
 
-export const apiFetchEstaciones =  (latitude, longitude) => {
-    let url = `${BASE_URL}:${RSV_PORT}/api/estaciones/coor/${latitude}/${longitude}`
+export const apiFetchEstaciones =  (latitude, longitude, ratio) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/estaciones/coor/${latitude}/${longitude}/${ratio}`
     console.log(url)
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
-export const apiFetchReservas = () => {
-    let url = `${BASE_URL}:${RSV_PORT}/reservas`
+export const apiFetchReservas = (dni) => {
+    console.log(dni)
+    let url = `${BASE_URL}:${RSV_PORT}/reservas/bydni/${dni}`
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
 export const apifetchVehicles = (token, cliente_id) => {
-    let url = `${BASE_URL}:${RSV_PORT}/api/vehiculos/cliente/${cliente_id}`
+    let url = `${BASE_URL}:${RSV_PORT}/api/vehiculos/cliente`
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -49,8 +50,15 @@ export const apiFetchReservaByMatricula = id => {
 }
 
 
-export const apiFetchTransacciones =  (latitude, longitude) => {
-    
+export const apiFetchHistorial =  (token) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/historial`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        },
+    }).then(res => Promise.all([res, res.json()]))
+
 }
 
 export const apiPostReserva = (data, token) => {
@@ -77,13 +85,14 @@ export const apiLogin = (data) => {
     }).then(res => Promise.all([res, res.json()]))
 }
 
-export const apiAddVehicle = (data) => {
-    let url = `${BASE_URL}:${RSV_PORT}/vehicles`
+export const apiAddVehicle = (data, token) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/vehiculos`
     return fetch(url, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',
+            'x-access-tokens': token
             // Header of token?
         },
         body: JSON.stringify(data)

@@ -28,7 +28,7 @@ class BookingList extends React.Component{
 		if(this.props.Login.logged === false){
 			this.props.navigation.navigate('LogIn');
 		} else {
-            this.props.fetchReservas()
+            this.props.fetchReservas(this.props.Login.cliente.dni)
         }
     }
     
@@ -137,7 +137,7 @@ const mapStateToProps = ({Reservas, Login}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchReservas: () => dispatch(fetchReservas())
+        fetchReservas: (dni) => dispatch(fetchReservas(dni))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(BookingList);

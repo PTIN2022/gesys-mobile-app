@@ -28,7 +28,7 @@ function Sidebar(props){
             <ScrollView style={s.itemsContainer} contentContainerStyle={{alignItems: "center"}} persistentScrollbar indicatorStyle="black">
               <Menu.Item style={s.item} onPress={(e)=> nav("Profile")} icon="account" title="Cuenta" />
               <Menu.Item style={s.item} onPress={(e)=> nav("VehiclesList")} icon="car" title="Vehículos" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("Transactions")} icon="history" title="Transacciones" />
+              <Menu.Item style={s.item} onPress={(e)=> nav("Historial")} icon="history" title="Historial" />
               <Menu.Item style={s.item} onPress={(e)=> nav("Stations")} icon="ev-station" title="Estaciones" />
               <Menu.Item style={s.item} onPress={(e)=> nav("BookingsList")} icon="book" title="Reservas"/>
               <Menu.Item style={s.item} onPress={(e)=> nav("DealsList")} icon="ticket-percent" title="Ofertas disponibles"/>
