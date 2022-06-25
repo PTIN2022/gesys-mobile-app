@@ -5,7 +5,7 @@ import {
 } from '../actionTypes'
 
 const initial_state = {
-    transaction: {},
+    historial: {},
     fetchingTransaction: false,
     successTransaction: false,
     errorTransaction: false

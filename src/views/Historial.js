@@ -74,7 +74,7 @@ class Historial extends React.Component {
                 let data = new Date(history.fecha);
                 let fullDate = `${data.getDate()}-${data.getMonth()}-${data.getFullYear()}`
                 return(history.type === "add" ? 
-                  <View style={s.balanceAdd}>
+                  <View style={s.balanceAdd} key={Math.random(1,10000)}>
                     <Text style={s.balanceText}>{fullDate}</Text>
                     <Text style={s.balanceText}>, +{history.saldo}€</Text>
                   </View>
@@ -128,6 +128,7 @@ const s = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({ Login, Historial }) => {
+  console.log(Historial)
   return { Login, Historial };
 };
   

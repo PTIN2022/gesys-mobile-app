@@ -165,7 +165,6 @@ class StationsList extends React.Component {
                 // Procesamos la cantidad estimada.
                 let precioPorMinutoEstacion = this.state.selected.rate / 60;
                 // Get difference in minutes for selected period.
-                console.log( Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT))
                 let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT) / 3600000; // hours
                 let amount = 0.28*minutesOfBooking+0.05+0.10;
                 amount = parseFloat(amount.toFixed(2))
