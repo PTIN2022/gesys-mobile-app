@@ -55,7 +55,6 @@ class BookingList extends React.Component{
     }
 
     render(){    //para pintar por pantalla
-        console.log(this.props.reservas)
         //alert(this.props.successReservas)
         return !this.props.successReservas ?
             (<Text>Sin datos</Text>)
@@ -64,7 +63,6 @@ class BookingList extends React.Component{
                 <AppBack title="Lista de reservas" backScreenName="Stations" />
                 <ScrollView>
                     {this.props.reservas.map((item) => {
-                        console.log(Date.parse(item.fecha_entrada))
                         return (
                             <ReservaCard
                                 key={item.id_reserva}

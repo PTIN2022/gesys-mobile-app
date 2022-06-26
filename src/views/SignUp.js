@@ -42,10 +42,8 @@ class SignUp extends Component {
 
 
   componentDidMount() {
-    console.log('SignUp')
   }
   componentDidUpdate() {
-    console.log('SignUp')
   }
 
   render() {

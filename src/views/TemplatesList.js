@@ -20,10 +20,8 @@ class TemplatesList extends Component {
     }
 
     componentDidMount() {
-        console.log('TemplatesList')
     }
     componentDidUpdate() {
-        console.log('TemplatesList')
     }
 
 

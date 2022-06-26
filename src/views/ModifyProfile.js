@@ -22,10 +22,8 @@ class ModifyProfile extends Component {
 	}
 
 	componentDidMount() {
-		console.log('ModifyProfile')
 	}
 	componentDidUpdate() {
-		console.log('ModifyProfile')
 	}
 
 	render() {
@@ -38,11 +36,8 @@ class ModifyProfile extends Component {
 				allowsEditing: true,
 			});
 
-			console.log(result);
-
 			if (!result.cancelled) {
 				setImage(result.uri);
-				console.log(result.uri);
 			}
 		};
 

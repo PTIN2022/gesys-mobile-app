@@ -19,10 +19,8 @@ class Password extends Component {
   }
 
   componentDidMount() {
-    console.log('Password')
   }
   componentDidUpdate() {
-    console.log('Password')
   }
 
   render() {
@@ -46,7 +44,6 @@ class Password extends Component {
             keyboardType="email-address"
           />
           <Button mode="contained" onPress={() => {
-            console.log(this.state.email.value)
             const emailError = emailValidator(this.state.email.value) //Comprobamos si el correo introducido por el usuario es válido
             if (emailError) {
               setEmail({ ...this.state.email, error: emailError })

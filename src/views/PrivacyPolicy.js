@@ -16,10 +16,8 @@ class PrivacyPolicy extends Component {
 	}
 
 	componentDidMount() {
-		console.log('PrivacyPolicy')
 	}
 	componentDidUpdate() {
-		console.log('PrivacyPolicy')
 	}
 
 	render() {

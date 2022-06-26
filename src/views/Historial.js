@@ -128,7 +128,6 @@ const s = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({ Login, Historial }) => {
-  console.log(Historial)
   return { Login, Historial };
 };
   

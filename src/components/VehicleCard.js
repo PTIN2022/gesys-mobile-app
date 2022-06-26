@@ -34,13 +34,13 @@ function TextReserva (props) {
               <Text style={{fontWeight: "700", marginRight: 10}}>Matricula:</Text>     
               <Text> {props.plate} </Text>
             </View>
-            {/* <View style={{flexDirection: "row"}}>
+            <View style={{flexDirection: "row"}}>
               <Text style={{fontWeight: "700", marginRight: 10}}>Modelo:</Text>
               <Text>{props.model}</Text>
-            </View> */}
+            </View>
             <View style={{flexDirection: "row", marginBottom: 15}}>
               <Text style={{fontWeight: "700", marginRight: 10}}>Carga:</Text>
-              <Text style={{color: getBatteryColor()}}>{props.charge}%</Text>
+              <Text style={{color: getBatteryColor(), fontWeight: 'bold'}}>{props.charge}%</Text>
             </View>
           </View>
           </View>

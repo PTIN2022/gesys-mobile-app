@@ -31,11 +31,9 @@ export const fetchEstaciones = (latitude, longitude, ratio) => {
         dispatch(getEstaciones())
         apiFetchEstaciones(latitude, longitude, ratio)
         .then(([response, json]) => {
-            console.log(json)
             dispatch(getEstacionesSuccess(json))
         })
         .catch(error => {
-            console.log(error)
             dispatch(getEstacionesError())
         })
     }

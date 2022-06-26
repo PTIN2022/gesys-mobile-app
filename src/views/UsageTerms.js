@@ -16,10 +16,8 @@ class UsageTerms extends Component {
 	}
 
 	componentDidMount() {
-		console.log('UsageTerms')
 	}
 	componentDidUpdate() {
-		console.log('UsageTerms')
 	}
 
 	render() {

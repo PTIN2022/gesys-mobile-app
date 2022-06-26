@@ -44,7 +44,9 @@ class StationsList extends React.Component {
                 rate: 20.0,
                 currentRate: 0,
                 coupon: "",
-                cuponValid: null,
+                cuponValid: false,
+                cuponInvalid: false,
+                vehicle_place: "",
             },
             showTimeFrom: false, // estados booleanos para mostrar o no el selector de hora
             showTimeUpto: false,
@@ -60,6 +62,7 @@ class StationsList extends React.Component {
             sliderColor: "#427fd4",
             selectedVehicle: "",
             insufficientBlanace: false,
+            cuponInvalid: false,
         }
     }
    
@@ -97,13 +100,9 @@ class StationsList extends React.Component {
 
     book = (idStation, nameStation) => {
         this.setState({ loading: true })
-
-        // Just a simulation. It would really be a API call.
-        setTimeout(() => {
-            this.setState({ loading: false, visible: false, bookingSuccess: true })
-        }, 2000);
-
+        
         if(this.state.selected.from !== null && this.state.selected.upto !== null){
+            this.setState({ loading: false, visible: false})
             this.props.addBooking({
                 id_estacion: this.state.selected.station,
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
@@ -113,6 +112,8 @@ class StationsList extends React.Component {
             })
 
         }
+
+        // TODO: Llamada a la API para restar el saldo.
     }
 
     // Establecemos la hora de reserva "desde"
@@ -226,7 +227,31 @@ class StationsList extends React.Component {
     }
 
     checkCupon = () => {
-        // Fetch and check if cupon exists for this user?
+        console.log(this.props.Login.token)
+        fetch(`http://craaxkvm.epsevg.upc.es:23701/api/cupones/${this.state.selected.coupon}`, {
+            method: 'GET',
+            headers: {
+                'x-access-tokens': this.props.Login.token
+            },
+        })
+        .then(res => {
+            if(res.status === 404){
+                console.log("404")
+                this.setState(prev => ({
+                    ...prev,
+                    selected: {
+                        ...prev.selected,
+                        cuponInvalid: true,
+                    }
+                }))
+            } else {
+                res.json()
+            }
+        })
+        .catch(data => {
+            console.log(data)
+        })
+
     }
 
     filterByRatio = (value) => {
@@ -341,9 +366,15 @@ class StationsList extends React.Component {
                                     null}
                                     <SelectDropdown
                                         data={data}
-                                        defaultValue={data}
+                                        defaultValue={data[0]}
                                         onSelect={(selectedItem, index) => {
-                                            console.log(selectedItem, index)
+                                            this.setState(previousState => ({
+                                                ...previousState,
+                                                selected:{
+                                                    ...previousState.selected,
+                                                    vehicle_place: selectedItem
+                                                }
+                                            }))                                           
                                         }}
                                         buttonTextAfterSelection={(selectedItem, index) => {
                                             // text represented after item is selected
@@ -407,16 +438,16 @@ class StationsList extends React.Component {
                                         editable={true}
                                         onChange={text => {this.changeCupon(text)}}
                                     />
-                                    {this.state.selected.cuponValid === true ? (
-                                        <Text style={{color: 'green'}} >Cupón inválido.</Text>
-                                    ) : ( 
-                                        this.state.selected.cuponValid === false ? (
-                                            <Text style={{color: 'green'}}>Cupón válido.</Text>
-                                        ) : (
-                                            null
-                                        )
-                                    )}
-                                    
+                                    {this.state.selected.cuponValid === true ?
+                                        <Text style={{color: 'green'}}>Cupón válido.</Text>
+                                        : 
+                                        null
+                                    }
+                                    {this.state.selected.cuponInvalid === true ? 
+                                        (<Text style={{color: 'red'}} >Cupón inválido.</Text>) 
+                                        :
+                                        null
+                                    }                                    
                                     <Button mode='contained' onPress={this.checkCupon}>Validar cupón</Button>
                                 </View>
                                 <Text style={{marginTop: 30}}>

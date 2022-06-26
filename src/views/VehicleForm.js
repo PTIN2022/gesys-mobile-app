@@ -12,6 +12,8 @@ import { addVehicle } from '../state/actions/Vehicles'
 import { connect } from 'react-redux';
 import Error from '../components/Error'
 import Success from '../components/Success'
+import SelectDropdown from 'react-native-select-dropdown'
+
 
 class VehicleForm extends Component {
     constructor(props) {
@@ -23,14 +25,30 @@ class VehicleForm extends Component {
             matricula: "",
             disable: false,
             error: false,
-            success: false
+            success: false,
+            modelos: []
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 		if(this.props.Login.logged === false){
 			this.props.navigation.navigate('LogIn');
 		}
+        let models = [];
+        await fetch("http://craaxkvm.epsevg.upc.es:23701/api/modelos", {
+            method: 'GET',
+            headers: {
+                'x-access-tokens': this.props.Login.token
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            data.map(i => {
+                models.push(i.modelo);
+            })
+            this.setState({modelos: models})
+        })
+    
     }
 
     componentDidUpdate() {
@@ -70,7 +88,24 @@ class VehicleForm extends Component {
                 <Card style={{ marginHorizontal: 5, padding: 20, backgroundColor: "#ffffffdd" }}>
                     <Header>Ingrese los datos del nuevo vehiculo:</Header>
                     <View style={{ flexDirection: "column", marginVertical: 15 }}>
-                        <TextInput
+                        <SelectDropdown
+                            data={this.state.modelos}
+                            defaultValue={this.state.modelos[0]}
+                            onSelect={(selectedItem, index) => {
+                                this.setState({modelo: selectedItem})
+                            }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                        />
+                        {/* <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
                             label="Nombre"
@@ -78,7 +113,7 @@ class VehicleForm extends Component {
                             onChangeText={text => this.setState({nombre: text, nombreError: false})}
                             value={this.state.nombre}
                             error={this.state.nombreError}
-                        />
+                        /> */}
                         <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
@@ -88,7 +123,7 @@ class VehicleForm extends Component {
                             value={this.state.marca}
                             error={this.state.marcaError}
                         />
-                        <TextInput
+                        {/* <TextInput
                             mode="outlined"
                             style={{ marginBottom: 10 }}
                             label="Modelo"
@@ -96,7 +131,7 @@ class VehicleForm extends Component {
                             onChangeText={text => this.setState({modelo: text, modeloError: false})}
                             value={this.state.modelo}
                             error={this.state.modeloError}
-                        />
+                        /> */}
                         <TextInput
                             mode="outlined"
                             label="Matricula"

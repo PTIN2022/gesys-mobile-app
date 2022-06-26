@@ -31,11 +31,9 @@ export const fetchHistorial = (token) => {
         dispatch(getTransacciones())
         apiFetchHistorial(token)
         .then(([response, json]) => {
-            console.log(json)
             dispatch(getTransaccionesSuccess(json))
         })
         .catch(error => {
-            console.log(error)
             dispatch(getTransaccionesError())
         })
     }

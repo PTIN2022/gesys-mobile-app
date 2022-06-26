@@ -16,10 +16,8 @@ class Error extends Component {
 	}
 
 	componentDidMount() {
-		console.log('Error')
 	}
 	componentDidUpdate() {
-		console.log('Error')
 	}
 
 	render() {

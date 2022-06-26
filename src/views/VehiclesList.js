@@ -44,7 +44,7 @@ class VehiclesList extends Component {
                                 <VehicleCard
                                     key={vehicle.matricula}
                                     plate={vehicle.matricula}
-                                    model={vehicle.modelo}
+                                    model={vehicle.modelo[0].modelo}
                                     charge={vehicle.procentaje_bat}
                                 />
                             )

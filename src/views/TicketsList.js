@@ -20,10 +20,8 @@ class TicketsList extends Component {
     }
 
     componentDidMount() {
-        console.log('TicketsList')
     }
     componentDidUpdate() {
-        console.log('TicketsList')
     }
 
 

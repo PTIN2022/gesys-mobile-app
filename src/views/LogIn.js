@@ -35,7 +35,9 @@ class LogIn extends Component {
     }
 
     componentDidMount() {
-
+        if(this.props.Login.logged){
+            this.props.navigation.navigate('Stations');
+        }
     }
 
     onLoginPressed = (e) => {

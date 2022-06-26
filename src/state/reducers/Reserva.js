@@ -15,7 +15,6 @@ const initial_state = {
 }
 
 export default getReserva = (state = initial_state, action) => {
-    console.log(action)
     switch(action.type){
         case FETCHING_RESERVA: 
             return {

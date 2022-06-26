@@ -13,10 +13,8 @@ class Landing extends Component {
   }
 
   componentDidMount() {
-    console.log('Landing')
   }
   componentDidUpdate() {
-    console.log('Landing')
   }
 
   render() {

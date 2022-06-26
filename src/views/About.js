@@ -16,10 +16,8 @@ class About extends Component {
 	}
 
 	componentDidMount() {
-		console.log('About')
 	}
 	componentDidUpdate() {
-		console.log('About')
 	}
 
 	render() {

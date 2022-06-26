@@ -16,10 +16,8 @@ class BookingForm extends Component {
   }
 
   componentDidMount() {
-    console.log('Bokingform')
   }
   componentDidUpdate() {
-    console.log('Bokingform')
   }
 
   render() {
