@@ -48,6 +48,7 @@ class StationsList extends React.Component {
                 cuponValid: false,
                 cuponInvalid: false,
                 vehicle_place: "",
+                porcentaje: String(""),
             },
             discount: {
                 percentage: 0,
@@ -165,7 +166,7 @@ class StationsList extends React.Component {
 
         // TODO: Llamada a la API para restar el saldo.
         this.decrementBalance()
-        return
+        
 
         this.setState({ loading: true })
         
@@ -179,7 +180,12 @@ class StationsList extends React.Component {
                 // id_cliente: this.props.Login.cliente.id_usuari, // this.props.Login.client_id
                 tarifa: this.state.selected.currentRate,
                 asistida: true, 
+                precio_carga_completa: this.state.selected.currentRate,
+                precio_carga_actual: 0,
+                porcentaje_carga: Number(this.state.selected.porcentaje),
+                estado_pago: this.state.insufficientBlanace
             })
+            console.log(typeof porcentaje_carga)
         }
 
 
@@ -283,6 +289,15 @@ class StationsList extends React.Component {
             this.props.fetchEstaciones(1, 1)
             // PROMOCIONES
         }
+    }
+
+    changePorcentaje = (text) => {
+        this.setState(prev => ({
+            selected: {
+                ...prev.selected,
+                porcentaje: text,
+            }
+        }))
     }
 
     changeCupon = (text) => {
@@ -521,6 +536,14 @@ class StationsList extends React.Component {
                                         value={this.state.selected.date === "" ? "" : this.state.selected.date}
                                         editable={true}
                                         onPressIn={() => this.setState({ showCalendar: true })}
+                                    />
+                                     <TextInput
+                                        mode="outlined"
+                                        style={{ marginBottom: 10 }}
+                                        label="% a cargar"
+                                        value={this.state.selected.porcentaje}
+                                        editable={true}
+                                        onChangeText={text => {this.changePorcentaje(text)}}
                                     />
                                 </View>
                                 <View>
