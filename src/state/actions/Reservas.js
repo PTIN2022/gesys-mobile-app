@@ -57,9 +57,9 @@ export const postReservaSuccess = (data) => {
     }
 }
 
-export const addBooking = (data) => {
+export const addBooking = (token, data) => {
     return (dispatch) => {
-        apiPostReserva(data)
+        apiPostReserva(token, data)
         .then(([response, json]) => {
             if (json.error != undefined) {
                 dispatch(postReservaError())
@@ -76,7 +76,7 @@ export const addBooking = (data) => {
             }
         })
         .catch(error => {
-            alert(error)
+            console.log(error)
         })
     }
 }

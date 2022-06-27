@@ -96,6 +96,7 @@ class StationsList extends React.Component {
             return
         }
         this.setState(prev => ({
+            ...prev,
             visible: true,
             selected: {
                 ...prev.selected,
@@ -161,36 +162,35 @@ class StationsList extends React.Component {
     }
 
     book = (idStation, nameStation) => {
-        // TODO: Si el usuario ha usado el cupon, poner éste como inválido
-        this.invalidateCupon()
-
-        // TODO: Llamada a la API para restar el saldo.
-        this.decrementBalance()
         
-
         this.setState({ loading: true })
         
         if(this.state.selected.from !== null && this.state.selected.upto !== null){
             this.setState({ loading: false, visible: false})
-            this.props.addBooking({
-                id_estacion: this.state.selected.station,
+            let data = {
+                // id_estacion: this.state.selected.station,
+                id_estacion: this.state.selected.stationName,
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
                 fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
-                id_vehiculo: this.state.vehicle_place,
+                id_vehiculo: this.state.selected.vehicle_place,
                 // id_cliente: this.props.Login.cliente.id_usuari, // this.props.Login.client_id
                 tarifa: this.state.selected.currentRate,
                 asistida: true, 
                 precio_carga_completa: this.state.selected.currentRate,
                 precio_carga_actual: 0,
-                porcentaje_carga: Number(this.state.selected.porcentaje),
+                porcentaje_carga: parseInt(this.state.selected.porcentaje),
                 estado_pago: this.state.insufficientBlanace
-            })
-            console.log(typeof porcentaje_carga)
+            }
+            this.props.addBooking(this.props.Login.token, data)
         }
 
-
+        // TODO: Si el usuario ha usado el cupon, poner éste como inválido
+        // this.invalidateCupon()
+    
+        // TODO: Llamada a la API para restar el saldo.
+        // this.decrementBalance()
     }
-
+    
     // Establecemos la hora de reserva "desde"
     setTimeFrom = (e, d) => {
 
@@ -219,6 +219,10 @@ class StationsList extends React.Component {
                 if(amount > this.props.Login.cliente.saldo) {
                     this.setState({
                         insufficientBlanace: true,
+                    })
+                } else {
+                    this.setState({
+                        insufficientBlanace: false,
                     })
                 }
             }
@@ -256,6 +260,10 @@ class StationsList extends React.Component {
                 if(amount > this.props.Login.cliente.saldo) {
                     this.setState({
                         insufficientBlanace: true,
+                    })
+                } else {
+                    this.setState({
+                        insufficientBlanace: false,
                     })
                 }
             }
@@ -624,7 +632,7 @@ const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchEstaciones: (long, lat, ratio) => dispatch(fetchEstaciones(long, lat, ratio)),
-        addBooking: (data) => dispatch(addBooking(data)),
+        addBooking: (token, data) => dispatch(addBooking(token, data)),
         setCurrentLocation: (data) => dispatch(setLocation(data)),
         fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
         updateSaldo: (data) => dispatch(updateSaldo(data)), 

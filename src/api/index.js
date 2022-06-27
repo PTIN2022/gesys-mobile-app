@@ -59,7 +59,7 @@ export const apiFetchHistorial =  (token) => {
 
 }
 
-export const apiPostReserva = (data, token) => {
+export const apiPostReserva = (token, data) => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
     return fetch(url, {
         method: 'POST',
