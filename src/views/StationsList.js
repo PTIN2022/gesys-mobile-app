@@ -107,8 +107,10 @@ class StationsList extends React.Component {
                 id_estacion: this.state.selected.station,
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
                 fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
-                id_vehiculo: "-",
-                id_cliente: "xx", // this.props.Login.client_id
+                id_vehiculo: this.state.vehicle_place,
+                // id_cliente: this.props.Login.cliente.id_usuari, // this.props.Login.client_id
+                tarifa: this.state.selected.currentRate,
+                asistida: true, 
             })
 
         }
@@ -491,6 +493,7 @@ const styles = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
+    console.log(Login)
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
     return { estaciones, successEstaciones, currentLocation, Login, Vehiculos };
