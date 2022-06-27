@@ -79,7 +79,7 @@ class Historial extends React.Component {
                     <Text style={s.balanceText}>, +{history.saldo}€</Text>
                   </View>
                   :
-                  <View style={s.balanceCharged}>
+                  <View style={s.balanceCharged} key={Math.random(1,10000)}>
                     <Text style={s.balanceText}>{fullDate}</Text>
                     <Text style={s.balanceText}>, -{history.saldo}€</Text>
                   </View>

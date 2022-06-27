@@ -20,6 +20,7 @@ import {Slider} from '@miblanchard/react-native-slider';
 import SelectDropdown from 'react-native-select-dropdown'
 import { fetchVehicles } from '../state/actions/Vehicles'
 import Error from '../components/Error'
+import { updateSaldo } from '../state/actions/Login'
 
 
 const API = "http://craaxkvm.epsevg.upc.es:23601/api";
@@ -43,10 +44,14 @@ class StationsList extends React.Component {
                 date: String(""),
                 rate: 20.0,
                 currentRate: 0,
-                coupon: "",
+                coupon: String(""),
                 cuponValid: false,
                 cuponInvalid: false,
                 vehicle_place: "",
+            },
+            discount: {
+                percentage: 0,
+                applied: false,
             },
             showTimeFrom: false, // estados booleanos para mostrar o no el selector de hora
             showTimeUpto: false,
@@ -63,6 +68,7 @@ class StationsList extends React.Component {
             selectedVehicle: "",
             insufficientBlanace: false,
             cuponInvalid: false,
+            cuponUsed: false,
         }
     }
    
@@ -98,7 +104,69 @@ class StationsList extends React.Component {
         )
     }
 
+    invalidateCupon = () =>{
+        if(this.state.cuponUsed) {
+            fetch(`http://craaxkvm.epsevg.upc.es:23701/api/cupones/${this.state.selected.coupon}`, {
+                method: 'PUT',
+                headers: {
+                    'x-access-tokens': this.props.Login.token,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({estado: "No usable"}),
+            })
+            .then(res => {
+                if(res.status === 404){
+                    this.setState(prev => ({
+                        ...prev,
+                        selected: {
+                            ...prev.selected,
+                            cuponInvalid: true,
+                        }
+                    }))
+                } else {
+                    res.json()
+                }
+            })
+            .then(data => {
+                console.log(data)
+            })
+            .catch(data => {
+                console.log(data)
+            })    
+        } else {
+            console.log("Didn't use any coupon.")
+        }
+    }
+
+    decrementBalance = () => {
+        let data = {
+            saldo: parseFloat(this.state.selected.currentRate),
+            type: "minus"
+        }
+        fetch("http://craaxkvm.epsevg.upc.es:23701/api/saldo", {
+            method: 'PUT',
+            headers: {
+                'x-access-tokens': this.props.Login.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            this.props.updateSaldo(data.saldo);
+        })  
+    }
+
     book = (idStation, nameStation) => {
+        // TODO: Si el usuario ha usado el cupon, poner éste como inválido
+        this.invalidateCupon()
+
+        // TODO: Llamada a la API para restar el saldo.
+        this.decrementBalance()
+        return
+
         this.setState({ loading: true })
         
         if(this.state.selected.from !== null && this.state.selected.upto !== null){
@@ -112,10 +180,9 @@ class StationsList extends React.Component {
                 tarifa: this.state.selected.currentRate,
                 asistida: true, 
             })
-
         }
 
-        // TODO: Llamada a la API para restar el saldo.
+
     }
 
     // Establecemos la hora de reserva "desde"
@@ -229,7 +296,6 @@ class StationsList extends React.Component {
     }
 
     checkCupon = () => {
-        console.log(this.props.Login.token)
         fetch(`http://craaxkvm.epsevg.upc.es:23701/api/cupones/${this.state.selected.coupon}`, {
             method: 'GET',
             headers: {
@@ -238,7 +304,6 @@ class StationsList extends React.Component {
         })
         .then(res => {
             if(res.status === 404){
-                console.log("404")
                 this.setState(prev => ({
                     ...prev,
                     selected: {
@@ -247,7 +312,35 @@ class StationsList extends React.Component {
                     }
                 }))
             } else {
-                res.json()
+                return res.json()
+            }
+        })
+        .then(res => {
+            if(res.estado !== "usable") {
+                this.setState(prev => ({
+                    ...prev,
+                    selected: {
+                        ...prev.selected,
+                        cuponInvalid: true,
+                    }
+                }))
+            } else {
+                let amount = this.state.selected.currentRate-(this.state.selected.currentRate*res.descuento/100);
+                amount = parseFloat(amount.toFixed(2))
+                this.setState(prev => ({
+                    ...prev,
+                    selected: {
+                        ...prev.selected,
+                        cuponValid: true,
+                        currentRate: amount
+                    },
+                    discount: {
+                        ...prev.discount,
+                        percentage: res.descuento,
+                        applied: true,
+                    },
+                    cuponUsed: true,
+                }))
             }
         })
         .catch(data => {
@@ -436,9 +529,9 @@ class StationsList extends React.Component {
                                         mode="outlined"
                                         style={{ marginBottom: 10 }}
                                         label="Cupón"
-                                        value={this.state.selected.coupon === "" ? "" : this.state.selected.coupon}
+                                        value={this.state.selected.coupon}
                                         editable={true}
-                                        onChange={text => {this.changeCupon(text)}}
+                                        onChangeText={text => {this.changeCupon(text)}}
                                     />
                                     {this.state.selected.cuponValid === true ?
                                         <Text style={{color: 'green'}}>Cupón válido.</Text>
@@ -453,8 +546,15 @@ class StationsList extends React.Component {
                                     <Button mode='contained' onPress={this.checkCupon}>Validar cupón</Button>
                                 </View>
                                 <Text style={{marginTop: 30}}>
-                                    Precio estimado: {this.state.selected.currentRate}€
+                                    Precio final: {this.state.selected.currentRate}€
                                 </Text>
+                                {this.state.discount.applied ? 
+                                    <Text>
+                                        Aplicado descuento del {this.state.discount.percentage}%
+                                    </Text>
+                                :
+                                    null
+                                }
                             </Card>
                             <Dialog.Actions>
                                 <Button loading={this.state.loading} disabled={this.state.insufficientBlanace} onPress={() => this.book()}>
@@ -493,7 +593,6 @@ const styles = StyleSheet.create({
 
 // Cargamos los datos que tenemos en el store.
 const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
-    console.log(Login)
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
     return { estaciones, successEstaciones, currentLocation, Login, Vehiculos };
@@ -505,6 +604,7 @@ const mapDispatchToProps = dispatch => {
         addBooking: (data) => dispatch(addBooking(data)),
         setCurrentLocation: (data) => dispatch(setLocation(data)),
         fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
+        updateSaldo: (data) => dispatch(updateSaldo(data)), 
     }
 }
 
