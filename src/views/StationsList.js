@@ -163,6 +163,11 @@ class StationsList extends React.Component {
 
     book = (idStation, nameStation) => {
         
+        let vehicle = this.state.selected.vehicle_place;
+        if(vehicle === "") {
+            vehicle = this.props.Vehiculos.vehicles[0].matricula;
+        }
+
         this.setState({ loading: true })
         
         if(this.state.selected.from !== null && this.state.selected.upto !== null){
@@ -172,23 +177,25 @@ class StationsList extends React.Component {
                 id_estacion: this.state.selected.stationName,
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
                 fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
-                id_vehiculo: this.state.selected.vehicle_place,
+                id_vehiculo: vehicle,
                 // id_cliente: this.props.Login.cliente.id_usuari, // this.props.Login.client_id
                 tarifa: this.state.selected.currentRate,
                 asistida: true, 
-                precio_carga_completa: this.state.selected.currentRate,
+                porcentaje_carga: Number(this.state.selected.porcentaje),
+                precio_carga_completo: this.state.selected.currentRate,
                 precio_carga_actual: 0,
-                porcentaje_carga: parseInt(this.state.selected.porcentaje),
                 estado_pago: this.state.insufficientBlanace
             }
-            this.props.addBooking(this.props.Login.token, data)
+            this.props.addBooking(this.props.Login.token, data, (status) => {
+                if(status) {
+                    // Si el usuario ha usado el cupon, poner éste como inválido
+                    this.invalidateCupon()
+                    // Llamada a la API para restar el saldo.
+                    this.decrementBalance()
+                }
+            })
         }
 
-        // TODO: Si el usuario ha usado el cupon, poner éste como inválido
-        // this.invalidateCupon()
-    
-        // TODO: Llamada a la API para restar el saldo.
-        // this.decrementBalance()
     }
     
     // Establecemos la hora de reserva "desde"
@@ -632,7 +639,7 @@ const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
 const mapDispatchToProps = dispatch => {
     return {
         fetchEstaciones: (long, lat, ratio) => dispatch(fetchEstaciones(long, lat, ratio)),
-        addBooking: (token, data) => dispatch(addBooking(token, data)),
+        addBooking: (token, data, fn) => dispatch(addBooking(token, data, fn)),
         setCurrentLocation: (data) => dispatch(setLocation(data)),
         fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
         updateSaldo: (data) => dispatch(updateSaldo(data)), 

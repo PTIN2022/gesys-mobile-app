@@ -57,25 +57,22 @@ export const postReservaSuccess = (data) => {
     }
 }
 
-export const addBooking = (token, data) => {
+export const addBooking = (token, data, fn) => {
     return (dispatch) => {
         apiPostReserva(token, data)
         .then(([response, json]) => {
-            if (json.error != undefined) {
-                dispatch(postReservaError())
+            let newData = {
+                fecha_entrada: json.fecha_entrada,
+                fecha_salida: json.fecha_salida,
+                id_cargador: json.id_cargador,
+                id_reserva: json.id_reserva,
+                id_vehiculo: json.id_vehiculo,
             }
-            else {
-                let newData = {
-                    fecha_entrada: json.fecha_entrada,
-                    fecha_salida: json.fecha_salida,
-                    id_cargador: json.id_cargador,
-                    id_reserva: json.id_reserva,
-                    id_vehiculo: json.id_vehiculo,
-                }
-                dispatch(postReservaSuccess(json))
-            }
+            dispatch(postReservaSuccess(newData))
+            fn(true)
         })
         .catch(error => {
+            fn(false)
             console.log(error)
         })
     }

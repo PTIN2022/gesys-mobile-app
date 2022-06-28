@@ -60,11 +60,11 @@ export const apiFetchHistorial =  (token) => {
 }
 
 export const apiPostReserva = (token, data) => {
-    let url = `${BASE_URL}:${RSV_PORT}/reservas`
+    let url = `${BASE_URL}:${RSV_PORT}/api/reservas`
     return fetch(url, {
         method: 'POST',
         headers: {
-            Accept: 'application/json',
+            // 'accept': 'application/json',
             'Content-Type': 'application/json',
             'x-access-tokens': token
         },
