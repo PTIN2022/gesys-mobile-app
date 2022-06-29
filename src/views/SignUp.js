@@ -9,6 +9,9 @@ import Button from '../components/Button'
 import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 
+import { connect } from 'react-redux';
+import { addSignup } from '../state/actions/Signup';
+
 import { nameValidator } from '../helpers/nameValidator'
 import { apellidoValidator } from '../helpers/apellidoValidator'
 import { emailValidator } from '../helpers/emailValidator'
@@ -25,6 +28,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: false,
       name: '',
       setName: '',
       apellido: '',
@@ -41,16 +45,37 @@ class SignUp extends Component {
   }
 
 
-  componentDidMount() {
-    console.log('SignUp')
+  book = () => {
+    this.setState({ loading: true })
+
+    // Just a simulation. It would really be a API call.
+
+    console.log("book")
+
+    this.props.addSignup({
+      nombre: this.state.setName.value,
+      apellido: this.state.setApellido.value,
+      DNI: this.state.setDNI.value,
+      telefono: parseInt(this.state.setPhone.value),
+      email: this.state.setEmail.value,
+      username: this.state.setName.value,
+      password: this.state.setPassword.value,
+      foto: "foto",
+    })
+
   }
+
+
   componentDidUpdate() {
     console.log('SignUp')
   }
-
+  caca() {
+    console.log("log")
+  }
   render() {
     const onSignUpPressed = () => {
-      const nameError = nameValidator(this.state.name.value)
+      console.log(this.state.setName.value)
+      const nameError = nameValidator(this.state.setName.value)
       const apellidoError = apellidoValidator(this.state.apellido.value)
       const emailError = emailValidator(this.state.email.value)
       const passwordError = passwordValidator(this.state.password.value)
@@ -63,12 +88,15 @@ class SignUp extends Component {
         this.setState({ setPassword: ({ ...this.state.password, error: passwordError }) })
         this.setState({ setDNI: ({ ...this.state.DNI, error: DNIError }) })
         this.setState({ setPhone: ({ ...this.state.phone, error: phoneError }) })
-        return
       }
+      console.log("suu")
+
+      this.book()
       this.props.navigation.reset({
         index: 0,
-        routes: [{ name: 'Dashboard' }],
+        routes: [{ name: 'LogIn' }],
       })
+
     }
 
 
@@ -77,9 +105,9 @@ class SignUp extends Component {
         <AppBack title="Registro de usuario" backScreenName="LogIn" />
 
         <View style={{ flexDirection: "column", alignItems: "center", paddingHorizontal: "10%" }}>
-          <Logo />
+
           <TextInput
-            style={{height:40}}
+            style={{ height: 40 }}
             label="Nombre"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -89,7 +117,7 @@ class SignUp extends Component {
             errorText={this.state.name.error}
           />
           <TextInput
-            style={{height:40}}
+            style={{ height: 40 }}
             label="Apellido"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -99,7 +127,7 @@ class SignUp extends Component {
             errorText={this.state.apellido.error}
           />
           <TextInput
-            style={{height:40}}
+            style={{ height: 40 }}
             label="Email"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -113,7 +141,7 @@ class SignUp extends Component {
             keyboardType="email-address"
           />
           <TextInput
-            style={{height:40}}
+            style={{ height: 40 }}
             label="DNI, NIE o CIF"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -123,7 +151,7 @@ class SignUp extends Component {
             errorText={this.state.DNI.error}
           />
           <TextInput
-            style={{height:40}}
+            style={{ height: 40 }}
             label="Phone number"
             returnKeyType="next"
             //Usamos el helper para validar
@@ -134,7 +162,7 @@ class SignUp extends Component {
             keyboardType="phone-pad"
           />
           <TextInput
-            style={{height:40}}
+            style={{ height: 40 }}
             label="Password"
             returnKeyType="done"
             //Usamos el helper para validar
@@ -164,7 +192,17 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+
+// Cargamos los datos que tenemos en el store.
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addSignup: (data) => dispatch(addSignup(data)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(SignUp);
 
 
 
@@ -269,3 +307,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
 })
+
+
+
+

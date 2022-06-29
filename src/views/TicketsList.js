@@ -1,6 +1,6 @@
 import { theme } from '../core/theme'
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { Button } from "react-native-paper"
 import AppBack from '../components/AppBack';
 import TicketCard from '../components/TicketCard'
@@ -10,41 +10,54 @@ import { addTicket } from '../state/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native'
 import Background from '../components/Background';
+import { fetchTickets, fetchTicketsApi, setTicketsState } from '../state/actions/Tickets'
+import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript';
 
 
 
 class TicketsList extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            tickets: []
+        };
     }
+    //this.props.route.params
 
-    componentDidMount() {
-        console.log('TicketsList')
-    }
+
     componentDidUpdate() {
-        console.log('TicketsList')
+        if (this.props.Login.logged === false) {
+            this.props.navigation.navigate('LogIn');
+        }
     }
 
+    async componentDidMount() {
+        const res = await fetchTicketsApi(this.props.Login.token, this.props.Login.cliente.id_usuari); // pass the token? or the cliente id?
+        setTicketsState(res)
+        this.setState({ tickets: res.Tickets });
+    }
 
 
     render() {
         return (
             <Background>
                 <AppBack title="Lista de tickets" backScreenName="Stations" />
+                <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("TicketForm")}>Nuevo Ticket</Button>
                 <ScrollView>
-                    {this.props.tickets.map(ticket => {
-                        return (
+                    {this.state.tickets && this.state.tickets.map((item) => (
+                        // Iteramos las estaciones que tenemos cargadas en el store.
+                        <View key={item.id_ticket}>
                             <TicketCard
-                                key={ticket.id}
-                                title={ticket.id_ticket}
-                                fecha={ticket.fecha}
-                                asunto={ticket.asunto}
-                                mensaje={ticket.mensaje}
-                                estado={ticket.estado}
+                                title={item.id_ticket}
+                                estado={item.estado}
+                                asunto={item.asunto}
+                                mensaje={item.mensaje}
+                                fecha={item.fecha}
                             />
-                        )
-                    })}
+                        </View>
+                    ))}
+
+
                 </ScrollView>
             </Background>
 
@@ -54,18 +67,20 @@ class TicketsList extends Component {
 
 
 
-const mapStateToProps = ({ Tickets }) => {
-    const { tickets } = Tickets;
-    return { tickets };
+const mapStateToProps = (data, Tickets) => {
+    const { tickets, errorTickets } = Tickets;
+    const { Login } = data;
+    return { tickets, Login, errorTickets };
 };
 
-const mapDispatchToProps = dispatch => (
-    bindActionCreators({
-        addTicket,
-    }, dispatch)
-);
 
 
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchTickets: (token, client) => dispatch(fetchTickets(token, client)),
+        setTicketsState: (tickets) => dispatch(setTicketsState(tickets))
+    }
+}
 
 
 

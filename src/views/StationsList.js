@@ -9,14 +9,14 @@ import Background from '../components/Background';
 import AppBack from '../components/AppBack';
 import Header from '../components/Header'
 import RNDateTimePicker from '@react-native-community/datetimepicker';
-import {fetchEstaciones} from '../state/actions/Estaciones'
+import { fetchEstaciones } from '../state/actions/Estaciones'
 import { fetchReservas } from '../state/actions/Reservas'
 import { addBooking } from '../state/actions/Reservas';
 import * as Location from 'expo-location';
 import { setLocation } from '../state/actions/Location'
 import { ScrollView } from 'react-native-gesture-handler';
 import { theme } from '../core/theme';
-import {Slider} from '@miblanchard/react-native-slider';
+import { Slider } from '@miblanchard/react-native-slider';
 import SelectDropdown from 'react-native-select-dropdown'
 import { fetchVehicles } from '../state/actions/Vehicles'
 import Error from '../components/Error'
@@ -62,7 +62,7 @@ class StationsList extends React.Component {
             insufficientBlanace: false,
         }
     }
-   
+
     async componentDidMount() {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
@@ -73,15 +73,15 @@ class StationsList extends React.Component {
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude
             })
-            if(this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+            if (this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null) {
                 this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude, this.state.kmFilter)
             }
-        } 
+        }
     }
 
     // Función que setea el estado para mostrar el formulario de hacer la reserva
     toggleDialog = (id, name) => {
-        if(this.props.Vehiculos.length <= 0){
+        if (this.props.Vehiculos.length <= 0) {
             alert("Añade un vehículo primero.")
             return
         }
@@ -91,7 +91,8 @@ class StationsList extends React.Component {
                 ...prev.selected,
                 station: id,
                 stationName: name,
-            }})
+            }
+        })
         )
     }
 
@@ -103,7 +104,7 @@ class StationsList extends React.Component {
             this.setState({ loading: false, visible: false, bookingSuccess: true })
         }, 2000);
 
-        if(this.state.selected.from !== null && this.state.selected.upto !== null){
+        if (this.state.selected.from !== null && this.state.selected.upto !== null) {
             this.props.addBooking({
                 id_estacion: this.state.selected.station,
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
@@ -127,9 +128,9 @@ class StationsList extends React.Component {
                     fromDT: d,
                 }
             }))
-            if(this.state.selected.uptoDT){
+            if (this.state.selected.uptoDT) {
                 let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT) / 3600000; // hours
-                let amount = 0.28*minutesOfBooking+0.05+0.10;
+                let amount = 0.28 * minutesOfBooking + 0.05 + 0.10;
                 amount = parseFloat(amount.toFixed(2))
 
                 this.setState(prev => ({
@@ -140,7 +141,7 @@ class StationsList extends React.Component {
                     }
                 }))
                 // Controlamos el saldo.
-                if(amount > this.props.Login.cliente.saldo) {
+                if (amount > this.props.Login.cliente.saldo) {
                     this.setState({
                         insufficientBlanace: true,
                     })
@@ -161,12 +162,12 @@ class StationsList extends React.Component {
                     uptoDT: d,
                 }
             }))
-            if(this.state.selected.fromDT){
+            if (this.state.selected.fromDT) {
                 // Procesamos la cantidad estimada.
                 let precioPorMinutoEstacion = this.state.selected.rate / 60;
                 // Get difference in minutes for selected period.
                 let minutesOfBooking = Math.abs(this.state.selected.fromDT - this.state.selected.uptoDT) / 3600000; // hours
-                let amount = 0.28*minutesOfBooking+0.05+0.10;
+                let amount = 0.28 * minutesOfBooking + 0.05 + 0.10;
                 amount = parseFloat(amount.toFixed(2))
 
                 this.setState(prev => ({
@@ -177,7 +178,7 @@ class StationsList extends React.Component {
                     }
                 }))
                 // Controlamos el saldo.
-                if(amount > this.props.Login.cliente.saldo) {
+                if (amount > this.props.Login.cliente.saldo) {
                     this.setState({
                         insufficientBlanace: true,
                     })
@@ -200,16 +201,16 @@ class StationsList extends React.Component {
     }
 
     swtich = (val) => {
-        if(val === this.state.checked) return;
+        if (val === this.state.checked) return;
 
-        this.setState({checked: val})
-        if(this.state.checked === 1){
+        this.setState({ checked: val })
+        if (this.state.checked === 1) {
             // Ahora se quiere filtrar por ubicación.
-            if(this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+            if (this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null) {
                 this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude)
-            }    
-        } else if(this.state.checked === 2) {
-            this.setDate({disableSlider: true})
+            }
+        } else if (this.state.checked === 2) {
+            this.setDate({ disableSlider: true })
             this.props.fetchEstaciones(1, 1)
             // PROMOCIONES
         }
@@ -236,67 +237,67 @@ class StationsList extends React.Component {
             sliderColor: "#DCDCDC"
         })
         // Fetch by ratio kilometer.
-        if(this.state.checked === 1 && this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null){
+        if (this.state.checked === 1 && this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null) {
             this.props.fetchEstaciones(this.props.currentLocation.latitude, this.props.currentLocation.longitude, this.state.kmFilter)
-            this.setState({disableSlider: false, sliderColor: "#427fd4"})
-        } 
+            this.setState({ disableSlider: false, sliderColor: "#427fd4" })
+        }
     }
 
     // Para pintar por pantalla.
     render() {
         const data = [];
-        if(this.props.Vehiculos !== undefined) {
+        if (this.props.Vehiculos !== undefined) {
             this.props.Vehiculos.vehicles.map(i => {
                 data.push(i.matricula)
             })
         }
 
-        return !this.props.successEstaciones 
+        return !this.props.successEstaciones
             ? (
-                <View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Header>Cargando localización</Header>
-                    <ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
+                    <ActivityIndicator style={{ margin: 10 }} size="large" color={theme.colors.primary} />
                 </View>
             )
             : (
                 <Background>
                     <AppBack title="Lista de estaciones" backScreenName="Stations" />
-                    {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ? 
+                    {this.props.currentLocation.latitude !== null && this.props.currentLocation.longitude !== null ?
                         // <Text>Tus coordenadas: {this.props.currentLocation.longitude}, {this.props.currentLocation.latitude}</Text>
                         null
                         :
                         null
                     }
-                    <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row'}}>
-                        <View style={{width: 155, marginLeft: 10}}>
-                            <Text style={{fontWeight: 'bold', marginVertical: 9}}>Filtro por promociones</Text>
-                            <Text style={{fontWeight: 'bold', marginVertical: 7}}>Filtro por ubicación</Text>
+                    <View style={{ flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row' }}>
+                        <View style={{ width: 155, marginLeft: 10 }}>
+                            <Text style={{ fontWeight: 'bold', marginVertical: 9 }}>Filtro por promociones</Text>
+                            <Text style={{ fontWeight: 'bold', marginVertical: 7 }}>Filtro por ubicación</Text>
                         </View>
                         <View>
                             <RadioButton
                                 value="Promociones"
-                                status={ this.state.checked === 2 ? 'checked' : 'unchecked' }
+                                status={this.state.checked === 2 ? 'checked' : 'unchecked'}
                                 onPress={() => this.swtich(2)}
                                 color="#427fd4"
                                 disabled={true}
                             />
                             <RadioButton
                                 value="Ubicación"
-                                status={ this.state.checked === 1 ? 'checked' : 'unchecked' }
+                                status={this.state.checked === 1 ? 'checked' : 'unchecked'}
                                 onPress={() => this.swtich(1)}
                                 color="#427fd4"
-                                />
+                            />
                         </View>
                     </View>
-                    <View style={{flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row'}}>
-                        <View style={{width: 155, marginLeft: 10}}>
-                            <Text style={{fontWeight: 'bold', marginVertical: 9}}>Filtro por ratio</Text>
+                    <View style={{ flexWrap: 'wrap', alignItems: 'flex-start', flexDirection: 'row' }}>
+                        <View style={{ width: 155, marginLeft: 10 }}>
+                            <Text style={{ fontWeight: 'bold', marginVertical: 9 }}>Filtro por ratio</Text>
                         </View>
-                        <View style={{width: 163, marginLeft: 10}}>
+                        <View style={{ width: 163, marginLeft: 10 }}>
                             <Slider
                                 value={this.state.kmFilter}
                                 onSlidingComplete={value => this.filterByRatio(value)}
-                                style={{backgroundColor: 'red'}}
+                                style={{ backgroundColor: 'red' }}
                                 maximumValue={100}
                                 minimumValue={1}
                                 step={1}
@@ -305,10 +306,10 @@ class StationsList extends React.Component {
                             />
                         </View>
                         <View>
-                            <Text style={{fontWeight: 'bold', marginVertical: 9, marginLeft: 3}}>{this.state.kmFilter} KM</Text>
+                            <Text style={{ fontWeight: 'bold', marginVertical: 9, marginLeft: 3 }}>{this.state.kmFilter} KM</Text>
                         </View>
                     </View>
-                
+
                     <ScrollView>
                         {this.props.estaciones.Estaciones.map((item) => {
                             // Iteramos las estaciones que tenemos cargadas en el store.
@@ -335,10 +336,10 @@ class StationsList extends React.Component {
                             <Card style={{ marginHorizontal: 5, padding: 20 }}>
                                 <Header>Reserva</Header>
                                 <View style={{ flexDirection: "column", marginVertical: 15 }}>
-                                    {this.state.insufficientBlanace ? 
-                                    <Error text={"Saldo insuficiente."} />
-                                    :
-                                    null}
+                                    {this.state.insufficientBlanace ?
+                                        <Error text={"Saldo insuficiente."} />
+                                        :
+                                        null}
                                     <SelectDropdown
                                         data={data}
                                         defaultValue={data}
@@ -405,21 +406,21 @@ class StationsList extends React.Component {
                                         label="Cupón"
                                         value={this.state.selected.coupon === "" ? "" : this.state.selected.coupon}
                                         editable={true}
-                                        onChange={text => {this.changeCupon(text)}}
+                                        onChange={text => { this.changeCupon(text) }}
                                     />
                                     {this.state.selected.cuponValid === true ? (
-                                        <Text style={{color: 'green'}} >Cupón inválido.</Text>
-                                    ) : ( 
+                                        <Text style={{ color: 'green' }} >Cupón inválido.</Text>
+                                    ) : (
                                         this.state.selected.cuponValid === false ? (
-                                            <Text style={{color: 'green'}}>Cupón válido.</Text>
+                                            <Text style={{ color: 'green' }}>Cupón válido.</Text>
                                         ) : (
                                             null
                                         )
                                     )}
-                                    
+
                                     <Button mode='contained' onPress={this.checkCupon}>Validar cupón</Button>
                                 </View>
-                                <Text style={{marginTop: 30}}>
+                                <Text style={{ marginTop: 30 }}>
                                     Precio estimado: {this.state.selected.currentRate}€
                                 </Text>
                             </Card>
@@ -459,10 +460,10 @@ const styles = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
+const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos, Tickets }) => {
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
-    return { estaciones, successEstaciones, currentLocation, Login, Vehiculos };
+    return { estaciones, successEstaciones, currentLocation, Login, Vehiculos, Tickets };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -471,6 +472,7 @@ const mapDispatchToProps = dispatch => {
         addBooking: (data) => dispatch(addBooking(data)),
         setCurrentLocation: (data) => dispatch(setLocation(data)),
         fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
+        fetchTickets: (token, client) => dispatch(fetchTickets(token, client)),
     }
 }
 

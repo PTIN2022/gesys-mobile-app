@@ -55,7 +55,7 @@ class StationsMap extends React.Component {
   getRegionForCoordinates(points) {
     // points should be an array of { latitude: X, longitude: Y }
     let minX, maxX, minY, maxY;
-  
+
     // init first point
     ((point) => {
       minX = point.latitude;
@@ -63,7 +63,7 @@ class StationsMap extends React.Component {
       minY = point.longitude;
       maxY = point.longitude;
     })(points[0]);
-  
+
     // calculate rect
     points.map((point) => {
       minX = Math.min(minX, point.latitude);
@@ -71,12 +71,12 @@ class StationsMap extends React.Component {
       minY = Math.min(minY, point.longitude);
       maxY = Math.max(maxY, point.longitude);
     });
-  
+
     const midX = (minX + maxX) / 2;
     const midY = (minY + maxY) / 2;
     const deltaX = (maxX - minX);
     const deltaY = (maxY - minY);
-  
+
     return {
       latitude: midX,
       longitude: midY,
@@ -104,16 +104,16 @@ class StationsMap extends React.Component {
           longitudeDelta: 1
         }
       })
-      
+
     }
 
-    if(this.props.Login.logged) {
+    if (this.props.Login.logged) {
       this.props.fetchVehicles(this.props.Login.token, this.props.Login.cliente.id_usuari);
     }
 
   }
 
-  selectStation(item){
+  selectStation(item) {
     this.setState({
       selectedStation: item
     })
@@ -121,34 +121,34 @@ class StationsMap extends React.Component {
 
 
   render() {
-    return !this.props.successEstaciones || this.state.region==null && this.state.currentLocation==null 
-      ? (<View style={{flex: 1, alignItems:'center', justifyContent: 'center'}}>
-            <Header>Cargando localización</Header>
-            <ActivityIndicator style={{margin:10}} size="large" color={theme.colors.primary} />
-          </View>
-        )
+    return !this.props.successEstaciones || this.state.region == null && this.state.currentLocation == null
+      ? (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Header>Cargando localización</Header>
+        <ActivityIndicator style={{ margin: 10 }} size="large" color={theme.colors.primary} />
+      </View>
+      )
       : (
         <View>
           <MapView
             style={s.map}
             initialRegion={this.state.region}
             onRegionChange={newRegion => this.setState({ region: newRegion })}
-            onTouchStart={() => this.setState({selectedStation: null}) }
+            onTouchStart={() => this.setState({ selectedStation: null })}
           >
-            {this.state.currentLocation.longitude != null && this.state.currentLocation.latitude!= null 
+            {this.state.currentLocation.longitude != null && this.state.currentLocation.latitude != null
               ?
-                <Marker
-                  coordinate={this.state.currentLocation}
-                >
-                  <Image
-                    source={require('../assets/icons8-place-marker.gif')}
-                    style={{ width: 75, height: 75 }}
-                    resizeMode="contain"
-                  />
-                </Marker>
+              <Marker
+                coordinate={this.state.currentLocation}
+              >
+                <Image
+                  source={require('../assets/icons8-place-marker.gif')}
+                  style={{ width: 75, height: 75 }}
+                  resizeMode="contain"
+                />
+              </Marker>
               :
               null
-          }
+            }
             {this.props.estaciones.Estaciones.map((item) => {
               // Iteramos las estaciones que tenemos cargadas en el store.
               return (
@@ -169,31 +169,31 @@ class StationsMap extends React.Component {
               );
             })}
           </MapView>
-          
+
           {/*Pop Up de seleccion de estacion*/}
-          
+
           {this.state.selectedStation && (
-              <View style={{position: "absolute", width: "100%", padding: 5}}>
-                <Card style={{backgroundColor: '#fffe'}}>
-                  <Card.Content style={{flexDirection: 'row'}}>
-                    <View style={{flex:1}}>
-                      <Header>{this.state.selectedStation.nombre_est}</Header>
-                      <View style={{flexDirection: "row", marginRight: 10}}>
-                          <Text>{this.state.selectedStation.direccion}</Text>
-                      </View>
+            <View style={{ position: "absolute", width: "100%", padding: 5 }}>
+              <Card style={{ backgroundColor: '#fffe' }}>
+                <Card.Content style={{ flexDirection: 'row' }}>
+                  <View style={{ flex: 1 }}>
+                    <Header>{this.state.selectedStation.nombre_est}</Header>
+                    <View style={{ flexDirection: "row", marginRight: 10 }}>
+                      <Text>{this.state.selectedStation.direccion}</Text>
                     </View>
-                    <View style={{flexDirection: "row-reverse", marginTop: 10}}>
-                        <Button 
-                          mode="contained" 
-                          style={{marginLeft: 10}}
-                          onPress={() => this.props.navigation.navigate('StationDetail', {id: this.state.selectedStation.id_estacion})}
-                        >
-                          Detalle
-                        </Button>
-                    </View>
-                  </Card.Content>
-                </Card>
-              </View>
+                  </View>
+                  <View style={{ flexDirection: "row-reverse", marginTop: 10 }}>
+                    <Button
+                      mode="contained"
+                      style={{ marginLeft: 10 }}
+                      onPress={() => this.props.navigation.navigate('StationDetail', { id: this.state.selectedStation.id_estacion })}
+                    >
+                      Detalle
+                    </Button>
+                  </View>
+                </Card.Content>
+              </Card>
+            </View>
           )}
 
 
@@ -211,11 +211,11 @@ const s = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations, Login }) => {
-
+const mapStateToProps = ({ Estaciones, Locations, Login, Tickets }) => {
+  const { tickets, errorTickets } = Tickets;
   const { estaciones, successEstaciones } = Estaciones;
   const { currentLocation } = Locations;
-  return { estaciones, successEstaciones, currentLocation, Login };
+  return { estaciones, successEstaciones, currentLocation, Login, Tickets, errorTickets };
 };
 
 const mapDispatchToProps = dispatch => {
@@ -223,6 +223,7 @@ const mapDispatchToProps = dispatch => {
     fetchEstaciones: (long, lat, ratio, token) => dispatch(fetchEstaciones(long, lat, ratio, token)),
     setCurrentLocation: (data) => dispatch(setLocation(data)),
     fetchVehicles: (token, client) => dispatch(fetchVehicles(token, client)),
+    fetchTickets: (token, client) => dispatch(fetchTickets(token, client)),
   }
 }
 

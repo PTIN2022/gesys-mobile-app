@@ -12,8 +12,8 @@ const initial_state = {
 }
 
 export default getEstacion = (state = initial_state, action) => {
-    switch(action.type){
-        case FETCHING_ESTACION: 
+    switch (action.type) {
+        case FETCHING_ESTACION:
             return {
                 ...state,
                 estacion: {},
@@ -21,7 +21,7 @@ export default getEstacion = (state = initial_state, action) => {
                 errorEstacion: false,
                 fetchingEstacion: true
             }
-        case FETCHING_ESTACION_SUCCESS: 
+        case FETCHING_ESTACION_SUCCESS:
             return {
                 ...state,
                 estacion: action.payload,
@@ -37,7 +37,7 @@ export default getEstacion = (state = initial_state, action) => {
                 fetchingEstacion: false,
                 errorEstacion: true
             }
-        default :
+        default:
             return state
     }
 }

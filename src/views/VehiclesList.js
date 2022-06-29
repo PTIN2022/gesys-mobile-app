@@ -20,10 +20,10 @@ class VehiclesList extends Component {
     }
 
     componentDidMount() {
-		if(this.props.Login.logged === false){
-			this.props.navigation.navigate('LogIn');
-		}
-
+        if (this.props.Login.logged === false) {
+            this.props.navigation.navigate('LogIn');
+        }
+        console.log(this.props.Login.cliente.id_usuari)
         this.props.fetchVehicles(this.props.Login.token, this.props.Login.cliente.id_usuari); // pass the token? or the cliente id?
     }
 
@@ -36,9 +36,9 @@ class VehiclesList extends Component {
                 <AppBack title="Lista de vehiculos" backScreenName="Stations" />
                 <Button style={{ margin: 5 }} icon="pencil-plus" mode="contained" onPress={() => this.props.navigation.navigate("VehicleForm")}>Nuevo vehiculo</Button>
                 <ScrollView>
-                    {this.props.errorVehicles ? 
+                    {this.props.errorVehicles ?
                         <Text>No data found.</Text>
-                    :
+                        :
                         this.props.vehicles.map(vehicle => {
                             return (
                                 <VehicleCard

@@ -29,9 +29,12 @@ import {
   PrivacyPolicy,
   UsageTerms,
   Error,
-  Historial
+  Historial,
+  TicketForm,
+  Chat,
+
 } from './src/views'
-  let store = createMyStore()
+let store = createMyStore()
 
 
 const Stack = createStackNavigator()
@@ -44,21 +47,21 @@ class App extends React.Component {
 
   render() {
     return (
-      <ReduxProvider store={store}> 
+      <ReduxProvider store={store}>
         <SafeAreaView style={SafeArea.AndroidSafeArea}>
           <Provider theme={theme}>
             <NavigationContainer >
               <Layout />
-              <Stack.Navigator  initialRouteName="LogIn" screenOptions={{headerShown: false}}>
+              <Stack.Navigator initialRouteName="LogIn" screenOptions={{ headerShown: false }}>
 
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />
                 <Stack.Screen name="LogIn" component={LogIn} />
-                <Stack.Screen name="SignUp" component={SignUp}/>
-                <Stack.Screen name="Password" component={Password}/>
+                <Stack.Screen name="SignUp" component={SignUp} />
+                <Stack.Screen name="Password" component={Password} />
 
                 {/*ESTACIONES*/}
-                <Stack.Screen name="Stations" component={Stations}/>
+                <Stack.Screen name="Stations" component={Stations} />
                 <Stack.Screen name="StationDetail" component={StationDetail} />
 
                 {/*VEHICULOS*/}
@@ -71,10 +74,15 @@ class App extends React.Component {
 
                 {/*TICKETS*/}
                 <Stack.Screen name="TicketsList" component={TicketsList} />
+                <Stack.Screen name="TicketForm" component={TicketForm} />
+                <Stack.Screen name="Chat" component={Chat} />
+
+
+
 
                 {/*OFERTAS*/}
                 <Stack.Screen name="DealsList" component={DealsList} />
-                
+
                 {/*NOTIFICATIONS*/}
                 <Stack.Screen name="NotificationsList" component={NotificationsList} />
 

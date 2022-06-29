@@ -1,26 +1,43 @@
+import {
+    FETCHING_OFERTA,
+    FETCHING_OFERTA_ERROR,
+    FETCHING_OFERTA_SUCCESS,
+} from '../actionTypes/Deals'
+
+
 const initial_state = {
-    deals: [
-        {
-            id: 1,
-            id_promo: "10VILANOVA2022",
-            estacion: 'Vilanova y la Geltru, Avda Victor Balague 17',
-            descuento: 10,
-            fecha_inicio: '01/05/2022',
-            fecha_fin: '01/06/2022',
-            estado: true
-        },
-        {
-            id: 2,
-            id_promo: "12VILANOVA2022",
-            estacion: 'Vilanova y la Geltru, Avda Victor Balague 17',
-            descuento: 12,
-            fecha_inicio: '01/04/2022',
-            fecha_fin: '01/05/2022',
-            estado: false
-        }
-    ]
+    ofertes: [],
+    fetchingTickets: false,
+    errorTickets: false
 }
 
-export default Deals = (state = initial_state) => {
-    return state
+export default Deal = (state = initial_state, action) => {
+    switch (action.type) {
+        case FETCHING_OFERTA:
+            return {
+                ...state,
+                ofertes: [],
+                successOfertes: false,
+                errorOfertes: false,
+                fetchingOfertes: true
+            }
+        case FETCHING_OFERTA_SUCCESS:
+            return {
+                ...state,
+                ofertes: action.payload,
+                successOfertes: true,
+                fetchingOfertes: false,
+                errorOfertes: false,
+            }
+        case FETCHING_OFERTA_ERROR:
+            return {
+                ...state,
+                ofertes: [],
+                successOfertes: false,
+                fetchingOfertes: false,
+                errorOfertes: true
+            }
+        default:
+            return state
+    }
 }

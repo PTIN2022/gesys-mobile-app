@@ -5,7 +5,7 @@ import {
     FETCHING_ESTACIONES_ERROR
 } from '../actionTypes'
 
-import {apiFetchEstaciones} from '../../api'
+import { apiFetchEstaciones } from '../../api'
 
 export const getEstaciones = () => {
     return {
@@ -30,13 +30,13 @@ export const fetchEstaciones = (latitude, longitude, ratio) => {
     return (dispatch) => {
         dispatch(getEstaciones())
         apiFetchEstaciones(latitude, longitude, ratio)
-        .then(([response, json]) => {
-            console.log(json)
-            dispatch(getEstacionesSuccess(json))
-        })
-        .catch(error => {
-            console.log(error)
-            dispatch(getEstacionesError())
-        })
+            .then(([response, json]) => {
+                console.log(json)
+                dispatch(getEstacionesSuccess(json))
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(getEstacionesError())
+            })
     }
 }

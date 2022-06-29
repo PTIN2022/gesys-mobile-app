@@ -15,17 +15,20 @@ export { default as VehiclesList } from './VehiclesList'
 export { default as VehicleForm } from './VehicleForm'
 
 //Reservas
-export { default as BookingsList} from './BookingsList'
+export { default as BookingsList } from './BookingsList'
 export { default as BookingForm } from './BookingForm'
 
 //Ofertas
-export { default as DealsList} from './DealsList'
+export { default as DealsList } from './DealsList'
 
 //Tickets
-export {default as TicketsList} from './TicketsList'
+export { default as TicketsList } from './TicketsList'
+export { default as TicketForm } from './TicketForm'
+export { default as Chat } from './Chat'
+
 
 //Notificaciones
-export {default as NotificationsList} from './NotificationsList'
+export { default as NotificationsList } from './NotificationsList'
 
 
 //Información del usuario

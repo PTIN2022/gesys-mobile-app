@@ -12,7 +12,7 @@ import Notifications from "./Notifications"
 import Historial from './Historial'
 
 export default combineReducers({
-    Estacion, 
+    Estacion,
     Estaciones,
     Reservas,
     Vehiculos,

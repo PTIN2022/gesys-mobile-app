@@ -9,7 +9,7 @@ const initial_state = {
         {
             id: 1,
             estacion: "hola",
-            latitude: 41.22353710912193, 
+            latitude: 41.22353710912193,
             longitude: 1.7204303853213787,
             ocupation_max: 10,
             ocupation_now: 5
@@ -17,7 +17,7 @@ const initial_state = {
         {
             id: 2,
             estacion: "hola",
-            latitud: 41.22301989408491, 
+            latitud: 41.22301989408491,
             longitud: 1.7290154658257961,
             ocupation_max: 20,
             ocupation_now: 18
@@ -25,7 +25,7 @@ const initial_state = {
         {
             id: 3,
             estacion: "hola",
-            latitud: 41.21592322008729, 
+            latitud: 41.21592322008729,
             longitud: 1.7236034385859966,
             ocupation_max: 25,
             ocupation_now: 1
@@ -36,8 +36,8 @@ const initial_state = {
 }
 
 export default Estaciones = (state = initial_state, action) => {
-    switch(action.type){
-        case FETCHING_ESTACIONES: 
+    switch (action.type) {
+        case FETCHING_ESTACIONES:
             return {
                 ...state,
                 estaciones: [],
@@ -45,7 +45,7 @@ export default Estaciones = (state = initial_state, action) => {
                 errorEstaciones: false,
                 fetchingEstaciones: true
             }
-        case FETCHING_ESTACIONES_SUCCESS: 
+        case FETCHING_ESTACIONES_SUCCESS:
             return {
                 ...state,
                 estaciones: action.payload,
@@ -61,7 +61,7 @@ export default Estaciones = (state = initial_state, action) => {
                 fetchingEstaciones: false,
                 errorEstaciones: true
             }
-        default :
+        default:
             return state
     }
 }

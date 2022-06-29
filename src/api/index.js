@@ -2,7 +2,7 @@ const BASE_URL = "http://craaxkvm.epsevg.upc.es"
 const EST_PORT = "23601"
 const RSV_PORT = "23701"
 
-export const apiFetchEstaciones =  (latitude, longitude, ratio) => {
+export const apiFetchEstaciones = (latitude, longitude, ratio) => {
     let url = `${BASE_URL}:${RSV_PORT}/api/estaciones/coor/${latitude}/${longitude}/${ratio}`
     console.log(url)
     return fetch(url).then(res => Promise.all([res, res.json()]))
@@ -50,7 +50,7 @@ export const apiFetchReservaByMatricula = id => {
 }
 
 
-export const apiFetchHistorial =  (token) => {
+export const apiFetchHistorial = (token) => {
     let url = `${BASE_URL}:${RSV_PORT}/api/historial`
     return fetch(url, {
         method: 'GET',
@@ -58,8 +58,9 @@ export const apiFetchHistorial =  (token) => {
             'x-access-tokens': token
         },
     }).then(res => Promise.all([res, res.json()]))
-
 }
+
+
 
 export const apiPostReserva = (data, token) => {
     let url = `${BASE_URL}:${RSV_PORT}/reservas`
@@ -96,5 +97,97 @@ export const apiAddVehicle = (data, token) => {
             // Header of token?
         },
         body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+
+
+
+
+export const apiSignUp = data => {
+    let url = `http://craaxkvm.epsevg.upc.es:23701/api/clientes`
+    console.log(url)
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+
+
+export const apiAddTickets = (token, data) => {
+    let url = `http://craaxkvm.epsevg.upc.es:23701/api/soporte`
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-tokens': token,
+            // Header of token?
+        },
+        body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+
+export const apifetchTickets = (token, client) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/soporte/byuser`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        }
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+
+
+export const apiAddChat = (token, data, id) => {
+    let url = `http://craaxkvm.epsevg.upc.es:23701/api/soporte/${id}`
+    return fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-tokens': token,
+            // Header of token?
+        },
+        body: JSON.stringify(data)
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+
+
+export const apifetchChat = (token, client, id) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/soporte/${id}`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        }
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+export const apifetchOfertes = (token, client, id) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/estaciones/${id}`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        }
+    }).then(res => Promise.all([res, res.json()]))
+}
+
+
+
+
+export const apifetchOfertesEst = (token, client) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/estaciones`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        }
     }).then(res => Promise.all([res, res.json()]))
 }
