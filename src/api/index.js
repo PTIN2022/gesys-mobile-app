@@ -7,9 +7,15 @@ export const apiFetchEstaciones =  (latitude, longitude, ratio) => {
     return fetch(url).then(res => Promise.all([res, res.json()]))
 }
 
-export const apiFetchReservas = (dni) => {
-    let url = `${BASE_URL}:${RSV_PORT}/reservas/bydni/${dni}`
-    return fetch(url).then(res => Promise.all([res, res.json()]))
+export const apiFetchReservas = (dni, token) => {
+    let url = `${BASE_URL}:${RSV_PORT}/api/reservas/bydni/${dni}`
+    console.log(url)
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'x-access-tokens': token
+        },
+    }).then(res => Promise.all([res, res.json()]))
 }
 
 export const apifetchVehicles = (token, cliente_id) => {
