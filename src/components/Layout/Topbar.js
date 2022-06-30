@@ -6,43 +6,53 @@ import { theme } from '../../core/theme';
 import { connect } from 'react-redux';
 
 
-function Header (props) {
+class Topbar extends React.Component {
+
+    constructor (props){
+        super(props);
+        this.state = {
+            Auth: this.props.Auth
+        }
+    }
     //El header es parte del layout de la app.
     //Esta compuesto por dos botones (control de sidebar y notificaciones) y un output
     //del usuario autenticado.
-    return (
-        <View>
-            <View style={s.header}>
+    componentDidUpdate(prevProps){
+        if (prevProps.Auth != this.props.Auth) this.setState({Auth: this.props.Auth})
+    }
+
+    render (){
+        return  (
+            <View>
+                <View style={s.header}>  
+                <IconButton 
+                    icon={!this.props.menuVisible? "menu" : "chevron-left"} 
+                    style={s.iconBtn}
+                    size={28}
+                    color={"#fff"}
+                    onPress={()=>this.props.toggleMenu()}
+                ></IconButton>
+                <View>
                     <IconButton 
-                        icon={!props.menuVisible? "menu" : "chevron-left"} 
+                        icon={"bell"} 
                         style={s.iconBtn}
-                        size={28}
                         color={"#fff"}
-                        onPress={()=>props.toggleMenu()}
+                        size={28}
                     ></IconButton>
-                    <View>
-                        <IconButton 
-                            icon={"bell"} 
-                            style={s.iconBtn}
-                            color={"#fff"}
-                            size={28}
-                        ></IconButton>
-                        <Badge style={s.bellBadge} size={20}>2</Badge>
-                    </View>
-                    <View style={s.avatarContainer}>
-                        <Text style={s.username}> {props.Login.logged ? props.Login.cliente.nombre : ""} </Text>
-                        <Avatar.Image style={s.avatar} size={50} source={require('../../assets/avatar.png')} />
-                    </View>
+                    <Badge style={s.bellBadge} size={20}>2</Badge>
+                </View>
+                <View style={s.avatarContainer}>
+                    <Text style={s.username}> {this.state.Auth.cliente != null ? this.state.Auth.cliente.nombre : ""} </Text>
+                    <Avatar.Image style={s.avatar} size={50} source={require('../../assets/avatar.png')} />
+                </View>
+                    
+                </View>
+                <View style={s.balance}>
+                    <Text style={s.balanceText}>{this.state.Auth.cliente != null ? this.state.Auth.cliente.saldo : "0"} puntos</Text>
+                </View>
             </View>
-            {props.Login.logged ? 
-            <View style={s.balance}>
-                <Text style={s.balanceText}>{props.Login.cliente.saldo} puntos</Text>
-            </View>            
-            : 
-            null}
-        </View>
-    );
-    
+        );
+    }
 }
 
 
@@ -108,16 +118,10 @@ const s = StyleSheet.create({
 });
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Login, Transactions }) => {
-    return { Login, Transactions };
+const mapStateToProps = ({ Auth, Transactions }) => {
+    return { Auth, Transactions };
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Topbar);
 
 // export default Header;

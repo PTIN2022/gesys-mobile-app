@@ -14,7 +14,7 @@ class Profile extends Component {
 	}
 
 	componentDidMount() {
-		if(this.props.Login.logged === false){
+		if(this.props.Authlogged === false){
 			this.props.navigation.navigate('LogIn');
 		}
 	}
@@ -81,8 +81,8 @@ class Profile extends Component {
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Login }) => {
-	return {Login};
+const mapStateToProps = ({ Auth }) => {
+	return {Auth};
 };
 
 const mapDispatchToProps = dispatch => {

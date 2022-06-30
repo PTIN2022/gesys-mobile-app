@@ -28,7 +28,7 @@ class VehicleForm extends Component {
     }
 
     componentDidMount() {
-		if(this.props.Login.logged === false){
+		if(this.props.Authlogged === false){
 			this.props.navigation.navigate('LogIn');
 		}
     }
@@ -48,10 +48,10 @@ class VehicleForm extends Component {
             let data = {
                 modelo: this.state.modelo,
                 matricula: this.state.matricula,
-                //client_id: this.props.Login.client_id
+                //client_id: this.props.Authclient_id
                 porcentaje_bat: 100,
             }
-            this.props.addVehicle(data, this.props.Login.token, (success) => {
+            this.props.addVehicle(data, this.props.Authtoken, (success) => {
                 if(success) this.setState({success: true, modelo: "", matricula: "", nombre: "", marca: ""})
                 else this.setState({error: true})
             });
@@ -117,8 +117,8 @@ class VehicleForm extends Component {
 }
 
 const mapStateToProps = (data) => {
-    const { Login, Vehiculos } = data;
-    return { Login, Vehiculos };
+    const { Auth, Vehiculos } = data;
+    return { Auth, Vehiculos };
 };
 
 

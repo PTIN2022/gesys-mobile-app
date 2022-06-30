@@ -107,8 +107,8 @@ class StationsMap extends React.Component {
       
     }
 
-    if(this.props.Login.logged) {
-      this.props.fetchVehicles(this.props.Login.token, this.props.Login.cliente.id_usuari);
+    if(this.props.Authlogged) {
+      this.props.fetchVehicles(this.props.Authtoken, this.props.Authcliente.id_usuari);
     }
 
   }
@@ -211,11 +211,11 @@ const s = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations, Login }) => {
+const mapStateToProps = ({ Estaciones, Locations, Auth }) => {
 
   const { estaciones, successEstaciones } = Estaciones;
   const { currentLocation } = Locations;
-  return { estaciones, successEstaciones, currentLocation, Login };
+  return { estaciones, successEstaciones, currentLocation, Auth };
 };
 
 const mapDispatchToProps = dispatch => {

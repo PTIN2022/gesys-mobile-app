@@ -1,50 +1,82 @@
 import * as React from 'react';
 import { View, Text, StyleSheet, Dimensions, ScrollView, TouchableOpacity} from 'react-native';
-import { Menu, Avatar } from 'react-native-paper';
+import { Menu, Avatar, Button } from 'react-native-paper';
 import {theme} from '../../core/theme';
-import { useNavigation } from '@react-navigation/native';
+import { connect } from 'react-redux';
+import { doLogout } from '../../state/actions/Auth'
 
-function Sidebar(props){
+class Sidebar extends React.Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      Auth: props.Auth
+    }
+  }
   //El sidebar es un componente del layout de la app.
   //Permite la nevegacion por las distintas pantallas de configuracion de la app.
 
-
-  const navigation = useNavigation();
-
-  const nav = (view) => { // Esta funcion se accion al apretar en los distintos botones de navegacion presentes en el sidebar.
-    props.toggleMenu()
-    navigation.navigate(view)
+  componentDidUpdate(props){
+    console.log(this.props.Auth.logoutSuccess)
+    if ((!props.Auth.loginSuccess && this.props.Auth.loginSuccess) || (!props.Auth.logoutSuccess && this.props.Auth.logoutSuccess))
+      this.setState({Auth: this.props.Auth})
   }
 
 
-    return props.menuVisible && (
+  nav = (view) => { // Esta funcion se acciona al apretar en los distintos botones de navegacion presentes en el sidebar.
+    this.props.toggleMenu()
+    this.props.navigation.navigate(view)
+  }
+
+  logout = () => {
+    doLogout(this.state.Auth.token)
+    this.nav("LogIn")
+  }
+
+  render() {
+    return this.props.menuVisible && (
         <View style={s.sidebarVisible}>
           <View style={{width: screen.width*0.75, flexDirection: "column", backgroundColor: theme.colors.primary, opacity:0.95}}>
             <View style={s.avatarContainer}>
-              <Avatar.Image style={s.avatar} size={100} source={require('../../assets/avatar.png')} />
-              <Text style={s.username}>Username</Text>
+              <Avatar.Image size={100} source={require('../../assets/avatar.png')} />
             </View>
+            {this.state.Auth.cliente != null &&
+                <View style={{alignItems: 'center'}}>
+                  <Text style={s.username}>{this.state.Auth.cliente.nombre}</Text>
+                  <Button style={{width: "50%", margin: 15}} mode='contained' color='darkred' icon="logout" onPress={()=>this.logout()}>Log out</Button>
+                </View>
+            }
+            {this.state.Auth.cliente == null &&
+                <View style={{alignItems: 'center'}}>
+                  <Button style={{width: "50%", margin: 15}} mode='contained' color="white" icon="login" onPress={()=>this.nav("LogIn")}>Log in</Button>
+                </View>
+            }
             <ScrollView style={s.itemsContainer} contentContainerStyle={{alignItems: "center"}} persistentScrollbar indicatorStyle="black">
-              <Menu.Item style={s.item} onPress={(e)=> nav("Profile")} icon="account" title="Cuenta" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("VehiclesList")} icon="car" title="Vehículos" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("Historial")} icon="history" title="Historial" />
+              {this.state.Auth.cliente != null &&
+              <View>
+                <Menu.Item style={s.item} onPress={(e)=> this.nav("Profile")} icon="account" title="Cuenta" />
+                <Menu.Item style={s.item} onPress={(e)=> this.nav("VehiclesList")} icon="car" title="Vehículos" />
+                <Menu.Item style={s.item} onPress={(e)=> this.nav("Historial")} icon="credit-card" title="Saldo y pagos" />
+              </View>
+              }
               <Menu.Item style={s.item} onPress={(e)=> nav("Stations")} icon="ev-station" title="Estaciones" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("BookingsList")} icon="book" title="Reservas"/>
-              <Menu.Item style={s.item} onPress={(e)=> nav("DealsList")} icon="ticket-percent" title="Ofertas disponibles"/>
-              <Menu.Item style={s.item} onPress={(e)=> nav("TicketsList")} icon="email" title="Tu buzon"/>
-              <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
-              <Menu.Item style={s.item} onPress={(e)=> nav("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
-              <Menu.Item style={s.item} onPress={(e)=> nav("About")} icon="information" title="Información" />
+              {this.state.Auth.cliente != null &&
+                <View>
+                  <Menu.Item style={s.item} onPress={(e)=> this.nav("BookingsList")} icon="book" title="Reservas"/>
+                  <Menu.Item style={s.item} onPress={(e)=> this.nav("DealsList")} icon="ticket-percent" title="Ofertas disponibles"/>
+                  <Menu.Item style={s.item} onPress={(e)=> this.nav("TicketsList")} icon="email" title="Tu buzon"/>
+                  <Menu.Item style={s.item} onPress={(e)=> this.nav("Ir a pagina de Pagos y Tarjetas")} icon="credit-card" title="Pagos y tarjetas"/>
+                  <Menu.Item style={s.item} onPress={(e)=> this.nav("Ir a pagina de Ayuda")} icon="help" title="Ayuda" />
+                  <Menu.Item style={s.item} onPress={(e)=> this.nav("About")} icon="information" title="Información" />
+                </View>
+              }
+              
             </ScrollView>
           </View>
-          <TouchableOpacity style={{backgroundColor: "#000a", width: screen.width*0.4}} onPress={()=>props.toggleMenu()}></TouchableOpacity>
-            
-          
-        </View>
-           
+          <TouchableOpacity style={{backgroundColor: "#000a", width: screen.width*0.4}} onPress={()=>this.props.toggleMenu()}></TouchableOpacity> 
+        </View>   
     );
-
+  }
 }
 
 const screen = Dimensions.get('window')
@@ -54,7 +86,7 @@ const s = StyleSheet.create({
     position: "absolute",
     marginTop: 75,
     zIndex: 10,
-    width: screen.height,
+    width: screen.width,
     height : screen.height-75,
     flexDirection: "row",
   },
@@ -67,20 +99,19 @@ const s = StyleSheet.create({
   },
   avatarContainer:{
     alignItems: 'center',
-    justifyContent: 'center',
-    height: screen.height*0.2,
-    marginTop: screen.height*0.025,
+    margin: 15
   },
   itemsContainer:{
     flex: 1,
-    marginTop: screen.height*0.025,
     marginBottom: screen.height*0.04,
   },
   username:{
     fontSize: 20,
     color: "#fff",
-    fontWeight: "700"
+    fontWeight: "700",
   }
 });
-
-export default Sidebar;
+const mapStateToProps = ({ Auth }) => {
+  return { Auth };
+};
+export default connect(mapStateToProps)(Sidebar);

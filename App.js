@@ -50,7 +50,7 @@ class App extends React.Component {
             <NavigationContainer >
               <Layout />
               <Stack.Navigator  initialRouteName="LogIn" screenOptions={{headerShown: false}}>
-
+                
                 {/*AUTENTICACION*/}
                 <Stack.Screen name="Landing" component={Landing} />
                 <Stack.Screen name="LogIn" component={LogIn} />

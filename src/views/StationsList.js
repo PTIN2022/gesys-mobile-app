@@ -109,7 +109,7 @@ class StationsList extends React.Component {
                 fecha_inicio: String(this.state.selected.date + " " + this.state.selected.from),
                 fecha_final: String(this.state.selected.date + " " + this.state.selected.upto),
                 id_vehiculo: "-",
-                id_cliente: "xx", // this.props.Login.client_id
+                id_cliente: "xx", // this.props.Authclient_id
             })
 
         }
@@ -140,7 +140,7 @@ class StationsList extends React.Component {
                     }
                 }))
                 // Controlamos el saldo.
-                if(amount > this.props.Login.cliente.saldo) {
+                if(amount > this.props.Authcliente.saldo) {
                     this.setState({
                         insufficientBlanace: true,
                     })
@@ -177,7 +177,7 @@ class StationsList extends React.Component {
                     }
                 }))
                 // Controlamos el saldo.
-                if(amount > this.props.Login.cliente.saldo) {
+                if(amount > this.props.Authcliente.saldo) {
                     this.setState({
                         insufficientBlanace: true,
                     })
@@ -324,7 +324,7 @@ class StationsList extends React.Component {
                                         direccion={item.direccion}
                                         key={item.id}
                                         openModal={this.toggleDialog}
-                                        disabledBtn={!this.props.Login.logged}
+                                        disabledBtn={!this.props.Authlogged}
                                     />
                                 </View>
                             );
@@ -459,10 +459,10 @@ const styles = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Estaciones, Locations, Login, Vehiculos }) => {
+const mapStateToProps = ({ Estaciones, Locations, Auth, Vehiculos }) => {
     const { estaciones, successEstaciones } = Estaciones;
     const { currentLocation } = Locations;
-    return { estaciones, successEstaciones, currentLocation, Login, Vehiculos };
+    return { estaciones, successEstaciones, currentLocation, Auth, Vehiculos };
 };
 
 const mapDispatchToProps = dispatch => {

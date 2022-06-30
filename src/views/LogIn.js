@@ -10,7 +10,7 @@ import { theme } from '../core/theme'
 import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 import { connect } from 'react-redux';
-import { doLogin } from '../state/actions/Login';
+import { doLogin } from '../state/actions/Auth';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../state/actions'
 import Error from '../components/Error'
@@ -34,47 +34,22 @@ class LogIn extends Component {
         };
     }
 
-    componentDidMount() {
-
+    componentDidUpdate(props){
+        if (!props.Auth.loginSuccess && this.props.Auth.loginSuccess) {
+            this.setState({
+                loginError: false
+            })
+            this.props.navigation.navigate('Stations')
+        }
+        else if (!props.Auth.loginError && this.props.Auth.loginError){
+            this.setState({
+                loginError: true
+            })
+        }
     }
 
     onLoginPressed = (e) => {
-        // const emailError = emailValidator(this.state.email.value) //Comprobamos que el correo introducido sea válido
-        // const passwordError = passwordValidator(this.state.password.value) //Comprobamos que la contraseña introducida sea válida
-        
-        // if (emailError || passwordError) {
-        // this.setState(prev => ({
-        //     email: {
-        //         ...prev.email,
-        //         value: prev.email.value,
-        //         error: emailError
-        //     },
-        //     password: {
-        //         ...prev.password,
-        //         value: prev.password.value,
-        //         error: passwordError
-        //     }
-        // }))
-        // return
-        // }
-        // this.props.navigation.navigate('Stations')
-
-        this.props.doLogin(this.state.email.value, this.state.password.value, (val) => {
-            if(val){
-                this.setState({
-                    loginError: false
-                })
-                this.props.navigation.reset({
-                    index: 0,
-                    routes: [{name: 'Stations'}],
-                });
-            } else {
-                this.setState({
-                    loginError: true
-                })
-            }
-        })
-
+        this.props.doLogin(this.state.email.value, this.state.password.value)
     }
 
     render() {
@@ -149,8 +124,8 @@ class LogIn extends Component {
 }
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Login }) => {
-    return {Login};
+const mapStateToProps = ({ Auth }) => {
+    return {Auth};
 };
 
 const mapDispatchToProps = dispatch => {

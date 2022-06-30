@@ -7,7 +7,7 @@ import Locations from "./Location"
 import Templates from "./Templates"
 import Deals from "./Deals"
 import Tickets from './Tickets'
-import Login from './Login'
+import Auth from './Auth'
 import Notifications from "./Notifications"
 import Historial from './Historial'
 
@@ -20,7 +20,7 @@ export default combineReducers({
     Deals,
     Tickets,
     Templates,
-    Login,
+    Auth,
     Notifications,
     Historial,
 })

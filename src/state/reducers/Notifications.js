@@ -1,3 +1,9 @@
+import {
+    FETCHING_NOTIFICACIONES,
+    FETCHING_NOTIFICACIONES_SUCCESS,
+    FETCHING_NOTIFICACIONES_ERROR
+} from '../actionTypes'
+
 const initial_state = {
     notifications: [
         {
@@ -32,6 +38,33 @@ const initial_state = {
 
 }
 
-export default Notifications = (state = initial_state) => {
-    return state
+export default Notifications = (state = initial_state, action) => {
+    switch(action.type){
+        case FETCHING_NOTIFICACIONES: 
+            return {
+                ...state,
+                estaciones: [],
+                successNotificaciones: false,
+                errorNotificaciones: false,
+                fetchingNotificaciones: true
+            }
+        case FETCHING_NOTIFICACIONES_SUCCESS: 
+            return {
+                ...state,
+                estaciones: action.payload,
+                successNotificaciones: true,
+                fetchingNotificaciones: false,
+                errorNotificaciones: false,
+            }
+        case FETCHING_NOTIFICACIONES_ERROR:
+            return {
+                ...state,
+                estaciones: [],
+                successNotificaciones: false,
+                fetchingNotificaciones: false,
+                errorNotificaciones: true
+            }
+        default :
+            return state
+    }
 }

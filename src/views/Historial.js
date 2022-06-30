@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Image, View, StyleSheet, ActivityIndicator, Alert } from 'react-native'
 import { Button, Paragraph, Dialog, Portal, Snackbar, Divider, Card, TextInput, RadioButton } from 'react-native-paper';
 import { fetchHistorial } from '../state/actions/Historial'
-import { updateSaldo } from '../state/actions/Login'
+import { updateSaldo } from '../state/actions/Auth'
 import { theme } from '../core/theme';
 import { Text } from 'react-native-paper';
 
@@ -16,10 +16,10 @@ class Historial extends React.Component {
     }
 
     async componentDidMount() {
-      if(this.props.Login.logged === false){
+      if(this.props.Authlogged === false){
         this.props.navigation.navigate('LogIn');
       }
-      await this.props.fetchHistorial(this.props.Login.token)
+      await this.props.fetchHistorial(this.props.Authtoken)
     }
     
     addBalance = () => { 
@@ -31,7 +31,7 @@ class Historial extends React.Component {
         fetch("http://craaxkvm.epsevg.upc.es:23701/api/saldo", {
           method: 'PUT',
           headers: {
-            'x-access-tokens': this.props.Login.token,
+            'x-access-tokens': this.props.Authtoken,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
@@ -42,7 +42,7 @@ class Historial extends React.Component {
         .then(data => {
           this.props.updateSaldo(data.saldo);
           this.setState({balance: "0"})
-          this.props.fetchHistorial(this.props.Login.token)
+          this.props.fetchHistorial(this.props.Authtoken)
         })
       }
     }
@@ -62,7 +62,7 @@ class Historial extends React.Component {
           <Button style={{marginTop: 2, marginBottom: 15}} mode='contained' color='green' onPress={this.addBalance}>Añadir saldo</Button>
           {/* <View style={{alignItems: 'center', marginTop: 20, backgroundColor: '#0E3BAC', justifyContent: 'center'}} height={100}>
             <Text style={{textAlignVertical: 'center', fontSize: 50, color: 'white'}}>
-              {this.props.Login.cliente.saldo}
+              {this.props.Authcliente.saldo}
               <Text style={{textAlignVertical: 'center', fontSize: 15, color: 'white'}}> puntos</Text>
             </Text>
           </View> */}
@@ -127,9 +127,9 @@ const s = StyleSheet.create({
 
 
 // Cargamos los datos que tenemos en el store.
-const mapStateToProps = ({ Login, Historial }) => {
+const mapStateToProps = ({ Auth, Historial }) => {
   console.log(Historial)
-  return { Login, Historial };
+  return { Auth, Historial };
 };
   
 const mapDispatchToProps = dispatch => {

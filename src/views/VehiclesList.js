@@ -20,11 +20,11 @@ class VehiclesList extends Component {
     }
 
     componentDidMount() {
-		if(this.props.Login.logged === false){
+		if(this.props.Authlogged === false){
 			this.props.navigation.navigate('LogIn');
 		}
 
-        this.props.fetchVehicles(this.props.Login.token, this.props.Login.cliente.id_usuari); // pass the token? or the cliente id?
+        this.props.fetchVehicles(this.props.Authtoken, this.props.Authcliente.id_usuari); // pass the token? or the cliente id?
     }
 
     componentDidUpdate() {
@@ -60,8 +60,8 @@ class VehiclesList extends Component {
 
 const mapStateToProps = (data) => {
     const { vehicles, errorVehicles } = data.Vehiculos;
-    const { Login } = data;
-    return { vehicles, Login, errorVehicles };
+    const { Auth } = data;
+    return { vehicles, Auth, errorVehicles };
 };
 
 

@@ -75,6 +75,7 @@ export const apiPostReserva = (data, token) => {
 }
 
 export const apiLogin = (data) => {
+    console.log("hello")
     let url = `${BASE_URL}:${RSV_PORT}/api/login`
     return fetch(url, {
         method: 'POST',
@@ -83,6 +84,20 @@ export const apiLogin = (data) => {
         },
         body: JSON.stringify(data)
     }).then(res => Promise.all([res, res.json()]))
+}
+
+export const apiLogout = (token) => {
+    console.log("hello:", token)
+    let url = `${BASE_URL}:${RSV_PORT}/api/logout`
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-access-tokens': token
+        },
+    }).then(res => {
+        return Promise.all([res, res.json()])
+    })
 }
 
 export const apiAddVehicle = (data, token) => {
